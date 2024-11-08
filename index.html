@@ -1,84 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="script.js" defer>c</script>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.25/Tone.js"></script>
-    <script src="script.js"></script>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <body>
     <div class="keyboard">
-    
         <div class="controls">
-          <div class="volume-controls">
-              <label for="volume">Volume:</label>
-              <input type="range" id="volume" min="-60" max="0" value="-12">
-          </div>
-          
-          <div class="waveform-controls">
-              <label>Onda:</label>
-              <button class="waveform-button" class='active' data-waveform="sine">Sine</button>
-              <button class="waveform-button" data-waveform="square">Square</button>
-              <button class="waveform-button" data-waveform="triangle">Triangle</button>
-              <button class="waveform-button" data-waveform="sawtooth">Sawtooth</button>
-          </div>
+            <div class="volume-controls">
+                <label for="volume">Volume:</label>
+                <input type="range" id="volume" min="-60" max="0" value="-12">
+            </div>
+            
+            <div class="waveform-controls">
+                <label>Onda:</label>
+                <button class="waveform-button active" data-waveform="sine">Sine</button>
+                <button class="waveform-button" data-waveform="square">Square</button>
+                <button class="waveform-button" data-waveform="triangle">Triangle</button>
+                <button class="waveform-button" data-waveform="sawtooth">Sawtooth</button>
+            </div>
         </div>
         
         <div class="wkeys">
-          <button class="key" data-note="C3">
-            <div class="led"></div>
-          </button>
-          <button class="key" data-note="D3">
-            <div class="led"></div>
-          </button>
-          <button class="key" data-note="E3">
-            <div class="led"></div>
-          </button>
-          <button class="key" data-note="F3">
-            <div class="led"></div>
-          </button>
-          <button class="key" data-note="G3">
-            <div class="led"></div>
-          </button>
-          <button class="key" data-note="A3">
-            <div class="led"></div>
-          </button>
-          <button class="key" data-note="B3">
-            <div class="led"></div>
-          </button>
-          <button class="key" data-note="C4">
-            <div class="led"></div>
-          </button>
+            <button class="key" data-note="C3"><div class="led"></div></button>
+            <button class="key" data-note="D3"><div class="led"></div></button>
+            <button class="key" data-note="E3"><div class="led"></div></button>
+            <button class="key" data-note="F3"><div class="led"></div></button>
+            <button class="key" data-note="G3"><div class="led"></div></button>
+            <button class="key" data-note="A3"><div class="led"></div></button>
+            <button class="key" data-note="B3"><div class="led"></div></button>
+            <button class="key" data-note="C4"><div class="led"></div></button>
         </div>
+
         <div class="bkeys">
-          <button class="bkey" data-note="C#3" id="Cs3">
-                  <div class="led"></div>
-          </button>
-          <button class="bkey" data-note="D#3" id="Ds3">
-                  <div class="led"></div>
-          </button>
-          <button class="bkey" data-note="F#3" id="Fs3">
-                  <div class="led"></div>
-          </button>
-          <button class="bkey" data-note="G#3" id="Gs3">
-                  <div class="led"></div>
-          </button>
-          <button class="bkey" data-note="A#3" id="As3">
-                  <div class="led"></div>
-          </button>
+            <button class="bkey" data-note="C#3" id="Cs3"><div class="led"></div></button>
+            <button class="bkey" data-note="D#3" id="Ds3"><div class="led"></div></button>
+            <button class="bkey" data-note="F#3" id="Fs3"><div class="led"></div></button>
+            <button class="bkey" data-note="G#3" id="Gs3"><div class="led"></div></button>
+            <button class="bkey" data-note="A#3" id="As3"><div class="led"></div></button>
         </div>
-        
+
         <div class="signature">
-          <h1> MichyMoog </h1>
+            <h1>MichyMoog</h1>
         </div>
-        
-      </div>
+    </div>
 
-      <script src="script.js"></script>
+    <!-- Include script.js at the end -->
+    <script src="script.js"></script>
 </body>
-
 </html>

@@ -1,0 +1,114 @@
+body {
+    display: flex;
+    flex-direction: column; /* Stacks keyboard and other elements vertically */
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    height: 100vh; /* Ensures the body takes full viewport height */
+    overflow: hidden; /* Prevents scrollbars from appearing */
+}
+
+.keyboard {
+    display: flex;
+    position: relative;
+    width: 840px; /* Three octaves width */
+    height: 180px;
+    margin: 20px;
+}
+
+.key {
+    box-sizing: border-box;
+    position: relative;
+    transition: background-color 0.1s ease; /* Smooth transition for background color */
+}
+
+/* White keys */
+.key.white {
+    width: 40px;
+    height: 180px;
+    background-color: white;
+    border: 1px solid #000;
+    z-index: 1;
+    border-radius: 5px;
+}
+
+/* Black keys */
+.key.black {
+    width: 30px;
+    height: 120px;
+    background-color: black;
+    position: absolute;
+    z-index: 2;
+    margin-left: -15px; /* Centers black keys */
+    border-radius: 5px;
+}
+
+.note-name {
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-weight: bold;
+    color: #818181cc !important;  /* Force color with !important */
+    font-size: 14px;
+    opacity: 0.7;
+    text-align: center;
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+}
+
+
+/* Correct positioning of black keys using nth-of-type */
+.key.black:nth-of-type(2) { left: 40px; }  /* C# */
+.key.black:nth-of-type(4) { left: 80px; }  /* D# */
+.key.black:nth-of-type(7) { left: 160px; } /* F# */
+.key.black:nth-of-type(9) { left: 200px; } /* G# */
+.key.black:nth-of-type(11) { left: 240px; } /* A# */
+
+/* Second octave black keys */
+.key.black:nth-of-type(14) { left: 320px; } /* C# */
+.key.black:nth-of-type(16) { left: 360px; } /* D# */
+.key.black:nth-of-type(19) { left: 440px; } /* F# */
+.key.black:nth-of-type(21) { left: 480px; } /* G# */
+.key.black:nth-of-type(23) { left: 520px; } /* A# */
+
+/* Third octave black keys */
+.key.black:nth-of-type(26) { left: 600px; } /* C# */
+.key.black:nth-of-type(28) { left: 640px; } /* D# */
+.key.black:nth-of-type(31) { left: 720px; } /* F# */
+.key.black:nth-of-type(33) { left: 760px; } /* G# */
+.key.black:nth-of-type(35) { left: 800px; } /* A# */
+
+/* Note name styles */
+.note-name {
+    position: absolute;
+    bottom: 5px; /* Position the note name just above the bottom of the key */
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.4); /* Low opacity */
+    pointer-events: none; /* Prevents interference with mouse events */
+}
+
+/* Pressed key animation */
+.key.pressed {
+    background-color: #ffcc00; /* Change color when pressed */
+}
+
+/* Progress bar container */
+#progress-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #bbbbbb;
+    position: fixed;
+    bottom: 0;
+}
+
+/* Progress bar itself */
+#progress {
+    width: 0;
+    height: 100%;
+    background-color: green; /* Starting color */
+    transition: width 10s linear, background-color 10s ease; /* Smooth transition for color and width */
+}

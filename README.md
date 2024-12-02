@@ -1,9 +1,13 @@
 # ProgettoFINAL
 
 CIAO
+
 merhaba
 gorushuruz
+uzuntu
+
 Selam!
+
 
 08/11/2024
 Work distribution:

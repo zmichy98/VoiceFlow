@@ -21,8 +21,13 @@ const noteFrequencies = {
 function playNote(note, octave) {
     const oscillator = audioContext.createOscillator();
     oscillator.type = "sine";  // Sine wave sound
+
     const frequency = noteFrequencies[note][octave - 1]; // Get the frequency based on the octave
     oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+
+    const gainNode = audioContext.createGain();
+    gainNode.gain.value = 0.5;
+    
     oscillator.connect(audioContext.destination);
     oscillator.start();
     oscillator.stop(audioContext.currentTime + 0.5); // Play note for 0.5 seconds

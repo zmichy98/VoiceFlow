@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Collegamento con il file css: -->
+    <link rel="stylesheet" href="../../style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.25/Tone.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tone@14.8.29/build/Tone.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Vocal Trainer</title>
+</head>
+<body>
+    <h2>RECAPPPPP</h2>
+    
+
+    <!-- Setting menu -->
+    <nav class="navbar">
+        <h3 class="navbar-title">Settings:</h3> <!-- Title for the navbar -->
+        <ul>
+            <li><a href="setting_level.html" id="selectedLevel"> </a></li>
+            <li><a href="setting_time.html" id="sliderValue"></a></li>
+        </ul>
+    </nav>
+
+    <!-- Home button -->
+    <a href="../trainer/trainer_game.html" class="next_button">PLAY</a>
+
+    <!-- Home button -->
+    <a href="../../initial_page.html" class="home_button">Home</a>
+
+    <!-- Collegamento con lo script js: -->
+    <script src="../vocal_trainer.js"></script>
+
+    <!-- Get the variables saved: -->
+    <!-- selectedLevel variable -->
+    <script>
+        document.getElementById("selectedLevel").innerHTML = "Singing level: " + localStorage.getItem("selectedLevel");
+    </script>
+    <!-- sliderValue variable -->
+    <script>
+        document.getElementById("sliderValue").innerHTML = "Training time: " + localStorage.getItem("sliderValue") + " min";
+    </script>
+</body>
+</html>

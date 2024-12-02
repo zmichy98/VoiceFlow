@@ -2,6 +2,7 @@
 
 CIAO
 merhaba
+gorushuruz
 Selam!
 
 08/11/2024

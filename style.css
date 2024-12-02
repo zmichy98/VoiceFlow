@@ -1,184 +1,336 @@
-body{
-     font-family: Arial, sans-serif;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     justify-content: center;
-   }
-   
-   h1 {
-     text-align: center;
-     vertical-align: center;
-     font-style: italic;
-   }
-   
-   .keyboard {
-     width: 1000px;
-     height: 600px;
-     background-color: dimgrey;
-     border-radius: 50px;
-     padding: 50px;
-     transition: box-shadow 0.2s ease;
-     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-   }
-   
-   .wkeys {
-     width: 900px;
-     height: 304px;
-     display: flex;
-     position: relative;
-     left: 50px;
-     bottom: -230px;
-   }
-   
-   .key {
-     width: 800px;
-     height: 300px;
-     background-color: white;
-     margin: 2px;
-     border: 2px;
-     position: relative;
-     align-self: flex-end;
-     border-radius: 20px;
-     cursor: pointer;
-     justify-content: center;
-     align-items: center;
-     display: flex;
-     transition: box-shadow 0.2s ease;
-     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-   }
-   
-   .bkeys {
-     display: flex;
-     width: 645px;
-     height: 210px;
-     display: flex;
-     position: relative;
-     left: 117px;
-     bottom: 78px;
-   }
-   
-   .bkey {
-     width: 90px;
-     height: 200px;
-     background-color: black;
-     margin: 5px;
-     border: 2px;
-     position: relative;
-     border-radius: 20px;
-     cursor: pointer;
-     justify-content: center;
-     align-items: center;
-     display: flex;
-     transition: box-shadow 0.2s ease;
-     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-   }
-   
-   #Fs3 {
-     left: 145px;
-   }
-   
-   #Gs3 {
-     left: 145px;
-   }
-   
-   #As3 {
-     left: 145px;
-   }
-   
-   .key.on {
-     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(106, 90, 205, 0.6);
-   }
-   
-   .bkey.on {
-     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(106, 90, 205, 0.6);
-   }
-   
-   .led{
-     width: 30px;
-     height: 30px;
-     border-radius: 30px;
-     background-color:red;
-     position: absolute;
-     bottom: 20px;
-     opacity: 0;
-     transition: opacity 0.2s;
-   }
-   
-   .key.on .led{
-       opacity: 0;
-       background-color: red;
-   }
-   
-   .bkey.on .led{
-       opacity: 0;
-       background-color: red;
-   }
-   
-   .controls {
-     height: 104px;
-     width: 1000px;
-     position: relative;
-     bottom: 0px;
-   }
-   
-   .waveform-controls {
-     height: 100px;
-     width: 400px;
-     background-color: darkgrey;
-     justify-content: center;
-     align-items: center;
-     display: flex;
-     gap: 10px; /* Spazio tra i pulsanti */
-     margin-top: 10px; /* Spazio sopra i pulsanti */
-     position: relative;
-     border-radius: 20px;
-     right: -596px;
-     top: -110px;
-     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-   }
-   
-   .volume-controls {
-     width: 300px;
-     height: 100px;
-     background-color: darkgrey;
-     gap: 10px; /* Spazio tra i pulsanti */
-     justify-content: center;
-     align-items: center;
-     display: flex;
-     border-radius: 20px;
-       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-   }
-   
-   .waveform-button {
-       padding: 10px 15px;
-       border: none;
-       border-radius: 5px;
-       background-color: lightgrey; /* Colore di base */
-       color: black;
-       cursor: pointer;
-       transition: background-color 0.2s;
-       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombra */
-   }
-   
-   .waveform-button:hover {
-       background-color: grey; /* Colore al passaggio del mouse */
-   }
-   
-   .waveform-button.active {
-       background-color: grey; /* Colore attivo */
-   }
-   
-   .signature {
-     position: relative;
-     width: 300px;
-     height: 80px;
-     background-color: #ba926c;
-     border-radius: 20px;
-     align-items: central;
-     justify-content: center;
-     display: flex;
-     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Ombra */
-     top: -400px;
-     left: 600px;
-   }
+body {
+  display: flex;
+  flex-direction: column; /* Align items vertically (column layout) */
+  justify-content: center; /* Centers the content vertically */
+  align-items: center; /* Centers the content horizontally */
+  height: 100vh; /* Take up the full viewport height */
+  margin: 0;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+  font-size: 6em;
+  color: white;
+  background: linear-gradient(45deg, #ff6b6b, #f3a683);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-align: center;
+  text-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+h2 {
+  font-size: 3em;
+  color: white;
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-align: center;
+  text-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+a {
+  text-decoration: none; /* Remove underline from the link */
+}
+
+/*---------Buttons on first page---------*/
+button {
+  background: linear-gradient(45deg, #ff6b6b, #f3a683); /* Gradient background for button */
+  color: white;
+  font-size: 1.5em;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 50px; /* Rounded button corners */
+  cursor: pointer;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; /* Smooth transition */
+  margin: 10px;
+}
+
+button:hover {
+  transform: scale(1.05); /* Slightly enlarge on hover */
+  background: linear-gradient(45deg, #ff8a8a, #ffcc99); /* Change color on hover */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4); /* Deeper shadow on hover */
+}
+
+button:active {
+  transform: scale(1); /* Return to original size on click */
+}
+
+/*---------Settings Menu on top left---------*/
+.navbar-title {
+  font-size: 1em;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-weight: bold;
+  font-style: italic;
+  text-align: center;
+}
+
+.navbar {
+  position: absolute;
+  top: 20px; /* Distance from the top */
+  left: 20px; /* Distance from the left */
+  background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar li {
+  margin-bottom: 10px; /* Space between menu items */
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  padding: 10px 15px;
+  display: block; /* Makes the link take the full width of the container */
+  transition: background 0.3s ease, color 0.3s ease;
+  border-radius: 4px;
+}
+
+.navbar a:hover {
+  background-color: #f0986f;
+  color: white;
+}
+
+/*---------Home button---------*/
+.home_button {
+  position: absolute;
+  bottom: 20px; /* Distance from the bottom */
+  left: 20px; /* Distance from the left */
+  padding: 10px 20px;
+  background: linear-gradient(45deg, rgb(160, 160, 160), #f7f7f7);
+  color: rgb(79, 79, 79);
+  font-size: 1em;
+  text-decoration: none;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.home_button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, rgba(109, 109, 109, 0.989), #9c9c9c);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
+  color: black;
+}
+
+.home_button:active {
+  transform: scale(1);
+}
+
+/*---------Next button---------*/
+.next_button {
+  position: absolute;
+  bottom: 20px; /* Distance from the bottom */
+  right: 20px; /* Distance from the left */
+  padding: 10px 20px;
+  background: linear-gradient(45deg, rgb(160, 160, 160), #f7f7f7);
+  color: rgb(79, 79, 79);
+  font-size: 1em;
+  text-decoration: none;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.next_button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, rgba(109, 109, 109, 0.989), #9c9c9c);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
+  color: black;
+}
+
+.next_button:active {
+  transform: scale(1);
+}
+
+/*---------Level buttons---------*/
+.level-buttons {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+  margin-top: 20px;
+}
+
+.level-button {
+  padding: 10px 20px;
+  background-color: #f3a683; /* Initial background color */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.level-button:hover {
+  background-color: #ffcc99; /* Hover color */
+}
+
+.level-button.active {
+  background-color: #ff6b6b; /* Color when active */
+  transform: scale(1.2); /* Slightly enlarge when active */
+
+}
+.level-description {
+  margin-top: 20px; /* space between buttons and description */
+  font-size: 1.5em; /* font size of the description */
+  color: #1b1b1b;    /* text color of the description */
+  background: linear-gradient(45deg, #ff6b6b, #f3a683);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-align: center;
+  text-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+/*--------- minute slider ---------*/
+input[type="range"] {
+  width: 80%; /* You can adjust the width */
+  margin: 20px 0;
+  appearance: none;
+  height: 8px;
+  background: #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: background 0.3s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #4CAF50; /* Green color */
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]:hover {
+  background: #bbb;
+}
+
+input[type="range"]:active {
+  background: #888;
+}
+
+/*-------------Piano keyboard styling-------------*/
+.keyboard {
+  display: flex;
+  position: relative;
+  width: 840px; /* Three octaves width */
+  height: 180px;
+  margin: 20px;
+}
+
+.key {
+  box-sizing: border-box;
+  position: relative;
+  transition: background-color 0.1s ease; /* Smooth transition for background color */
+}
+
+/* White keys */
+.key.white {
+  width: 40px;
+  height: 180px;
+  background-color: white;
+  border: 1px solid #000;
+  z-index: 1;
+  border-radius: 5px;
+}
+
+/* Black keys */
+.key.black {
+  width: 30px;
+  height: 120px;
+  background-color: black;
+  position: absolute;
+  z-index: 2;
+  margin-left: -15px; /* Centers black keys */
+  border-radius: 5px;
+}
+
+.note-name {
+  font-family: 'Montserrat', sans-serif;
+  font-style: italic;
+  font-weight: bold;
+  color: #818181cc !important;  /* Force color with !important */
+  font-size: 14px;
+  opacity: 0.7;
+  text-align: center;
+  position: absolute;
+  bottom: 5px;
+  width: 100%;
+}
+
+
+/* Correct positioning of black keys using nth-of-type */
+.key.black:nth-of-type(2) { left: 40px; }  /* C# */
+.key.black:nth-of-type(4) { left: 80px; }  /* D# */
+.key.black:nth-of-type(7) { left: 160px; } /* F# */
+.key.black:nth-of-type(9) { left: 200px; } /* G# */
+.key.black:nth-of-type(11) { left: 240px; } /* A# */
+
+/* Second octave black keys */
+.key.black:nth-of-type(14) { left: 320px; } /* C# */
+.key.black:nth-of-type(16) { left: 360px; } /* D# */
+.key.black:nth-of-type(19) { left: 440px; } /* F# */
+.key.black:nth-of-type(21) { left: 480px; } /* G# */
+.key.black:nth-of-type(23) { left: 520px; } /* A# */
+
+/* Third octave black keys */
+.key.black:nth-of-type(26) { left: 600px; } /* C# */
+.key.black:nth-of-type(28) { left: 640px; } /* D# */
+.key.black:nth-of-type(31) { left: 720px; } /* F# */
+.key.black:nth-of-type(33) { left: 760px; } /* G# */
+.key.black:nth-of-type(35) { left: 800px; } /* A# */
+
+/* Note name styles */
+.note-name {
+  position: absolute;
+  bottom: 5px; /* Position the note name just above the bottom of the key */
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.4); /* Low opacity */
+  pointer-events: none; /* Prevents interference with mouse events */
+}
+
+/* Pressed key animation */
+.key.pressed {
+  background-color: #ffcc00; /* Change color when pressed */
+}
+
+/*-------------------- Progress Bar -------------------*/
+/* Progress bar container */
+#progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #bbbbbb;
+  position: fixed;
+  bottom: 0;
+}
+
+/* Progress bar itself */
+#progress {
+  width: 0;
+  height: 100%;
+  background-color: green; /* Starting color */
+  transition: width 10s linear, background-color 10s ease; /* Smooth transition for color and width */
+}

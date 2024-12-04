@@ -10,33 +10,33 @@
     <title>My Vocal Trainer</title>
 </head>
 <body>
-    <h2>Which is your vocal range?</h2>
-    <p> Insert your vocal range yourself:</p>
-
-
-
-
-
-
-
+    <h2>How do you want to choose your vocal range?</h2>
     
+    <div class="vocal-range-buttons">
+        <a href="setting3_vocrange1.html" class="vocrange-button" data-range="vocRang1">Choose from predefined range</a>
+        <a href="setting3_vocrange2.html" class="vocrange-button" data-range="vocRang2">Chose your range manually</a>
+        <a href="setting3_vocrange3.html" class="vocrange-button" data-range="covRang3">Help me to find my range</a>
+    </div>
+
     <!-- Setting menu -->
     <nav class="navbar">
         <h3 class="navbar-title">Settings:</h3> <!-- Title for the navbar -->
         <ul>
-            <li><a href="setting_level.html" id="selectedLevel"> </a></li>
-            <li><a href="setting_time.html" id="sliderValue"></a></li>
+            <li><a href="setting1_level.html" id="selectedLevel"> </a></li>
+            <li><a href="setting2_time.html" id="sliderValue"></a></li>
         </ul>
     </nav>
 
-    <!-- Next button -->
+    <!-- Next button-->
     <a href="setting_vocgear.html" class="next_button">Next setting</a>
-
-    <!-- Home button -->
-    <a href="../../initial_page.html" class="home_button">Home</a>
+    
+    <!-- Bottom left button container-->
+    <div class="button-container">
+        <a href="../../initial_page.html" class="bottomleft_button">Home</a>
+    </div>
 
     <!-- Collegamento con lo script js: -->
-    <script src="../vocal_trainer.js"></script>
+    <script src="vt_settings.js"></script>
 
     <!-- Get the variables saved: -->
     <!-- selectedLevel variable -->

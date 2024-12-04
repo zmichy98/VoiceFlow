@@ -107,11 +107,19 @@ button:active {
   color: white;
 }
 
-/*---------Home button---------*/
-.home_button {
-  position: absolute;
-  bottom: 20px; /* Distance from the bottom */
-  left: 20px; /* Distance from the left */
+/*---------bottom left buttons---------*/
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;  /* Ensures buttons stretch to the container width */
+  gap: 10px;             /* Adds space between buttons */
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+}
+
+.bottomleft_button {
+  text-align: center;    /* Centers text within the button */
   padding: 10px 20px;
   background: linear-gradient(45deg, rgb(160, 160, 160), #f7f7f7);
   color: rgb(79, 79, 79);
@@ -180,12 +188,14 @@ button:active {
 }
 
 .level-button:hover {
-  background-color: #ffcc99; /* Hover color */
+  transform: scale(1.05);          /* Slightly enlarge on hover */
+  background: linear-gradient(45deg, #ff6b6b, #f06595); /* Gradient changes to red-pink */
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5); /* Enhanced shadow on hover */
 }
 
 .level-button.active {
-  background-color: #ff6b6b; /* Color when active */
-  transform: scale(1.2); /* Slightly enlarge when active */
+  background: linear-gradient(45deg, #ff6b6b, #f06595); /* Gradient changes to red-pink */
+  transform: scale(1.0.5); /* Slightly enlarge when active */
 
 }
 .level-description {
@@ -200,43 +210,86 @@ button:active {
   padding: 20px;
   border-radius: 20px;
 }
-
-/*---------Vocal range buttons---------*/
+/*--------- Vocal range buttons---------*/
 /* Vocal Range Buttons Container */
 .vocal-range-buttons {
-  display: flex;
-  justify-content: center; /* Center the buttons */
-  gap: 20px; /* Space between buttons */
-  margin-top: 30px; /* Space from the title */
+  display: flex;                  /* Enable Flexbox */
+  flex-direction: column;         /* Stack buttons vertically */
+  align-items: center;            /* Center horizontally */
+  justify-content: center;        /* Center vertically */
+  height: 30vh;                  /* Full viewport height */
+  gap: 20px;                      /* Space between buttons */
+  margin: 0;                      /* Remove default margin */
+  padding: 0;                     /* Remove padding */
+  background: none;               /* Remove any background */
+  border: none;                   /* Remove borders if any */
 }
 
 /* Individual Button Style */
-.coll-button {
-  padding: 15px 30px;
-  background: linear-gradient(45deg, #6a11cb, #2575fc);
-  color: white;
-  font-size: 1.5em;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  text-align: center;
+.vocrange-button {
+  display: block;                 /* Make links behave like buttons */
+  padding: 20px 70px;             /* Larger padding for bigger buttons */
+  width: 400px;                   /* Increased button width */
+  background: linear-gradient(45deg, #8530e0, #3980fa); /* Purple to blue gradient */
+  color: white;                   /* Button text color */
+  font-size: 1.8em;               /* Larger font size */
+  text-decoration: none;          /* Remove underline */
+  border-radius: 15px;            /* Rounded corners */
+  text-align: center;             /* Center text */
   font-family: 'Poppins', sans-serif;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3); /* Deeper shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; /* Smooth transitions */
 }
 
 /* Hover Effect */
-.coll-button:hover {
-  transform: scale(1.1);
-  background: linear-gradient(45deg, #ff6b6b, #f3a683); /* Color change on hover */
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
+.vocrange-button:hover {
+  transform: scale(1.05);          /* Slightly enlarge on hover */
+  background: linear-gradient(45deg, #ff6b6b, #f06595); /* Gradient changes to red-pink */
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5); /* Enhanced shadow on hover */
 }
 
-/* Active (Clicked) State */
-.coll-button:active {
-  transform: scale(1);
-  background: linear-gradient(45deg, #4caf50, #81c784); /* Green gradient when active */
+/*---------Range buttons---------*/
+.range-buttons {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+  margin-top: 20px;
 }
+
+.range-button {
+  padding: 10px 20px;
+  background-color: #f3a683; /* Initial background color */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.range-button:hover {
+  transform: scale(1.05);          /* Slightly enlarge on hover */
+  background: linear-gradient(45deg, #ff6b6b, #f06595); /* Gradient changes to red-pink */
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5); /* Enhanced shadow on hover */
+}
+
+.range-button.active {
+  background: linear-gradient(45deg, #ff6b6b, #f06595); /* Gradient changes to red-pink */
+  transform: scale(1.05); /* Slightly enlarge when active */
+
+}
+.range-description {
+  margin-top: 20px; /* space between buttons and description */
+  font-size: 1.5em; /* font size of the description */
+  color: #1b1b1b;    /* text color of the description */
+  background: linear-gradient(45deg, #ff6b6b, #f3a683);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-align: center;
+  text-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  border-radius: 20px;
+}
+
 
 /*--------- minute slider ---------*/
 input[type="range"] {
@@ -265,6 +318,30 @@ input[type="range"]:hover {
 
 input[type="range"]:active {
   background: #888;
+}
+
+/*-------------Play button-------------*/
+.play-button {
+  background-color: #ff1e00; /* Bright orange background */
+  color: white; /* White text */
+  font-size: 20px; /* Larger text for emphasis */
+  padding: 15px 30px; /* Nice padding for a large clickable area */
+  border: none; /* Remove default border */
+  border-radius: 50px; /* Rounded corners for a sleek look */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-weight: bold; /* Make the text bold */
+  transition: transform 0.2s ease-in-out, box-shadow 0.3s ease; /* Smooth transformation and shadow transition */
+  box-shadow: 0 5px 20px rgba(255, 38, 0, 0.6); /* Glowing shadow effect */
+  outline: none; /* Remove outline when clicked */
+  display: inline-block; /* Allow inline display */
+  text-align: center; /* Center the text */
+}
+
+.play-button:hover {
+  transform: scale(1.1); /* Slightly enlarge the button when hovered */
+  box-shadow: 0 8px 30px rgba(255, 0, 0, 0.9); /* More intense glow on hover */
+  background-color: #ff9900; /* Change color to a lighter orange on hover */
+  animation: bounce 0.5s infinite alternate; /* Add a bounce effect */
 }
 
 /*-------------Piano keyboard styling-------------*/

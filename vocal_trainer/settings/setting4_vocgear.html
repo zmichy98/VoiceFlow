@@ -10,26 +10,28 @@
     <title>My Vocal Trainer</title>
 </head>
 <body>
-    <h2>What kind of gear do you have?</h2>
+    <h2>What kind of gear you have?</h2>
     
-
     <!-- Setting menu -->
     <nav class="navbar">
         <h3 class="navbar-title">Settings:</h3> <!-- Title for the navbar -->
         <ul>
-            <li><a href="setting_level.html" id="selectedLevel"> </a></li>
-            <li><a href="setting_time.html" id="sliderValue"></a></li>
+            <li><a href="setting1_level.html" id="selectedLevel"> </a></li>
+            <li><a href="setting2_time.html" id="sliderValue"></a> </li>
+            <li><a href="setting3_vocrange.html" id="selectedRange"></a> </li>
         </ul>
     </nav>
 
-    <!-- Next button -->
-    <a href="setting_recap.html" class="next_button">Next setting</a>
-
-    <!-- Home button -->
-    <a href="../../initial_page.html" class="home_button">Home</a>
+    <!-- Next button-->
+    <a href="setting5_recap.html" class="next_button">Next setting</a>
+    
+    <!-- Bottom left button container-->
+    <div class="button-container">
+        <a href="../../initial_page.html" class="bottomleft_button">Home</a>
+    </div>
 
     <!-- Collegamento con lo script js: -->
-    <script src="../vocal_trainer.js"></script>
+    <script src="vt_settings.js"></script>
 
     <!-- Get the variables saved: -->
     <!-- selectedLevel variable -->
@@ -39,6 +41,10 @@
     <!-- sliderValue variable -->
     <script>
         document.getElementById("sliderValue").innerHTML = "Training time: " + localStorage.getItem("sliderValue") + " min";
+    </script>
+    <!-- selectedRange variable -->
+    <script>
+        document.getElementById("selectedRange").innerHTML = "Vocal range: " + localStorage.getItem("selectedRange");
     </script>
 </body>
 </html>

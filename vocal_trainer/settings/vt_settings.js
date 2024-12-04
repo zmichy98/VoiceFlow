@@ -1,5 +1,5 @@
+/*------------------------ SELECTED LEVEL ------------------------*/
 document.addEventListener("DOMContentLoaded", () => {
-  /*------------------------ SELECTED LEVEL ------------------------*/
   /* The listener comand wait that all the HTML page is fully loaded before running 
   the JS code. Useful to not let the code be exicuted before that all the elements
   are loaded on the DOM */
@@ -60,8 +60,10 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("selectedLevel", selectedLevel)
     });
   });
+});
 
-  /*------------------------ TRAINING TIME ------------------------*/
+/*------------------------ TRAINING TIME ------------------------*/
+document.addEventListener("DOMContentLoaded", () => {
   // I Select the slider by its id and save it in the costant
   const slider = document.getElementById('Slider');
   // I save the value selected with the slider and save it in the sliderValue variable
@@ -73,6 +75,49 @@ document.addEventListener("DOMContentLoaded", () => {
     /*I save the sliderValuel variable in the localStorage*/
     localStorage.setItem("sliderValue", slider.value)
   });
-  /*------------------------ VOCAL RANGE ------------------------*/
-  
+});
+
+/*------------------------ VOCAL RANGE ------------------------*/
+document.addEventListener('DOMContentLoaded', () => {
+  let selectedRange = '';
+  const rangeButtons = document.querySelectorAll('.range-button');
+  const rangeDescription = document.getElementById('range-description');
+
+  // Check if the range description exists in the DOM
+  if (!rangeDescription) {
+    console.error('range-description element not found.');
+    return;
+  }
+  rangeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      if (!button.classList.contains('active')) {
+        // Remove active class from all buttons
+        rangeButtons.forEach(btn => btn.classList.remove('active'));
+        // Add active class to the clicked button
+        button.classList.add('active');
+        // Update the selected range based on the button clicked
+        selectedRange = button.textContent.trim();
+
+        // Change the range description based on the selected range
+        if (selectedRange === 'Soprano') {
+          rangeDescription.innerHTML = '<p>Descrizione Soprano</p>';
+        } else if (selectedRange === 'Mezzosoprano') {
+          rangeDescription.innerHTML = '<p>Descrizione Mezzosoprano</p>';
+        } else if (selectedRange === 'Contralto') {
+          rangeDescription.innerHTML = '<p>Descrizione Contralto</p>';
+        } else if (selectedRange === 'Tenore') {
+          rangeDescription.innerHTML = '<p>Descrizione Tenore</p>';
+        } else if (selectedRange === 'Baritono') {
+          rangeDescription.innerHTML = '<p>Descrizione Baritono</p>';
+        } else if (selectedRange === 'Basso') {
+          rangeDescription.innerHTML = '<p>Descrizione Basso</p>';
+        } else {
+          rangeDescription.innerHTML = '<p> </p>';
+        }
+      }
+
+      // Save the selected range to localStorage
+      localStorage.setItem("selectedRange", selectedRange);
+    });
+  });
 });

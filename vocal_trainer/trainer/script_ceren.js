@@ -6,7 +6,7 @@ const db = firebase.firestore();
 
 // DALLE PAGINE DI GIANLUIGI
 let eser = "es1";
-const voce = "tenor";  // Variabile dichiarata con let per poterla modificare
+let voce = "bass";  // Variabile dichiarata con let per poterla modificare
 
 // Function to change the color of the key when pressed
 function changeKeyColor(note) {
@@ -25,10 +25,8 @@ function changeKeyColor(note) {
 
 // Variabili
 const pattern = [0, 2, 4, 5, 7, 5, 4, 2, 0];
-let vox = ["A2", "B2"]; // Questa Ã¨ una variabile, quindi puoi modificarla
+const vox = ["A2", "B2"]; // Questa Ã¨ una variabile, quindi puoi modificarla
 // Variabili note iniziali, possono essere modificate da setVocal
-let noteStart1 = "C3";
-let noteStart2 = "E3";
 
 // Recupera il range vocale
 async function setVocal(vol) {
@@ -37,13 +35,6 @@ async function setVocal(vol) {
   vox.length = 0;
   vox.push(...newVoice); // Carica i nuovi pattern
   console.log(vox);
-
-  noteStart1 = vox[0];  // Modifica le note vocali
-  noteStart2 = vox[1];
-  console.log(vox[0]);
-  console.log(vox[1]);
-  console.log(noteStart1);
-  console.log(noteStart2);
 
 }
 
@@ -59,10 +50,6 @@ async function setExercise(es) {
   console.log(pattern);
   //console.log(speed);
 }
-
-
-const startMidi = Tone.Frequency(noteStart1).toMidi();
-const endMidi = Tone.Frequency(noteStart2).toMidi();
 
 // Configura il piano Salamander
 const piano = new Tone.Sampler({
@@ -114,12 +101,13 @@ const playPattern = async () => {
     await Tone.start();
     console.log("Audio context started");
 
-    noteStart1 = vox[0];  // Modifica le note vocali
-    noteStart2 = vox[1];
-    console.log(vox[0]);
-    console.log(vox[1]);
+    const noteStart1 = vox[0];  // Modifica le note vocali
+    const noteStart2 = vox[1];
     console.log(noteStart1);
     console.log(noteStart2);
+
+    const startMidi = Tone.Frequency(noteStart1).toMidi();
+    const endMidi = Tone.Frequency(noteStart2).toMidi();
 
     let index = 5;
     let currentMidi = startMidi;
@@ -140,6 +128,7 @@ const playPattern = async () => {
 
               if(currentMidi > endMidi) {
                    Tone.Transport.stop();
+                   index = 5;
                    console.log("Pattern completato!");
               }
          }

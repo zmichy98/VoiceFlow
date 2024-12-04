@@ -2,9 +2,10 @@
 
 CIAO
 
-merhaba
+merhaba 
 gorushuruz
 uzuntu
+tesekkur ederim (sagol g is muted)
 
 Selam!
 

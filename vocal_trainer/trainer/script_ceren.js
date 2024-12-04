@@ -25,30 +25,26 @@ function changeKeyColor(note) {
 
 // Variabili
 const pattern = [0, 2, 4, 5, 7, 5, 4, 2, 0];
-let vox = []; // Questa Ã¨ una variabile, quindi puoi modificarla
+let vox = ["A2", "B2"]; // Questa Ã¨ una variabile, quindi puoi modificarla
 // Variabili note iniziali, possono essere modificate da setVocal
-//let noteStart1 = "C3";
-//let noteStart2 = "E3";
+let noteStart1 = "C3";
+let noteStart2 = "E3";
 
 // Recupera il range vocale
 async function setVocal(vol) {
-    const docRef = db.collection("store").doc("vocal_ranges");
-    const docSnap = await docRef.get();
-    
-    if (docSnap.exists()) {
-      const data = docSnap.data();
-      // Assicurati che il campo 'tenor' esista e sia un array
-      const voiceArray = data[voce];  // voce è la variabile che contiene 'tenor' o un altro valore
-      if (Array.isArray(voiceArray)) {
-        vox.length = 0;  // Svuota l'array vox
-        vox.push(...voiceArray);  // Carica l'array 'tenor' in vox
-        console.log(vox);  // Verifica che i dati siano caricati correttamente
-      } else {
-        console.error("Il campo 'voice' non è un array valido.");
-      }
-    } else {
-      console.log("Documento non trovato!");
-    }
+  const doc = await db.collection("store").doc("vocal_ranges").get();
+  const newVoice = doc.data()[vol];
+  vox.length = 0;
+  vox.push(...newVoice); // Carica i nuovi pattern
+  console.log(vox);
+
+  noteStart1 = vox[0];  // Modifica le note vocali
+  noteStart2 = vox[1];
+  console.log(vox[0]);
+  console.log(vox[1]);
+  console.log(noteStart1);
+  console.log(noteStart2);
+
 }
 
 // Carica l'esercizio
@@ -64,10 +60,7 @@ async function setExercise(es) {
   //console.log(speed);
 }
 
-const noteStart1 = vox[0];  // Modifica le note vocali
-const noteStart2 = vox[1];
-console.log(noteStart1);
-console.log(noteStart2);
+
 const startMidi = Tone.Frequency(noteStart1).toMidi();
 const endMidi = Tone.Frequency(noteStart2).toMidi();
 
@@ -120,6 +113,13 @@ const getNoteFromOffset = (offset, refNote) => {
 const playPattern = async () => {
     await Tone.start();
     console.log("Audio context started");
+
+    noteStart1 = vox[0];  // Modifica le note vocali
+    noteStart2 = vox[1];
+    console.log(vox[0]);
+    console.log(vox[1]);
+    console.log(noteStart1);
+    console.log(noteStart2);
 
     let index = 5;
     let currentMidi = startMidi;

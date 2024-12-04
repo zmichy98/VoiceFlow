@@ -5,7 +5,48 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 // Crea un nuovo AudioContext
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+Tone.start();
+console.log('Audio context started');
+
+// Configura il piano Salamander
+const piano = new Tone.Sampler({
+  urls: {
+    "A0": "A0.mp3",
+    "C1": "C1.mp3",
+    "D#1": "Ds1.mp3",
+    "F#1": "Fs1.mp3",
+    "A1": "A1.mp3",
+    "C2": "C2.mp3",
+    "D#2": "Ds2.mp3",
+    "F#2": "Fs2.mp3",
+    "A2": "A2.mp3",
+    "C3": "C3.mp3",
+    "D#3": "Ds3.mp3",
+    "F#3": "Fs3.mp3",
+    "A3": "A3.mp3",
+    "C4": "C4.mp3",
+    "D#4": "Ds4.mp3",
+    "F#4": "Fs4.mp3",
+    "A4": "A4.mp3",
+    "C5": "C5.mp3",
+    "D#5": "Ds5.mp3",
+    "F#5": "Fs5.mp3",
+    "A5": "A5.mp3",
+    "C6": "C6.mp3",
+    "D#6": "Ds6.mp3",
+    "F#6": "Fs6.mp3",
+    "A6": "A6.mp3",
+    "C7": "C7.mp3",
+    "D#7": "Ds7.mp3",
+    "F#7": "Fs7.mp3",
+    "A7": "A7.mp3",
+    "C8": "C8.mp3"
+  },
+  baseUrl: "https://tonejs.github.io/audio/salamander/", // Percorso dei campioni
+  onload: () => {
+    console.log('Piano loaded');
+  }
+}).toDestination();
 
 // Dichiaro le variabili
 const startNote = 0;
@@ -15,10 +56,6 @@ let root = 130.81;
 let finNote = 0;
 let currNote = startNote;
 let speed = 500;
-
-// INPUT DEI COMANDI
-
-
 
 // Recupera il range vocale
 
@@ -44,29 +81,13 @@ function setExercise(eser) {
   })
 }
 
+
 // Suona una nota
 
 function playNote(f, d) {
 
-  // Crea un oscillatore
-  const oscillator = audioContext.createOscillator();
-  oscillator.type = 'sine'; // Tipo di onda: 'sine', 'square', 'sawtooth', 'triangle'
-  oscillator.frequency.setValueAtTime(f, audioContext.currentTime); // Imposta la frequenza
+  piano.triggerAttackRelease("C4", "2n");
 
-  // Crea un gain node per controllare il volume
-  const gainNode = audioContext.createGain();
-  gainNode.gain.setValueAtTime(0.1, audioContext.currentTime); // Imposta il volume
-  
-  // Collegamenti: oscillatore -> gain -> uscita audio
-  oscillator.connect(gainNode);
-  gainNode.connect(audioContext.destination);
-
-  // Avvia l'oscillatore
-  oscillator.start();
-  // Ferma l'oscillatore dopo 0.5 secondi
-  setTimeout(() => {
-    oscillator.stop();
-  }, d);
 }
 
 // Suona il pattern

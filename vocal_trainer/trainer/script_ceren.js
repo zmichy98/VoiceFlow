@@ -5,7 +5,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 // DALLE PAGINE DI GIANLUIGI
-let eser = "es2";
+let eser = "es1";
 const voce = "tenor";  // Variabile dichiarata con let per poterla modificare
 
 // Function to change the color of the key when pressed
@@ -25,18 +25,30 @@ function changeKeyColor(note) {
 
 // Variabili
 const pattern = [0, 2, 4, 5, 7, 5, 4, 2, 0];
-const vox = ["C1", "E1"]; // Questa Ã¨ una variabile, quindi puoi modificarla
+let vox = []; // Questa Ã¨ una variabile, quindi puoi modificarla
 // Variabili note iniziali, possono essere modificate da setVocal
 //let noteStart1 = "C3";
 //let noteStart2 = "E3";
 
 // Recupera il range vocale
 async function setVocal(vol) {
-  const doc = await db.collection("store").doc("vocal_ranges").get();
-  const newVoice = doc.data()[vol];
-  vox.length = 0;
-  vox.push(...newVoice); // Carica i nuovi pattern
-  console.log(vox);
+    const docRef = db.collection("store").doc("vocal_ranges");
+    const docSnap = await docRef.get();
+    
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      // Assicurati che il campo 'tenor' esista e sia un array
+      const voiceArray = data[voce];  // voce è la variabile che contiene 'tenor' o un altro valore
+      if (Array.isArray(voiceArray)) {
+        vox.length = 0;  // Svuota l'array vox
+        vox.push(...voiceArray);  // Carica l'array 'tenor' in vox
+        console.log(vox);  // Verifica che i dati siano caricati correttamente
+      } else {
+        console.error("Il campo 'voice' non è un array valido.");
+      }
+    } else {
+      console.log("Documento non trovato!");
+    }
 }
 
 // Carica l'esercizio
@@ -47,7 +59,7 @@ async function setExercise(es) {
   pattern.push(...exercisePattern); // Carica i nuovi pattern
 
   // Calcola la velocitÃ 
-  const speed = 60 / pattern[4] * 1000; // Assicurati che pattern abbia abbastanza elementi
+  //const speed = 60 / pattern[4] * 1000; // Assicurati che pattern abbia abbastanza elementi
   console.log(pattern);
   //console.log(speed);
 }

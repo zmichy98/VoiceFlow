@@ -6,7 +6,7 @@ const db = firebase.firestore();
 
 // DALLE PAGINE DI GIANLUIGI
 let eser = "es1";
-let voce = "bass";  // Variabile dichiarata con let per poterla modificare
+let voce = "bass";  // PER GIANLUIGI
 
 // Function to change the color of the key when pressed
 function changeKeyColor(note) {

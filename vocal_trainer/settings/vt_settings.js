@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
           rangeDescription.innerHTML = '<p>Descrizione Tenore</p>';
         } else if (selectedRange === 'Baritono') {
           rangeDescription.innerHTML = '<p>Descrizione Baritono</p>';
-        } else if (selectedRange === 'Basso') {
+        } else if (selectedRange === 'bass') {
           rangeDescription.innerHTML = '<p>Descrizione Basso</p>';
         } else {
           rangeDescription.innerHTML = '<p> </p>';

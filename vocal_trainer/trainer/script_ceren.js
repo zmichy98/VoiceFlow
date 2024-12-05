@@ -4,9 +4,10 @@ firebase.initializeApp(firebaseConfig);
 // Access Firestore
 const db = firebase.firestore();
 
-// DALLE PAGINE DI GIANLUIGI
+// Take the selectedRange variable from the html
+let voiceRange = localStorage.getItem("selectedRange").toString();
 let eser = "es1";
-let voce = "bass";  // PER GIANLUIGI
+let voce = voiceRange;
 
 // Function to change the color of the key when pressed
 function changeKeyColor(note) {

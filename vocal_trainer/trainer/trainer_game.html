@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    <!-- Keyboard -->
     <div class="keyboard">
         <!-- First Octave -->
         <div class="key white" data-note="C1" data-octave="1">
@@ -127,21 +128,33 @@
         </div>
     </div>
     
-        <!-- Progress Bar -->
+    <!-- Progress Bar -->
     <div id="progress-bar">
         <div id="progress"></div>
     </div>
 
-        <!-- Play Pattern -->
+    <!-- Play Pattern -->
     <button id="playPattern">Start
     </button>
 
 
+    <!-- Link to settings script js: -->
+    <script src="vtsettings.js"></script>
 
-
-
+    <!-- Get the variables from settings saved: -->
+    <script>
+    // selectedLevel variable
+        document.getElementById("selectedLevel").innerHTML = localStorage.getItem("selectedLevel");
+    // sliderValue variable
+        document.getElementById("sliderValue").innerHTML = localStorage.getItem("sliderValue");
+    // selectedRange variable
+        document.getElementById("selectedRange").innerHTML = localStorage.getItem("selectedRange");
+    </script>
+    
+    <!-- Link to script_ceren js: -->
     <script type="module" src="script_ceren.js"></script>
-         <!-- Include Firebase SDK via CDN -->
+    
+    <!-- Include Firebase SDK via CDN -->
     <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-firestore.js"></script>

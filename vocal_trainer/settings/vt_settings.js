@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-/*------------------------ VOCAL RANGE ------------------------*/
+/*------------------------ VOCAL RANGE 1 ------------------------*/
 document.addEventListener('DOMContentLoaded', () => {
   let selectedRange = '';
   const rangeButtons = document.querySelectorAll('.range-button');
@@ -119,5 +119,114 @@ document.addEventListener('DOMContentLoaded', () => {
       // Save the selected range to localStorage
       localStorage.setItem("selectedRange", selectedRange);
     });
+  });
+});
+
+/*------------------------ VOCAL RANGE 2 ------------------------*/
+// Function to start selecting
+function activeselect() {
+  const button = document.querySelector('button');
+  const noteButtons = document.querySelectorAll('.key');
+  const rangeInterval = document.getElementById('rangeInterval');
+  const satrtselection = document.getElementById('startselection');
+
+  button.classList.toggle('active')
+
+  let firstNote = null;
+  let secondNote = null;
+
+  // Add click event listeners when the "Select" button is pressed
+  noteButtons.forEach(button => {
+    button.addEventListener('click', noteClickHandler); 
+  });
+
+  function noteClickHandler() {
+    const note = this.getAttribute('data-note'); // Get the note from the data attribute
+
+    // If it's the first note selection
+    if (firstNote === null) {
+      firstNote = note;
+      this.classList.add('pressed'); // Highlight the key
+    } 
+    // If it's the second note and different from the first
+    else if (secondNote === null && note !== firstNote) {
+      secondNote = note;
+      this.classList.add('pressed'); // Highlight the second key
+      finalizeSelection(); // Stop further changes
+    }
+
+    updateRangeText();
+  }
+
+  function updateRangeText() {
+    if (firstNote && !secondNote) {
+      rangeInterval.innerHTML = `<p>Range starts at ${firstNote}, select the range ending note</p>`;
+    } else if (firstNote && secondNote) {
+      rangeInterval.innerHTML = `<p>Range starts at ${firstNote} and ends at ${secondNote}</p>`; 
+      startselection.innerHTML = " ";
+    }
+  }
+
+  function finalizeSelection() {
+    // Save the selected range to localStorage
+    localStorage.setItem("firstNote", firstNote);
+    localStorage.setItem("secondNote", secondNote);
+    localStorage.setItem("selectedRange", `from ${firstNote} to ${secondNote}`);
+
+    // Optionally log for debugging
+    console.log('First Note:', firstNote, 'Second Note:', secondNote);
+
+    // Remove event listeners to prevent further changes
+    noteButtons.forEach(button => {
+      button.removeEventListener('click', noteClickHandler);
+    });
+  }
+}
+
+// Initialize the Salamander piano sampler
+const piano = new Tone.Sampler({
+  urls: {
+    "A0": "A0.mp3",
+    "C1": "C1.mp3",
+    "D#1": "Ds1.mp3",
+    "F#1": "Fs1.mp3",
+    "A1": "A1.mp3",
+    "A2": "A2.mp3",
+    "C2": "C2.mp3",
+    "D#2": "Ds2.mp3",
+    "F#2": "Fs2.mp3",
+    "C3": "C3.mp3",
+    "D#3": "Ds3.mp3",
+    "F#3": "Fs3.mp3",
+    "A3": "A3.mp3",
+    "C4": "C4.mp3",
+    "D#4": "Ds4.mp3",
+    "F#4": "Fs4.mp3",
+    "A4": "A4.mp3",
+    "C5": "C5.mp3",
+    "D#5": "Ds5.mp3",
+    "F#5": "Fs5.mp3",
+    "A5": "A5.mp3",
+    "C6": "C6.mp3",
+    "D#6": "Ds6.mp3",
+    "F#6": "Fs6.mp3",
+    "A6": "A6.mp3",
+    "C7": "C7.mp3",
+    "D#7": "Ds7.mp3",
+    "F#7": "Fs7.mp3",
+    "A7": "A7.mp3",
+    "C8": "C8.mp3"
+  },
+  baseUrl: "https://tonejs.github.io/audio/salamander/",
+  onload: () => {
+    console.log("Piano loaded");
+  }
+}).toDestination();
+
+// Add sound to all keys (independent of "Select" button)
+document.querySelectorAll('.key').forEach(key => {
+  key.addEventListener('click', () => {
+    const note = key.getAttribute('data-note');
+    piano.triggerAttackRelease(note, "6n");
   });
 });

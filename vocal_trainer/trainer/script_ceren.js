@@ -4,7 +4,7 @@ firebase.initializeApp(firebaseConfig);
 // Access Firestore
 const db = firebase.firestore();
 
-// Take the selectedRange variable from the html
+// Take the selectedRange variable from the html and store it as a new variable
 let voiceRange = localStorage.getItem("selectedRange").toString();
 let eser = "es1";
 let voce = voiceRange;

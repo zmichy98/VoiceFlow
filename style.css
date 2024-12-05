@@ -22,14 +22,15 @@ h1 {
 }
 
 h2 {
-  font-size: 3em;
+  font-size: 2.5em; /* Smaller font size */
   color: white;
   -webkit-background-clip: text;
   background-clip: text;
   text-align: center;
   text-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
-  padding: 20px;
+  padding: 15px; /* Reduced padding */
   border-radius: 20px;
+  margin-top: 90px; /* Increased margin-top to create more space */
 }
 
 a {
@@ -41,9 +42,9 @@ button {
   background: linear-gradient(45deg, #ff6b6b, #f3a683); /* Gradient background for button */
   color: white;
   font-size: 1.5em;
-  padding: 15px 30px;
+  padding: 10px 30px;
   border: none;
-  border-radius: 50px; /* Rounded button corners */
+  border-radius: 100px; /* Rounded button corners */
   cursor: pointer;
   text-align: center;
   font-family: 'Poppins', sans-serif;
@@ -53,15 +54,48 @@ button {
 }
 
 button:hover {
-  transform: scale(1.05); /* Slightly enlarge on hover */
-  background: linear-gradient(45deg, #ff8a8a, #ffcc99); /* Change color on hover */
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4); /* Deeper shadow on hover */
+  background: linear-gradient(45deg, #ff6b6b, #f06595); /* Darker color when active */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
+  transform: scale(1.05); /* Slightly enlarge when clicked */
 }
 
-button:active {
-  transform: scale(1); /* Return to original size on click */
+button.active {
+  background: linear-gradient(45deg, #f53737, #e73976); /* Darker color when active */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
+  transform: scale(1.05); /* Slightly enlarge when clicked */
+}
+/*--------------------------------------*/
+.button-description-container {
+  display: flex;
+  justify-content: center;
+  gap: 50px; /* Spacing between each button-description pair */
+  margin-top: 50px; /* Top margin */
 }
 
+.button-description-item {
+  text-align: center;
+}
+
+.button-description-gear {
+  padding: 15px 30px;
+  font-size: 1.5em;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.button-description-gear:hover {
+  transform: scale(1.05);
+}
+
+.gear-description {
+  font-size: 1.2em;
+  color: #333;
+  margin-top: 10px; /* Spacing between button and description */
+}
 /*---------Settings Menu on top left---------*/
 .navbar-title {
   font-size: 1em;
@@ -290,6 +324,35 @@ button:active {
   border-radius: 20px;
 }
 
+/*---------- Start Selecting Button ---------*/
+/* Container to hold the Start Selecting button */
+.start-selecting-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  /* Centers the button vertically */
+  align-items: center;      /* Centers the button horizontally */
+  margin: 0px 0px;           /* Adds space above and below */
+}
+
+.start-selecting-button {
+  background: linear-gradient(45deg, #ff6b6b, #f3a683); /* Button gradient */
+  color: white;
+  font-size: 1.5em;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.start-selecting-button:hover {
+  transform: scale(1.05); /* Slightly enlarge on hover */
+  background: linear-gradient(45deg, #ff8a8a, #ffcc99); /* Hover gradient */
+}
+
+.start-selecting-button:active {
+  transform: scale(1.05); /* Return to original size on click */
+}
 
 /*--------- minute slider ---------*/
 input[type="range"] {

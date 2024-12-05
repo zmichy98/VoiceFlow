@@ -11,7 +11,133 @@
 </head>
 <body>
     <h2>Select the starting and ending notes of your vocal range</h2>
-    
+
+    <!-- Keyboard -->
+    <div class="keyboard">
+        <!-- First Octave -->
+        <div class="key white" data-note="C1" id="C1" data-octave="1">
+            <span class="note-name">C</span>
+        </div>
+        <div class="key black" data-note="C#1" id="C#1" data-octave="1">
+            <span class="note-name">C#</span>
+        </div>
+        <div class="key white" data-note="D1" id="D1" data-octave="1">
+            <span class="note-name">D</span>
+        </div>
+        <div class="key black" data-note="D#1" id=D#1" data-octave="1">
+            <span class="note-name">D#</span>
+        </div>
+        <div class="key white" data-note="E1" id="E1" data-octave="1">
+            <span class="note-name">E</span>
+        </div>
+        <div class="key white" data-note="F1" id="F1" data-octave="1">
+            <span class="note-name">F</span>
+        </div>
+        <div class="key black" data-note="F#1" id="F#1" data-octave="1">
+            <span class="note-name">F#</span>
+        </div>
+        <div class="key white" data-note="G1" id="G1" data-octave="1">
+            <span class="note-name">G</span>
+        </div>
+        <div class="key black" data-note="G#1" id="G#1" data-octave="1">
+            <span class="note-name">G#</span>
+        </div>
+        <div class="key white" data-note="A1" id="A1" data-octave="1">
+            <span class="note-name">A</span>
+        </div>
+        <div class="key black" data-note="A#1" id="A#1" data-octave="1">
+            <span class="note-name">A#</span>
+        </div>
+        <div class="key white" data-note="B1" id="B1" data-octave="1">
+            <span class="note-name">B</span>
+        </div>
+        
+        <!-- Second Octave -->
+    <div class="key white" data-note="C2" id="C2" data-octave="2">
+        <span class="note-name">C</span>
+    </div>
+    <div class="key black" data-note="C#2" id="Csharp2" data-octave="2">
+        <span class="note-name">C#</span>
+    </div>
+    <div class="key white" data-note="D2" id="D2" data-octave="2">
+        <span class="note-name">D</span>
+    </div>
+    <div class="key black" data-note="D#2" id="Dsharp2" data-octave="2">
+        <span class="note-name">D#</span>
+    </div>
+    <div class="key white" data-note="E2" id="E2" data-octave="2">
+        <span class="note-name">E</span>
+    </div>
+    <div class="key white" data-note="F2" id="F2" data-octave="2">
+        <span class="note-name">F</span>
+    </div>
+    <div class="key black" data-note="F#2" id="Fsharp2" data-octave="2">
+        <span class="note-name">F#</span>
+    </div>
+    <div class="key white" data-note="G2" id="G2" data-octave="2">
+        <span class="note-name">G</span>
+    </div>
+    <div class="key black" data-note="G#2" id="Gsharp2" data-octave="2">
+        <span class="note-name">G#</span>
+    </div>
+    <div class="key white" data-note="A2" id="A2" data-octave="2">
+        <span class="note-name">A</span>
+    </div>
+    <div class="key black" data-note="A#2" id="Asharp2" data-octave="2">
+        <span class="note-name">A#</span>
+    </div>
+    <div class="key white" data-note="B2" id="B2" data-octave="2">
+        <span class="note-name">B</span>
+    </div>
+
+    <!-- Third Octave -->
+    <div class="key white" data-note="C3" id="C3" data-octave="3">
+        <span class="note-name">C</span>
+    </div>
+    <div class="key black" data-note="C#3" id="Csharp3" data-octave="3">
+        <span class="note-name">C#</span>
+    </div>
+    <div class="key white" data-note="D3" id="D3" data-octave="3">
+        <span class="note-name">D</span>
+    </div>
+    <div class="key black" data-note="D#3" id="Dsharp3" data-octave="3">
+        <span class="note-name">D#</span>
+    </div>
+    <div class="key white" data-note="E3" id="E3" data-octave="3">
+        <span class="note-name">E</span>
+    </div>
+    <div class="key white" data-note="F3" id="F3" data-octave="3">
+        <span class="note-name">F</span>
+    </div>
+    <div class="key black" data-note="F#3" id="Fsharp3" data-octave="3">
+        <span class="note-name">F#</span>
+    </div>
+    <div class="key white" data-note="G3" id="G3" data-octave="3">
+        <span class="note-name">G</span>
+    </div>
+    <div class="key black" data-note="G#3" id="Gsharp3" data-octave="3">
+        <span class="note-name">G#</span>
+    </div>
+    <div class="key white" data-note="A3" id="A3" data-octave="3">
+        <span class="note-name">A</span>
+    </div>
+    <div class="key black" data-note="A#3" id="Asharp3" data-octave="3">
+        <span class="note-name">A#</span>
+    </div>
+    <div class="key white" data-note="B3" id="B3" data-octave="3">
+        <span class="note-name">B</span>
+    </div>
+    </div>
+
+    <!-- Start selecting button -->
+    <div id="startselection" class="start-selecting-container">
+        <button class="start-selecting-button" onclick="activeselect()">Start Selecting</button>
+    </div>
+
+    <!-- range description -->
+    <div id="rangeInterval" class="level-description">
+        <p>Select a level that represents you the best</p>
+    </div>
 
     <!-- Setting menu -->
     <nav class="navbar">
@@ -35,13 +161,14 @@
     <script src="vt_settings.js"></script>
 
     <!-- Get the variables saved: -->
-    <!-- selectedLevel variable -->
     <script>
+        // selectedLevel variable
         document.getElementById("selectedLevel").innerHTML = "Singing level: " + localStorage.getItem("selectedLevel");
-    </script>
-    <!-- sliderValue variable -->
-    <script>
+        // sliderValue variable
         document.getElementById("sliderValue").innerHTML = "Training time: " + localStorage.getItem("sliderValue") + " min";
+        // range variables
+        document.getElementById("firstNote").innerHTML = "The range starts at note " + localStorage.getItem("firstNote");
+        document.getElementById("secondNote").innerHTML = "The range ends at note " + localStorage.getItem("secondNote");
     </script>
 </body>
 </html>

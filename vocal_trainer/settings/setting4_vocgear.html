@@ -12,20 +12,19 @@
 <body>
     <h2>What kind of gear you have?</h2>
 
-    <div class="button-description-container">
+    <div class="gear-description-container">
         <div class="button-gear-item">
-          <button class="button-gear">mask</button>
-          <p class="gear-description">it is a mask but not for the covidd</p>
+          <button id="mask" class="button-gear">Mask</button>
+          <p class="gear-description">Description of the mask</p>
         </div>
         <div class="button-gear-item">
-          <button class="button-gear">laxvox</button>
-          <p class="gear-description">It is not a sexual thing, I swear!</p>
+          <button id="laxvox" class="button-gear">Laxvox</button>
+          <p class="gear-description">Description of the laxvox</p>
         </div>
         <div class="button-gear-item">
-          <button class="button-gear">None</button>
-          <p class="gear-description">Nothing bro</p>
+          <button id="none" class="button-gear">None of them</button>
         </div>
-    </div>
+      </div>
     
     <!-- Setting menu -->
     <nav class="navbar">
@@ -49,16 +48,9 @@
     <script src="vt_settings.js"></script>
 
     <!-- Get the variables saved: -->
-    <!-- selectedLevel variable -->
     <script>
         document.getElementById("selectedLevel").innerHTML = "Singing level: " + localStorage.getItem("selectedLevel");
-    </script>
-    <!-- sliderValue variable -->
-    <script>
         document.getElementById("sliderValue").innerHTML = "Training time: " + localStorage.getItem("sliderValue") + " min";
-    </script>
-    <!-- selectedRange variable -->
-    <script>
         document.getElementById("selectedRange").innerHTML = "Vocal range: " + localStorage.getItem("selectedRange");
     </script>
 </body>

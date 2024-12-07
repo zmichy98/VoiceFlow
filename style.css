@@ -65,37 +65,50 @@ button.active {
   transform: scale(1.05); /* Slightly enlarge when clicked */
 }
 /*--------------------------------------*/
-.button-description-container {
+.gear-description-container {
   display: flex;
-  justify-content: center;
-  gap: 50px; /* Spacing between each button-description pair */
+  justify-content: center; /* Center all items horizontally */
+  gap: 40px; /* Space between each button-description pair */
   margin-top: 50px; /* Top margin */
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
 }
 
-.button-description-item {
-  text-align: center;
+.button-gear-item {
+  display: flex;
+  flex-direction: column; /* Stack button and description vertically */
+  align-items: center; /* Center-align button and description */
+  max-width: 2000px; /* Optional: set max width for consistent alignment */
 }
 
-.button-description-gear {
+.button-gear {
   padding: 15px 30px;
-  font-size: 1.5em;
-  background-color: #ff6b6b;
-  color: white;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
+  font-size: 1.2em;
+  background: linear-gradient(45deg, #ff6b6b, #f3a683); 
+  color: white; /* White text */
+  border: none; /* No border */
+  border-radius: 25px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
 }
 
-.button-description-gear:hover {
-  transform: scale(1.05);
+.button-gear:hover {
+  transform: scale(1.1); /* Slightly enlarge on hover */
+  background: linear-gradient(45deg, #f53737, #e73976); /* Darker green on hover */
+}
+
+.activatedgear{
+  background: linear-gradient(45deg, #f53737, #e73976); /* Darker color when active */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
+  transform: scale(1.05); /* Slightly enlarge when clicked */
 }
 
 .gear-description {
-  font-size: 1.2em;
-  color: #333;
-  margin-top: 10px; /* Spacing between button and description */
+  font-size: 1.2em; /* Description text size */
+  color: #000000; /* Gray text color */
+  text-align: center;
+  margin-top: 10px; /* Space between button and description */
 }
+
 /*---------Settings Menu on top left---------*/
 .navbar-title {
   font-size: 1em;

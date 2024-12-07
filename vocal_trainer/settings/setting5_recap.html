@@ -22,6 +22,7 @@
             <li><a href="setting1_level.html" id="selectedLevel"> </a></li>
             <li><a href="setting2_time.html" id="sliderValue"></a> </li>
             <li><a href="setting3_vocrange.html" id="selectedRange"></a> </li>
+            <li><a href="setting4_vocgear.html" id="selectedGear"></a> </li>
         </ul>
     </nav>
     
@@ -34,17 +35,11 @@
     <script src="vtsettings.js"></script>
 
     <!-- Get the variables saved: -->
-    <!-- selectedLevel variable -->
     <script>
         document.getElementById("selectedLevel").innerHTML = "Singing level: " + localStorage.getItem("selectedLevel");
-    </script>
-    <!-- sliderValue variable -->
-    <script>
         document.getElementById("sliderValue").innerHTML = "Training time: " + localStorage.getItem("sliderValue") + " min";
-    </script>
-    <!-- selectedRange variable -->
-    <script>
         document.getElementById("selectedRange").innerHTML = "Vocal range: " + localStorage.getItem("selectedRange");
+        document.getElementById("selectedGear").innerHTML = "Gear: " + localStorage.getItem("selectedGear");
     </script>
 </body>
 </html>

@@ -5,9 +5,14 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 // Take the selectedRange variable from the html and store it as a new variable
+let manual = localStorage.getItem("manual");
 let voiceRange = localStorage.getItem("selectedRange").toString();
+voiceRange = "Tenor"
+let firstmanNote = localStorage.getItem("firstNote").toString();
+let secondmanNote = localStorage.getItem("secondNote").toString();
 let eser = "es1";
 let voce = voiceRange;
+
 
 // Function to change the color of the key when pressed
 function changeKeyColor(note) {
@@ -26,17 +31,30 @@ function changeKeyColor(note) {
 
 // Variabili
 const pattern = [0, 2, 4, 5, 7, 5, 4, 2, 0];
-const vox = ["A2", "B2"]; // Questa Ã¨ una variabile, quindi puoi modificarla
+let vox = ["A2", "B2"]; // Questa Ã¨ una variabile, quindi puoi modificarla
 // Variabili note iniziali, possono essere modificate da setVocal
 
 // Recupera il range vocale
-async function setVocal(vol) {
-  const doc = await db.collection("store").doc("vocal_ranges").get();
-  const newVoice = doc.data()[vol];
-  vox.length = 0;
-  vox.push(...newVoice); // Carica i nuovi pattern
-  console.log(vox);
+async function setVocal(vol, man, first, second) {
+    const doc = await db.collection("store").doc("vocal_ranges").get();
+    const newVoice = doc.data()[vol];
+    vox.length = 0;
+    vox.push(...newVoice); // Carica i nuovi pattern
+    console.log(vox);
+    console.log(man);
+    console.log(first);
+    console.log(second);
 
+    if (man) {
+        vox[0] = first;
+        vox[1] = second;
+        console.log(vox[0]);
+        console.log(vox[1]);
+        console.log(first);
+        console.log(second);
+    }
+
+    console.log(vox);
 }
 
 // Carica l'esercizio
@@ -142,7 +160,7 @@ const playPattern = async () => {
 // Assicurati che il DOM sia pronto
 document.addEventListener("DOMContentLoaded", function() {
     // Imposta il range vocale e l'esercizio
-    setVocal(voce);
+    setVocal(voce, manual, firstmanNote, secondmanNote);
     setExercise(eser);
     document.getElementById("playPattern").addEventListener("click", playPattern);
 });

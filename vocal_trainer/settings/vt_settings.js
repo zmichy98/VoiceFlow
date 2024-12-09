@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /*------------------------ VOCAL RANGE 1 ------------------------*/
+let manual = false;
 document.addEventListener('DOMContentLoaded', () => {
   let selectedRange = '';
   const rangeButtons = document.querySelectorAll('.range-button');
@@ -109,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
           rangeDescription.innerHTML = '<p>Descrizione Tenore</p>';
         } else if (selectedRange === 'Baritono') {
           rangeDescription.innerHTML = '<p>Descrizione Baritono</p>';
-        } else if (selectedRange === 'bass') {
+        } else if (selectedRange === 'Bass') {
           rangeDescription.innerHTML = '<p>Descrizione Basso</p>';
         } else {
           rangeDescription.innerHTML = '<p> </p>';
@@ -117,6 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // Save the selected range to localStorage
+      manual = false;
+      localStorage.setItem("manual", manual);
       localStorage.setItem("selectedRange", selectedRange);
     });
   });
@@ -155,6 +158,7 @@ function activeselect() {
       finalizeSelection(); // Stop further changes
     }
 
+    
     updateRangeText();
   }
 
@@ -169,6 +173,8 @@ function activeselect() {
 
   function finalizeSelection() {
     // Save the selected range to localStorage
+    manual = true;
+    localStorage.setItem("manual", manual);
     localStorage.setItem("firstNote", firstNote);
     localStorage.setItem("secondNote", secondNote);
     localStorage.setItem("selectedRange", `from ${firstNote} to ${secondNote}`);

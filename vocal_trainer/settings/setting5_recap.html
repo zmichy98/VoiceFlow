@@ -22,6 +22,7 @@
             <li><a href="setting1_level.html" id="selectedLevel"> </a></li>
             <li><a href="setting2_time.html" id="sliderValue"></a> </li>
             <li><a href="setting3_vocrange.html" id="selectedRange"></a> </li>
+            <li><a href="setting3_vocrange.html" id="manual"></a> </li>
             <li><a href="setting4_vocgear.html" id="selectedGear"></a> </li>
         </ul>
     </nav>
@@ -40,6 +41,7 @@
         document.getElementById("sliderValue").innerHTML = "Training time: " + localStorage.getItem("sliderValue") + " min";
         document.getElementById("selectedRange").innerHTML = "Vocal range: " + localStorage.getItem("selectedRange");
         document.getElementById("selectedGear").innerHTML = "Gear: " + localStorage.getItem("selectedGear");
+        document.getElementById("manual").innerHTML = "Manual? " + localStorage.getItem("manual");
     </script>
 </body>
 </html>

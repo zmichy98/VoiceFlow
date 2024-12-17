@@ -7,10 +7,19 @@
     <script src="https://cdn.jsdelivr.net/npm/tone@14.8.29/build/Tone.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Vocal Trainer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800&display=swap" rel="stylesheet"></head>
+    <title>VoiceFlow</title>
 </head>
-<body>
-    <h2>How do you want to choose your vocal range?</h2>
+<body data-setting="3">
+    <div class="settings-bar">
+        <div class="setting">1</div>
+        <div class="setting">2</div>
+        <div class="setting">3</div>
+        <div class="setting">4</div>
+        <div class="setting">5</div>
+    </div>
+
+    <h2>How would you like to determine your vocal range?</h2>
     
     <div class="vocal-range-buttons">
         <a href="setting3_vocrange1.html" class="vocrange-button" data-range="vocRang1">Choose from predefined range</a>
@@ -18,21 +27,22 @@
         <a href="setting3_vocrange3.html" class="vocrange-button" data-range="covRang3">Help me to find my range</a>
     </div>
 
-    <!-- Setting menu -->
+    <!-- Setting menu 
     <nav class="navbar">
-        <h3 class="navbar-title">Settings:</h3> <!-- Title for the navbar -->
+        <h3 class="navbar-title">Settings:</h3>
         <ul>
             <li><a href="setting1_level.html" id="selectedLevel"> </a></li>
             <li><a href="setting2_time.html" id="sliderValue"></a></li>
         </ul>
     </nav>
+    -->
 
     <!-- Next button-->
-    <a href="setting_vocgear.html" class="next_button">Next setting</a>
+    <a href="setting4_vocgear.html" class="next_button">Next</a>
     
     <!-- Bottom left button container-->
     <div class="button-container">
-        <a href="../../initial_page.html" class="bottomleft_button">Home</a>
+        <a href="setting2_time.html" class="bottomleft_button">Go back</a>
     </div>
 
     <!-- Collegamento con lo script js: -->

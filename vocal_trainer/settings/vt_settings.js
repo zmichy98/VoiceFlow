@@ -1,3 +1,27 @@
+/*------------------------ SETTINGS BAR ------------------------*/
+document.addEventListener("DOMContentLoaded", () => {
+  const settings = document.querySelectorAll(".setting");
+  const currentPage = parseInt(document.body.dataset.setting);
+  const totalSettings = settings.length;
+
+  let currentSetting = parseInt(localStorage.getItem("currentSetting")) || 1;
+
+  if (currentPage > currentSetting) {
+    currentSetting = currentPage;
+    localStorage.setItem("currentSetting", currentSetting);
+  }
+  
+  settings.forEach((setting, index) => {
+    if (index + 1 < currentPage) {
+      setting.classList.add("completed");
+      setting.textContent = "✔";
+    } else if (index + 1 === currentPage) {
+      setting.classList.add("active");
+    }
+  });
+});
+
+
 /*------------------------ SELECTED LEVEL ------------------------*/
 document.addEventListener("DOMContentLoaded", () => {
   /* The listener comand wait that all the HTML page is fully loaded before running 
@@ -42,18 +66,18 @@ document.addEventListener("DOMContentLoaded", () => {
         If the text contained in the button is 'Beginner, then we modify the text
         of the element with ID levelDescription */
         if (button.textContent === 'Beginner') {
-          levelDescription.innerHTML = '<p>You only recently started studying singing</p>';
+          levelDescription.innerHTML = '<p> You’ve just started exploring singing.</p>';
           //innerHTML let us read and modify the HTML content of an element
           //<p> is used to create the paragraph
 
         } else if (button.textContent === 'Intermediate') {
-          levelDescription.innerHTML = '<p>You are not a beginner but not even an advanced singer </p>';
+          levelDescription.innerHTML = '<p>You’re past the beginner stage, but not quite at the advanced level yet.</p>';
         
         } else if (button.textContent === 'Advanced') {
-          levelDescription.innerHTML = '<p>You feel to be a quite great singer!</p>';
+          levelDescription.innerHTML = '<p>You consider yourself a highly skilled singer!</p>';
         
         } else {
-          levelDescription.innerHTML = '<p>Select a level that rappresents you the best!</p>';
+          levelDescription.innerHTML = '<p>Select a level that describes you the best!</p>';
         }
       }
       /*I save the selectedLevel variable in the localStorage*/

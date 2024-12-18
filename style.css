@@ -184,52 +184,72 @@ button.active {
 }
 
 
-/*---------Settings Menu on top left---------*/
-/*
-.navbar-title {
-  font-size: 1em;
-  margin-bottom: 10px;
-  margin-top: 10px;
-  font-weight: bold;
-  font-style: italic;
-  text-align: center;
-}
-
+/* ------- MENU AT TOP ------- */
+/* General Navbar Styles */
 .navbar {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 10px 15px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #4d9246; /* Navbar background color */
+  padding: 20px; /* Spacing inside the navbar */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  display: flex; /* Flexbox layout */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items */
+  width: auto; /* Ensure the width grows with the content */
+  min-width: 300px; /* Set a minimum width to prevent tightness */
+  max-width: 100%; /* Prevent the navbar from overflowing */
+  margin: 0 auto; /* Center the navbar horizontally */
+  margin-bottom: 20px;
 }
 
+/* Navbar Title */
+.navbar-title {
+  font-size: 1.5em; /* Larger font size */
+  color: #ffffff; /* White text color */
+  font-weight: bold; /* Bold text */
+  margin-bottom: 15px; /* Add spacing below the title */
+  margin-top: 0px;
+  font-family: 'Kanit', sans-serif; /* Use Kanit font */
+}
+
+/* Navbar List Styles */
 .navbar ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+  list-style: none; /* Remove bullet points */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  display: flex;
+  flex-direction: column; /* Stack list items vertically */
+  gap: 10px; /* Add spacing between buttons */
+  width: 100%; /* Allow full width for items */
 }
 
-.navbar li {
-  margin-bottom: 10px;
+/* Navbar Links */
+.navbar ul li a {
+  text-decoration: none; /* Remove underline */
+  font-size: 1em; /* Base font size */
+  color: #ffffff; /* White text color */
+  background-color: #66bb6a; /* Button-like background */
+  padding: 10px 20px; /* Button padding */
+  border-radius: 5px; /* Rounded button */
+  text-align: center; /* Center text inside the buttons */
+  width: calc(100% - 40px); /* Account for navbar padding */
+  max-width: 300px; /* Set a maximum width for buttons */
+  display: block; /* Make links behave like block elements */
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth hover effect */
+  font-family: 'Kanit', sans-serif; /* Use Kanit font */
 }
 
-.navbar a {
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
-  padding: 10px 15px;
-  display: block;
-  transition: background 0.3s ease, color 0.3s ease;
-  border-radius: 4px;
+/* Hover Effects for Links */
+.navbar ul li a:hover {
+  background-color: #7bd4a3; /* Lighter green on hover */
+  transform: scale(1.05); /* Slightly enlarge */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow on hover */
 }
 
-.navbar a:hover {
-  background-color: #4d9246;
-  color: white;
+/* Active Link Styling */
+.navbar ul li a:active {
+  transform: scale(1); /* Reset size on click */
+  background-color: #4d9246; /* Slightly darker green */
 }
-*/
 
 /*---------bottom left buttons---------*/
 .button-container {

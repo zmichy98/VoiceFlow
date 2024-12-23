@@ -178,12 +178,18 @@ button.active {
 
 .gear-description {
   font-size: 1.2em; /* Description text size */
-  color: #000000; /* Gray text color */
+  color: #E0E0E0; /* Gray text color */
   text-align: center;
   margin-top: 10px; /* Space between button and description */
+  width: 350px; /* Adjust size */
 }
 
-
+.gear-image {
+  width: 198px; /* Adjust size */
+  height: 198px;
+  margin-right: 8px; /* Space between image and text */
+  vertical-align: middle; /* Align image with text */
+}
 /* ------- MENU AT TOP ------- */
 /* General Navbar Styles */
 .navbar {

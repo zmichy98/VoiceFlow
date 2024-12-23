@@ -24,7 +24,6 @@
 <body>
   <h1>FFT e Rilevamento Note</h1>
   <button id="startButton">Avvia Microfono</button>
-  <canvas id="fftCanvas" width="800" height="400"></canvas>
   <div class="frequency" id="frequency">Frequenza Dominante: -- Hz</div>
   <div class="note" id="note">Nota: --</div>
 
@@ -32,8 +31,6 @@
     const startButton = document.getElementById('startButton');
     const frequencyDisplay = document.getElementById('frequency');
     const noteDisplay = document.getElementById('note');
-    const canvas = document.getElementById('fftCanvas');
-    const canvasContext = canvas.getContext('2d');
 
     let audioContext, analyser, microphone, dataArray, sampleRate;
 
@@ -149,6 +146,7 @@
       }
     }
 
+
     function updateFFT() {
         /* Populate the dataArray with the frequency-domain data (amplitudes) from the AnalyserNode.
         Now dataArray contains values (0–255) representing the intensity of frequencies in the audio signal */
@@ -166,15 +164,15 @@
 
         const fundamentalFrequency = detectFundamentalFrequency(dominantFrequency, dataArray);
 
+        // I am now trying without using teh detectFundamentalFrequency method
+        //const fundamentalFrequency = dominantFrequency
+
         // Find the closest note
         const closestNote = getClosestNote(fundamentalFrequency);
 
         // Show the freq and the note
         frequencyDisplay.textContent = `Frequenza Dominante: ${fundamentalFrequency.toFixed(2)} Hz`;
         noteDisplay.textContent = `Nota: ${closestNote.note}`;
-
-        // Draw the FFT graph
-        drawFFT(dataArray);
 
         // Update every ___ ms
         setTimeout(updateFFT, 400);
@@ -191,11 +189,8 @@
         }
       }
 
-      // Calculate the frequency of the bin
-      // const nyquist = sampleRate / 2;
-      // return (maxIndex / binCount) * nyquist;
-
-      // Interpolation to find more accurate frequency
+      /*
+      // INTERPOLATION TO FIND A MORE ACCURATE FREQ:
       if (maxIndex > 0 && maxIndex < binCount - 1) {
         const left = dataArray[maxIndex - 1];
         const center = dataArray[maxIndex];
@@ -204,27 +199,47 @@
         // Parabolic interpolation to estimate the peak frequency more accurately
         const interpolationFactor = (left - right) / (2 * (2 * center - left - right));
         maxIndex += interpolationFactor;
-      }
+      } */
 
       return (maxIndex * sampleRate) / fftSize;
     }
 
-    function detectFundamentalFrequency(dominantFreq, spectrum) {
-      const harmonicThreshold = 0.9; // Adjust this value
+    function detectFundamentalFrequency(dominantFreq, spectrum, sampleRate, fftSize) {
+      if (dominantFreq <= 0) return dominantFreq; // Handle edge case where frequency is invalid
+
+      const harmonicThreshold = 0.8;                      // Ratio threshold to consider a harmonic
+      const searchHarmonics = 10;                         // Number of harmonics to analyze
+      const minAmplitude = Math.max(...spectrum) * 0.1;   // Minimum amplitude threshold to consider as valid: 10% of the peak spectrum amplitude
+
+      // Start by assuming the fundamental frequency is the dominant frequency
       let fundamentalFreq = dominantFreq;
 
-      // Search for harmonics (multiples of the fundamental frequency)
-      for (let harmonic = 2; harmonic <= 5; harmonic++) {
-        const possibleFundamental = dominantFreq / harmonic;
-        const binIndex = Math.round((possibleFundamental / (sampleRate / 2)) * spectrum.length);
+      // Convert the spectrum to frequency-domain bins
+      const spectrumBins = Array.from({ length: spectrum.length }, (_, i) => 
+        (i * sampleRate) / fftSize
+      );
 
-      if (binIndex > 0 && spectrum[binIndex] > harmonicThreshold * spectrum[Math.round((dominantFreq / (sampleRate / 2)) * spectrum.length)]) {
-        fundamentalFreq = possibleFundamental;
-        break;
+      // Iterate over potential harmonics
+      for (let harmonic = 1; harmonic <= searchHarmonics; harmonic++) {
+        const candidateFreq = dominantFreq / harmonic;
+
+        if (candidateFreq < 20) break; // Ignore unrealistic low frequencies
+
+        // Find the nearest frequency bin to the candidate frequency
+        const binIndex = spectrumBins.findIndex((freq) => Math.abs(freq - candidateFreq) < sampleRate / fftSize);
+
+        if (binIndex > 0 && spectrum[binIndex] > minAmplitude) {
+          const amplitudeRatio = spectrum[binIndex] / spectrum[Math.round((dominantFreq / (sampleRate / 2)) * spectrum.length)];
+
+          if (amplitudeRatio > harmonicThreshold) {
+            fundamentalFreq = candidateFreq; // Update the fundamental frequency
+            break;
+          }
+        }
       }
+
+      return fundamentalFreq;
     }
-    return fundamentalFreq;
-  }
 
     function getClosestNote(freq) {
       if (freq <= 0) return { note: "--", freq: 0 };
@@ -245,35 +260,6 @@
       }
 
       return closestNote;
-    }
-
-    function drawFFT(dataArray) {
-      // Clear the previous frame
-      canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Set up the drawing style (you can customize colors, line styles, etc.)
-      const barWidth = canvas.width / dataArray.length; // Width of each frequency bar
-      const barHeightFactor = canvas.height / 255; // Scaling factor for frequency bars (0-255 range)
-
-      // Draw the frequency bars
-      for (let i = 0; i < dataArray.length; i++) {
-        const value = dataArray[i];
-        const barHeight = value * barHeightFactor;
-
-        // Use a gradient color for the bars (change depending on frequency)
-        const frequency = (i * sampleRate) / (analyser.fftSize); // Frequency for this bin
-        const gradient = canvasContext.createLinearGradient(0, 0, 0, barHeight);
-        gradient.addColorStop(0, `rgb(${frequency / sampleRate * 255}, 0, 0)`); // Color varies with frequency
-
-        canvasContext.fillStyle = gradient;
-        canvasContext.fillRect(i * barWidth, canvas.height - barHeight, barWidth, barHeight);
-      }
-
-      // Optionally, add frequency labels or scale
-      canvasContext.fillStyle = "white";
-      canvasContext.font = "14px Arial";
-      canvasContext.fillText("0 Hz", 10, canvas.height - 10); // Label for 0 Hz
-      canvasContext.fillText(`${Math.round(sampleRate / 2)} Hz`, canvas.width - 70, canvas.height - 10); // Label for Nyquist frequency
     }
 
 

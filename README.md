@@ -10,15 +10,27 @@ tesekkur ederim (sagol g is muted)
 Selam!
 
 
-08/11/2024
-Work distribution:
-    - Gian: first welcome page and switching from a page to another (while keeping track of parameters)
-            2 possibility for page switching:
-                - Form HTML LINK
-                - Use a framework as REACT
-    
-    - Michele: undestand how the database works and building a functional database for the vocals exercises. 
+THINGS TO DO:
+FIRST PAGES
+•⁠  ⁠UI -> complete the new look 
+•⁠  ⁠Change "Home" and "Back" buttons
+•⁠  ⁠Help me find my range -> to be created
+•⁠  ⁠Cursor on the Selection of the notes -> something has to change
+•⁠  ⁠Images of equipment
 
-    - Ceren: work on the layout of the training page, so the rappresentation of notes on keyboard.
+VOCAL TRAINER
+•⁠  ⁠Change the start button
+•⁠  ⁠Implement the pitch detector
+•⁠  ⁠Implement the timebar
+•⁠  ⁠Change completely the UI
+•⁠  ⁠Implement the Workouts, Exercises and other stuff from database
+•⁠  ⁠Create the actual exercise with timings
 
-    - Federico: understand how the trainer can listen to the singer and compare that audio with a certaint note.
+VOCAL "TUNER"
+•⁠  ⁠Windows of frequencies -> implement to better catch the notes emitted
+•⁠  ⁠Create as a javascript file to be recalled when needed
+
+EXTRA FEATURES
+•⁠  ⁠accounts and custom workouts
+
+Cheren is working on the UI, while I’m working on the database to create workouts. You can join with whatever you prefer. During the holidays of course most of the work must be done, so maybe we can see each other soon on Discord or other platforms. Let me know what you think and what you want to work on.

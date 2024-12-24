@@ -67,6 +67,25 @@ function getClosestNote(freq) {
     return [closestNote, centsDetune];
 }
 
+// Function to update the level meter based on the cents value
+function updateLevelMeter(value) {
+    const percentage = ((value + 50) / 100) * 100; // Scale the value to 0-100
+
+    levelBar.style.width = percentage + '%';
+    levelValue.innerText = value;
+
+    // Change color based on value
+    if (value < -30) {
+        levelBar.className = "level low";
+    } else if (value > 30) {
+        levelBar.className = "level high";
+    } else if (value === null) {
+        levelBar.className = "level norange";
+    } else {
+        levelBar.className = "level mid";
+    }
+  }
+
 function getMicrophoneStream(){
     navigator.mediaDevices.getUserMedia(constraints)
         .then((stream) => {
@@ -128,6 +147,7 @@ function getPitch(){
     console.log(frequencyinHz);
     
     if(frequencyinHz === -1){
+        noteElem.innerHTML = "No note detected";
 
     } else{
         let [closerNote, detune] = getClosestNote(frequencyinHz);
@@ -147,6 +167,14 @@ function getPitch(){
             detuneWarning.innerHTML = "You are in tune!";
             detuneWarning.className = "in-tune";
         }
+
+        if(Math.abs(detune) > 50){
+            noteElem.innerHTML = "No note detected";
+            detuneWarning.innerHTML = "Out of range";
+            detune = null;
+        }
+
+        updateLevelMeter(detune);
     }
 
     // Continue to call the function:
@@ -200,6 +228,9 @@ const noteElem = document.getElementById("note");
 const hzElem = document.getElementById("hz");
 const detuneElem = document.getElementById("detune");
 const detuneWarning = document.getElementById("detune-warning");
+
+const levelBar = document.getElementById("level-bar");
+const levelValue = document.getElementById("level-value");
 
 const noteFrequencies = [
     { note: "C2", freq: 65.41 },

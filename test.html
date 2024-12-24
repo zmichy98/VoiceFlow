@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level Meter</title>
+  <style>
+    .meter {
+      width: 100%;
+      height: 30px;
+      background-color: #e0e0e0;
+      border-radius: 15px;
+      position: relative;
+    }
+
+    .level {
+      height: 100%;
+      width: 0%;
+      border-radius: 15px;
+      transition: width 0.3s;
+    }
+
+    .level.low {
+      background-color: red;
+    }
+
+    .level.mid {
+      background-color: green;
+    }
+    .level.high {
+      background-color: blue;
+    }
+
+    .value {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="meter">
+  <div class="level" id="level-bar"></div>
+  <div class="value" id="level-value">0</div>
+</div>
+
+<input type="range" id="value-input" min="-50" max="50" value="0" step="1" />
+
+<script>
+  const levelBar = document.getElementById("level-bar");
+  const levelValue = document.getElementById("level-value");
+  const valueInput = document.getElementById("value-input");
+
+  // Function to update the level meter based on the value
+  function updateLevelMeter(value) {
+    const percentage = ((value + 50) / 100) * 100; // Scale the value to 0-100
+
+    levelBar.style.width = percentage + '%';
+    levelValue.innerText = value;
+
+    // Change color based on value
+    if (value < -30) {
+      levelBar.className = "level low";
+    } else if (value > 30) {
+      levelBar.className = "level high";
+    } else {
+      levelBar.className = "level mid";
+    }
+  }
+
+  // Event listener for the input range
+  valueInput.addEventListener('input', function () {
+    const value = parseInt(valueInput.value);
+    updateLevelMeter(value);
+  });
+
+  // Initial call to set the default value
+  updateLevelMeter(0);
+</script>
+
+</body>
+</html>

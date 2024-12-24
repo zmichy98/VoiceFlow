@@ -1,0 +1,43 @@
+<html lang="en"></html>
+    <head>
+        <title>Pitch tracking app</title>
+        <meta name="viewport" content="width=devixe-width, initial-scale=1"></meta>
+        <meta name="description" content="This app pitch track your voice and tells you your pitch."></meta>
+        
+        <style>
+            body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
+
+            #note {
+                font-size: 72px;
+            }
+
+            .sharp {
+                color: red;
+            }
+
+            .flat {
+                color: blue;
+            }
+
+            .in-tune {
+                color: green;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Pitch Tracker</h1>
+            <button id="enable-mic" data-tracking="false">Enable microphone</button>
+            <div id="note">-</div> <!-- note -->
+            <div id="hz">-</div> <!-- heartz -->
+            <div id="detune">-</div> <!-- in cents -->
+            <div id="detune-warning">-</div> <!-- flat or sharp -->
+        </div>
+        <script src="js/pitchtrack.js"></script>
+    </body>
+</html>

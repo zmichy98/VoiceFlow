@@ -1,11 +1,13 @@
 /* This first function was found on gitHub: https://github.com/cwilso/PitchDetect/blob/main/js/pitchdetect.js,
-it returns the freq in Hz of the buffer in a certaint time domain */
+it returns the dominant freq in Hz of the buffer (array) */
 function autoCorrelate( buf, sampleRate ) {
 	// Implements the ACF2+ algorithm
-	var SIZE = buf.length;
-	var rms = 0;
+	var SIZE = buf.length; // SIZE = length of the array
+	var rms = 0; // root mean square: calculate the signal strength
 
-	for (var i=0;i<SIZE;i++) {
+    /* Measures the signal's strength to ensure there's enough audio data. 
+    If too quiet (rms < 0.01), it returns -1 (indicating no signal detected). */
+	for (var i=0; i<SIZE; i++) {
 		var val = buf[i];
 		rms += val*val;
 	}
@@ -13,21 +15,44 @@ function autoCorrelate( buf, sampleRate ) {
 	if (rms<0.01) // not enough signal
 		return -1;
 
-	var r1=0, r2=SIZE-1, thres=0.2;
-	for (var i=0; i<SIZE/2; i++)
-		if (Math.abs(buf[i])<thres) { r1=i; break; }
-	for (var i=1; i<SIZE/2; i++)
-		if (Math.abs(buf[SIZE-i])<thres) { r2=SIZE-i; break; }
+    /* Trim Silence: finds where the signal starts and ends (avoiding noise). */
+    // r1: Marks the starting index of the significant portion of the signal.
+    // r2: Marks the ending index.
+    // thres: The amplitude threshold to decide whether a sample is part of the signal or silence.
+	var r1 = 0, r2 = SIZE-1, thres = 0.2;
 
+    // Decide r1 position (only check up to half the buffer because audio signals are often symmetric or periodic, and the autocorrelation will handle periodicity.)
+	for (var i=0; i<SIZE/2; i++)
+		if (Math.abs(buf[i]) < thres){ r1=i; break; }
+
+    // Decide r2 position
+	for (var i=1; i<SIZE/2; i++)
+		if (Math.abs(buf[SIZE-i]) < thres) { r2=SIZE-i; break; }
+    // Cut the buffer to exclude silence
 	buf = buf.slice(r1,r2);
 	SIZE = buf.length;
 
-	var c = new Array(SIZE).fill(0);
+    /* Perform Autocorrelation: measures how well the signal matches itself when 
+    shifted in time to determine the fundamental frequency.*/
+	var c = new Array(SIZE).fill(0); // c[i] will store the autocorrelation result for a time lag of i
 	for (var i=0; i<SIZE; i++)
 		for (var j=0; j<SIZE-i; j++)
-			c[i] = c[i] + buf[j]*buf[j+i];
+			c[i] = c[i] + buf[j] * buf[j+i];
+            // buf[j] is the current value of the signal
+            // buf[j + i] is the signal value shifted by i samples.
+            // buf[j] * buf[j + i] measures the similarity between the signal and its lagged version for this particular offset.
+            // The sum of these products for all valid j values gives the autocorrelation value for lag i.
 
-	var d=0; while (c[d]>c[d+1]) d++;
+    /* The result c[i] at each lag i gives a measure of how well the signal matches itself when shifted by i samples.
+    Peaks in the autocorrelation array correspond to strong periodicity in the signal. */
+
+    // Find Peak Position: The first peak in the autocorrelation gives the period of the dominant frequency.
+	// Skips the initial decreasing part of the autocorrelation array.
+    /* The autocorrelation function c typically has a large initial value at lag 0 (due to perfect self-correlation),
+    which then decreases before rising again at the first significant peak. */
+    var d=0; while (c[d]>c[d+1]) d++;
+
+    // Find the peak position and store it in T0
 	var maxval=-1, maxpos=-1;
 	for (var i=d; i<SIZE; i++) {
 		if (c[i] > maxval) {
@@ -37,16 +62,22 @@ function autoCorrelate( buf, sampleRate ) {
 	}
 	var T0 = maxpos;
 
-	var x1=c[T0-1], x2=c[T0], x3=c[T0+1];
+    // Improves the resolution of the period (T0) by fitting a parabola to the values around the detected peak.
+	var x1 = c[T0-1], x2 = c[T0], x3 = c[T0+1];
 	a = (x1 + x3 - 2*x2)/2;
 	b = (x3 - x1)/2;
 	if (a) T0 = T0 - b/(2*a);
 
-	return sampleRate/T0;
+    // Return the frequency
+    /*
+    sampleRate: The rate at which the audio signal is sampled (e.g., 44100 Hz for CD-quality audio).
+    T0: The period of the fundamental frequency, measured in terms of sample indices. This value is obtained after identifying and refining the peak position in the autocorrelation function.
+    */
+	return sampleRate / T0;
 }
 
+// Matches the detected frequency to the closest musical note.
 function getClosestNote(freq) {
-    /* Find the closest Note */
     // As closest note take a generical note and we store diff between freq and notefreq
     let closestNote = noteFrequencies[0];
     let minDiff = Math.abs(freq - noteFrequencies[0].freq);
@@ -60,8 +91,12 @@ function getClosestNote(freq) {
       }
     }
     
-    /* Find the distant from the rigth note in cents */
-    // A half step is = to 100 cents
+    /* 
+    Find the distant from the rigth note in cents: half step is equal to 100 cents 
+    Cents are a logarithmic unit of pitch interval. There are 100 cents in a semitone,
+    and 1200 cents in an octave. This means cents allow us to measure small variations in pitch
+    Pitch (or frequency) doubles every octave, making the relationship between pitch and frequency logarithmic.
+    */
     centsDetune = Math.floor( 1200 * Math.log( freq / closestNote.freq)/Math.log(2) );
 
     return [closestNote, centsDetune];
@@ -71,49 +106,51 @@ function getClosestNote(freq) {
 function updateLevelMeter(value) {
     const percentage = ((value + 50) / 100) * 100; // Scale the value to 0-100
 
+    // Write the value in the bar
     levelBar.style.width = percentage + '%';
     levelValue.innerText = value;
 
     // Change color based on value
-    if (value < -30) {
+    if (value < - tuneTollerance) {
         levelBar.className = "level low";
-    } else if (value > 30) {
+    } else if (value > tuneTollerance) {
         levelBar.className = "level high";
     } else if (value === null) {
         levelBar.className = "level norange";
     } else {
         levelBar.className = "level mid";
     }
-  }
+}
 
+//  Initializes the microphone input and prepares it for audio analysis.
 function getMicrophoneStream(){
+    // Requests microphone access consists of several tracks, such as video or audio tracks. 
+    // Each track is specified as an instance of MediaStreamTrack.
     navigator.mediaDevices.getUserMedia(constraints)
+        // On success
         .then((stream) => {
-            currStream = stream; // save the stream
+            // Save the stream : 
+            currStream = stream;
             console.log('got microphone stream');
-
-            /* A stream consists of several tracks, such as video or audio tracks.
-            Each track is specified as an instance of MediaStreamTrack.*/
             console.log(stream);
 
             /* In the next two steps we are going to translate the stream into something that
-            the webAudio API can do the analysing on*/
-            // Create AudioContext (This is a constractor part of the web audio API)
-            audioContext = new AudioContext(); 
+            the webAudio API can analyse*/
+            audioContext = new AudioContext(); // Create AudioContext (This is a constractor part of the web audio API)
+            source = audioContext.createMediaStreamSource(stream) // Inside the context, create the source
 
-            // Inside the ciontext, create the source
-            source = audioContext.createMediaStreamSource(stream)
-
+            // Call the function that detects the pitch
             startPitchTrack()
         })
+        // On error:
         .catch((err) => {
+            // handle the error
             console.log('Did not get microphone stream: \n' + err);
-
-            /* handle the error */
             enableMicBtn.innerHTML = "Enable Microphone"
         });
 }
 
+// Stops the microphone and animation.
 function stopMicrophoneStream(){
     if (currStream !== null){
         // get the tracks from the stream
@@ -129,17 +166,21 @@ function stopMicrophoneStream(){
     window.cancelAnimationFrame(requestAnimationFrameId);
 }
 
+// Sets up the audio analyzer for pitch detection.
 function startPitchTrack(){
+    // Creates an AnalyserNode
     analyser = audioContext.createAnalyser();
 
+    // Number of samples processed in one FFT.
     analyser.fftSize = 2048;
 
-    // Connect the analyser node to the audio context
-    source.connect(analyser); // the source is the audio input, the analyser is needed to analyse the stream
+    // Connect the analyser node to the audio context: the source is the audio input, the analyser is needed to analyse the stream
+    source.connect(analyser);
 
     getPitch()
 }
 
+// Continuously detects the pitch and updates the UI.
 function getPitch(){
     // repetitive Ui /window.requestAnimationFrame
     analyser.getFloatTimeDomainData(buffer);
@@ -163,7 +204,7 @@ function getPitch(){
             detuneWarning.className = "sharp";
         }
 
-        if(Math.abs(detune) < 30){
+        if(Math.abs(detune) < tuneTollerance){
             detuneWarning.innerHTML = "You are in tune!";
             detuneWarning.className = "in-tune";
         }
@@ -228,7 +269,7 @@ const noteElem = document.getElementById("note");
 const hzElem = document.getElementById("hz");
 const detuneElem = document.getElementById("detune");
 const detuneWarning = document.getElementById("detune-warning");
-
+const tuneTollerance = 30;
 const levelBar = document.getElementById("level-bar");
 const levelValue = document.getElementById("level-value");
 

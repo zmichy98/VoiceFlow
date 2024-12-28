@@ -5,13 +5,15 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 // Take the selectedRange variable from the html and store it as a new variable
-let manual = localStorage.getItem("manual");
+let manual = false;
+manual = localStorage.getItem("manual");
 let voiceRange = localStorage.getItem("selectedRange").toString();
-voiceRange = "Tenor"
+voiceRange = "Tenor";
 let firstmanNote = localStorage.getItem("firstNote").toString();
 let secondmanNote = localStorage.getItem("secondNote").toString();
-let eser = "es1";
+let eser = "es3";
 let voce = voiceRange;
+let beatDuration = 60 / 180;
 
 
 // Function to change the color of the key when pressed
@@ -40,10 +42,10 @@ async function setVocal(vol, man, first, second) {
     const newVoice = doc.data()[vol];
     vox.length = 0;
     vox.push(...newVoice); // Carica i nuovi pattern
-    console.log(vox);
-    console.log(man);
-    console.log(first);
-    console.log(second);
+    console.log("vox: " + vox);
+    console.log("manual: " + man);
+    console.log("first note: " + first);
+    console.log("second note: " + second);
 
     if (man) {
         vox[0] = first;
@@ -64,9 +66,11 @@ async function setExercise(es) {
   pattern.length = 0; // Pulisci l'array pattern
   pattern.push(...exercisePattern); // Carica i nuovi pattern
 
+  beatDuration = 60 / pattern[3];
   // Calcola la velocitÃ 
   //const speed = 60 / pattern[4] * 1000; // Assicurati che pattern abbia abbastanza elementi
   console.log(pattern);
+  console.log("tempo: " + pattern[3] + "; and duration: " + beatDuration);
   //console.log(speed);
 }
 
@@ -116,62 +120,99 @@ const getNoteFromOffset = (offset, refNote) => {
     return Tone.Frequency(midiNote, "midi").toNote();
 }
 
+
 const playPattern = async () => {
     await Tone.start();
     console.log("Audio context started");
 
-    const noteStart1 = vox[0];  // starting note for the type of voice
+    const noteStart1 = vox[0]; // starting note for the type of voice
     const noteStart2 = vox[1]; // ending note for the type of voice
-    console.log(noteStart1);
-    console.log(noteStart2);
 
     const startMidi = Tone.Frequency(noteStart1).toMidi(); // transforms to midi
     const endMidi = Tone.Frequency(noteStart2).toMidi();
 
-    let noteIndex = 7; //starting from 7, the beginning of pattern notes in the exercise array
-    let currentMidi = startMidi;
-    console.log(`Current Midi: ${currentMidi}`)
-    
-    // Playing contextual chord
-    const playChord = (time) => {
-        const offset1 = pattern[4];
-        const offset2 = pattern[5];
-        const offset3 = pattern[6];
+    let currentMidi = startMidi; // Start at the initial MIDI note
+    let noteIndex = 7; // Start index of the pattern notes
+    let direction = 1; // 1 for ascending, -1 for descending
+    let hasSwitchedToDescending = false; // Tracks whether the direction has already switched
 
+    const playChord = (time, duration) => {
+        const chordNotes = [
+            getNoteFromOffset(pattern[4], currentMidi),
+            getNoteFromOffset(pattern[5], currentMidi),
+            getNoteFromOffset(pattern[6], currentMidi),
+        ];
+        console.log(`Playing chord: ${chordNotes.join(", ")} at ${time}s for ${duration}s`);
+        chordNotes.forEach((note) => piano.triggerAttackRelease(note, duration, time));
+        chordNotes.forEach((note) => changeKeyColor(note));
+    };
+
+    const playNextNote = (time) => {
         const offset = pattern[noteIndex];
         const note = getNoteFromOffset(offset, currentMidi);
         changeKeyColor(note);
-        console.log(`Playing note: ${note}`);
         piano.triggerAttackRelease(note, "8n", time);
+        console.log(`Playing note: ${note} at ${time}s`);
+
         noteIndex++;
+        if (noteIndex >= pattern.length) {
+            noteIndex = 7; // Reset the pattern index
+            return true; // Signal the end of the pattern
+        }
+        return false; // Signal that the pattern is still ongoing
+    };
 
-    }
+    let isPlayingPattern = false; // Indicates whether the pattern is being played
 
-    // Playing next note
-    const playNextNote = (time) => {
-         const offset = pattern[noteIndex];
-         const note = getNoteFromOffset(offset, currentMidi);
-         changeKeyColor(note);
-         console.log(`Playing note: ${note}`);
-         piano.triggerAttackRelease(note, "8n", time);
-         noteIndex++;
+    const repeatSequence = (time) => {
+        if (!isPlayingPattern) {
+            // Play the starting chord
+            playChord(time, "2n");
+            isPlayingPattern = true;
+            return time + Tone.Time("2n").toSeconds(); // Schedule next section
+        }
 
-         if (noteIndex >= pattern.length) {
-              noteIndex = 7;
-              currentMidi++;
+        // Play the pattern
+        const patternEnd = playNextNote(time);
+        if (patternEnd) {
+            // Pattern is complete, play the final chord
+            playChord(time + Tone.Time("8n").toSeconds(), "1n");
+            isPlayingPattern = false;
 
-              if(currentMidi > endMidi) {
-                   Tone.Transport.stop();
-                   noteIndex = 7;
-                   console.log("Pattern completato!");
-              }
-         }
-    }
+            // Advance to the next semitone based on the direction
+            if (direction === 1 && currentMidi === endMidi) {
+                direction = -1; // Switch to descending
+                hasSwitchedToDescending = true;
+            } else if (direction === -1 && currentMidi === startMidi) {
+                Tone.Transport.stop(); // Stop if we've returned to the start
+                console.log("Pattern completato!");
+                return;
+            }
 
-    Tone.Transport.scheduleRepeat(playChord, "16n");
-    Tone.Transport.scheduleRepeat(playNextNote, "4n");
+            if (!hasSwitchedToDescending || currentMidi !== endMidi) {
+                currentMidi += direction;
+            }
+
+            return time + Tone.Time("1n").toSeconds(); // Schedule next iteration
+        }
+
+        return time + Tone.Time("4n").toSeconds(); // Schedule the next note
+    };
+
+    // Schedule the sequence
+    let nextTime = Tone.Transport.now();
+    const scheduleSequence = () => {
+        nextTime = repeatSequence(nextTime);
+        if (Tone.Transport.state === "started") {
+            Tone.Transport.scheduleOnce(scheduleSequence, nextTime);
+        }
+    };
+
+    // Start the transport
     Tone.Transport.start();
-}
+    scheduleSequence();
+};
+
 
 // Assicurati che il DOM sia pronto
 document.addEventListener("DOMContentLoaded", function() {

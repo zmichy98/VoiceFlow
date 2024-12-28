@@ -11,9 +11,8 @@ let voiceRange = localStorage.getItem("selectedRange").toString();
 voiceRange = "Tenor";
 let firstmanNote = localStorage.getItem("firstNote").toString();
 let secondmanNote = localStorage.getItem("secondNote").toString();
-let eser = "es3";
+let eser = "es4";
 let voce = voiceRange;
-let beatDuration = 60 / 180;
 
 
 // Function to change the color of the key when pressed
@@ -65,12 +64,6 @@ async function setExercise(es) {
   const exercisePattern = doc.data()[es];
   pattern.length = 0; // Pulisci l'array pattern
   pattern.push(...exercisePattern); // Carica i nuovi pattern
-
-  beatDuration = 60 / pattern[3];
-  // Calcola la velocitÃ 
-  //const speed = 60 / pattern[4] * 1000; // Assicurati che pattern abbia abbastanza elementi
-  console.log(pattern);
-  console.log("tempo: " + pattern[3] + "; and duration: " + beatDuration);
   //console.log(speed);
 }
 
@@ -125,16 +118,17 @@ const playPattern = async () => {
     await Tone.start();
     console.log("Audio context started");
 
-    const noteStart1 = vox[0]; // starting note for the type of voice
-    const noteStart2 = vox[1]; // ending note for the type of voice
+    const noteStart1 = vox[0]; // Starting note for the type of voice
+    const noteStart2 = vox[1]; // Ending note for the type of voice
 
-    const startMidi = Tone.Frequency(noteStart1).toMidi(); // transforms to midi
+    const startMidi = Tone.Frequency(noteStart1).toMidi(); // Transform to MIDI
     const endMidi = Tone.Frequency(noteStart2).toMidi();
 
     let currentMidi = startMidi; // Start at the initial MIDI note
     let noteIndex = 7; // Start index of the pattern notes
     let direction = 1; // 1 for ascending, -1 for descending
-    let hasSwitchedToDescending = false; // Tracks whether the direction has already switched
+    let hasSwitchedToDescending = false; // Tracks if we've switched to descending
+    let isPlayingPattern = false; // Indicates whether the pattern is being played
 
     const playChord = (time, duration) => {
         const chordNotes = [
@@ -142,16 +136,15 @@ const playPattern = async () => {
             getNoteFromOffset(pattern[5], currentMidi),
             getNoteFromOffset(pattern[6], currentMidi),
         ];
-        console.log(`Playing chord: ${chordNotes.join(", ")} at ${time}s for ${duration}s`);
+        console.log(`Playing chord: ${chordNotes.join(", ")} at ${time}s for ${duration}`);
         chordNotes.forEach((note) => piano.triggerAttackRelease(note, duration, time));
-        chordNotes.forEach((note) => changeKeyColor(note));
     };
 
     const playNextNote = (time) => {
         const offset = pattern[noteIndex];
         const note = getNoteFromOffset(offset, currentMidi);
         changeKeyColor(note);
-        piano.triggerAttackRelease(note, "8n", time);
+        piano.triggerAttackRelease(note, "4n", time);
         console.log(`Playing note: ${note} at ${time}s`);
 
         noteIndex++;
@@ -162,45 +155,111 @@ const playPattern = async () => {
         return false; // Signal that the pattern is still ongoing
     };
 
-    let isPlayingPattern = false; // Indicates whether the pattern is being played
-
     const repeatSequence = (time) => {
         if (!isPlayingPattern) {
-            // Play the starting chord
+            // Play the first chord (2 beats)
             playChord(time, "2n");
             isPlayingPattern = true;
             return time + Tone.Time("2n").toSeconds(); // Schedule next section
         }
-
+        
         // Play the pattern
         const patternEnd = playNextNote(time);
         if (patternEnd) {
-            // Pattern is complete, play the final chord
-            playChord(time + Tone.Time("8n").toSeconds(), "1n");
+
+            if (currentMidi == startMidi && hasSwitchedToDescending) {
+                 // Handle ascending or descending transition
+                if (direction === 1 && currentMidi === endMidi) {
+                        direction = -1; // Switch to descending
+                        hasSwitchedToDescending = true;
+                    } else if (direction === -1 && currentMidi === startMidi) {
+                        // Stop when back to the start
+                        Tone.Transport.stop(); // Stop when back to the start
+                        console.log("Pattern completato!");
+                        return;
+                    }
+        
+                    // Move the currentMidi note after playing the final chord
+                    if (!hasSwitchedToDescending || currentMidi !== endMidi) {
+                        currentMidi += direction; // Move to next note
+                    }
+                    else if (hasSwitchedToDescending || currentMidi !== startMidi) {
+                        currentMidi += direction; // Move to next note
+                    }
+        
+                isPlayingPattern = false;
+        
+                return time + Tone.Time("2n").toSeconds(); // Schedule next iteration
+            } else {
+                const waitTime = Tone.Time("4n").toSeconds(); // Wait for 1 beat
+            Tone.Transport.scheduleOnce(() => {
+                // Play the final chord at the same pitch as currentMidi
+                playChord(time + waitTime, "4n"); // Play chord at currentMidi pitch
+    
+                // Handle ascending or descending transition
+                if (direction === 1 && currentMidi === endMidi) {
+                    direction = -1; // Switch to descending
+                    hasSwitchedToDescending = true;
+                } else if (direction === -1 && currentMidi === startMidi) {
+                    // Stop when back to the start
+                    Tone.Transport.stop(); // Stop when back to the start
+                    console.log("Pattern completato!");
+                    return;
+                }
+    
+                // Move the currentMidi note after playing the final chord
+                if (!hasSwitchedToDescending || currentMidi !== endMidi) {
+                    currentMidi += direction; // Move to next note
+                }
+                else if (hasSwitchedToDescending || currentMidi !== startMidi) {
+                    currentMidi += direction; // Move to next note
+                }
+            }, time + waitTime); // Schedule the chord with delay
+    
             isPlayingPattern = false;
-
-            // Advance to the next semitone based on the direction
-            if (direction === 1 && currentMidi === endMidi) {
-                direction = -1; // Switch to descending
-                hasSwitchedToDescending = true;
-            } else if (direction === -1 && currentMidi === startMidi) {
-                Tone.Transport.stop(); // Stop if we've returned to the start
-                console.log("Pattern completato!");
-                return;
+    
+            return time + Tone.Time("2n").toSeconds(); // Schedule next iteration
             }
 
-            if (!hasSwitchedToDescending || currentMidi !== endMidi) {
-                currentMidi += direction;
-            }
-
-            return time + Tone.Time("1n").toSeconds(); // Schedule next iteration
+            const waitTime = Tone.Time("4n").toSeconds(); // Wait for 1 beat
+            Tone.Transport.scheduleOnce(() => {
+                // Play the final chord at the same pitch as currentMidi
+                playChord(time + waitTime, "4n"); // Play chord at currentMidi pitch
+    
+                // Handle ascending or descending transition
+                if (direction === 1 && currentMidi === endMidi) {
+                    direction = -1; // Switch to descending
+                    hasSwitchedToDescending = true;
+                } else if (direction === -1 && currentMidi === startMidi) {
+                    // Stop when back to the start
+                    Tone.Transport.stop(); // Stop when back to the start
+                    console.log("Pattern completato!");
+                    return;
+                }
+    
+                // Move the currentMidi note after playing the final chord
+                if (!hasSwitchedToDescending || currentMidi !== endMidi) {
+                    currentMidi += direction; // Move to next note
+                }
+                else if (hasSwitchedToDescending || currentMidi !== startMidi) {
+                    currentMidi += direction; // Move to next note
+                }
+            }, time + waitTime); // Schedule the chord with delay
+    
+            isPlayingPattern = false;
+    
+            return time + Tone.Time("2n").toSeconds(); // Schedule next iteration
         }
-
+    
         return time + Tone.Time("4n").toSeconds(); // Schedule the next note
     };
+    
+    
+    
+    
 
     // Schedule the sequence
-    let nextTime = Tone.Transport.now();
+    let nextTime = Tone.Transport.now()+Tone.Time("4n").toSeconds();
     const scheduleSequence = () => {
         nextTime = repeatSequence(nextTime);
         if (Tone.Transport.state === "started") {
@@ -209,9 +268,13 @@ const playPattern = async () => {
     };
 
     // Start the transport
+    Tone.Transport.bpm.value = pattern[3];
+    console.log("BPM transport: " + Tone.Transport.bpm.value) 
     Tone.Transport.start();
     scheduleSequence();
 };
+
+
 
 
 // Assicurati che il DOM sia pronto

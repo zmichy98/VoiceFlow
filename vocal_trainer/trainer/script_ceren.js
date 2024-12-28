@@ -116,6 +116,10 @@ const getNoteFromOffset = (offset, refNote) => {
     return Tone.Frequency(midiNote, "midi").toNote();
 }
 
+const playChord = async () => {
+    
+}
+
 const playPattern = async () => {
     await Tone.start();
     console.log("Audio context started");

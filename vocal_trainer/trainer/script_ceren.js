@@ -116,47 +116,59 @@ const getNoteFromOffset = (offset, refNote) => {
     return Tone.Frequency(midiNote, "midi").toNote();
 }
 
-const playChord = async () => {
-    
-}
-
 const playPattern = async () => {
     await Tone.start();
     console.log("Audio context started");
 
-    const noteStart1 = vox[0];  // Modifica le note vocali
-    const noteStart2 = vox[1];
+    const noteStart1 = vox[0];  // starting note for the type of voice
+    const noteStart2 = vox[1]; // ending note for the type of voice
     console.log(noteStart1);
     console.log(noteStart2);
 
-    const startMidi = Tone.Frequency(noteStart1).toMidi();
+    const startMidi = Tone.Frequency(noteStart1).toMidi(); // transforms to midi
     const endMidi = Tone.Frequency(noteStart2).toMidi();
 
-    let index = 5;
+    let noteIndex = 7; //starting from 7, the beginning of pattern notes in the exercise array
     let currentMidi = startMidi;
     console.log(`Current Midi: ${currentMidi}`)
     
-    // Nota corrente
+    // Playing contextual chord
+    const playChord = (time) => {
+        const offset1 = pattern[4];
+        const offset2 = pattern[5];
+        const offset3 = pattern[6];
+
+        const offset = pattern[noteIndex];
+        const note = getNoteFromOffset(offset, currentMidi);
+        changeKeyColor(note);
+        console.log(`Playing note: ${note}`);
+        piano.triggerAttackRelease(note, "8n", time);
+        noteIndex++;
+
+    }
+
+    // Playing next note
     const playNextNote = (time) => {
-         const offset = pattern[index];
+         const offset = pattern[noteIndex];
          const note = getNoteFromOffset(offset, currentMidi);
          changeKeyColor(note);
          console.log(`Playing note: ${note}`);
          piano.triggerAttackRelease(note, "8n", time);
-         index++;
+         noteIndex++;
 
-         if (index >= pattern.length) {
-              index = 5;
+         if (noteIndex >= pattern.length) {
+              noteIndex = 7;
               currentMidi++;
 
               if(currentMidi > endMidi) {
                    Tone.Transport.stop();
-                   index = 5;
+                   noteIndex = 7;
                    console.log("Pattern completato!");
               }
          }
     }
 
+    Tone.Transport.scheduleRepeat(playChord, "16n");
     Tone.Transport.scheduleRepeat(playNextNote, "4n");
     Tone.Transport.start();
 }

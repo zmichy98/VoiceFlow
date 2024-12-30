@@ -184,6 +184,7 @@ function startPitchTrack(){
 function getPitch(){
     // repetitive Ui /window.requestAnimationFrame
     analyser.getFloatTimeDomainData(buffer);
+    
     let frequencyinHz = autoCorrelate(buffer, audioContext.sampleRate);
     console.log(frequencyinHz);
     

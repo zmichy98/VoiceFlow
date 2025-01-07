@@ -125,17 +125,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Change the range description based on the selected range
         if (selectedRange === 'Soprano') {
-          rangeDescription.innerHTML = '<p>Descrizione Soprano</p>';
+          rangeDescription.innerHTML = '<p>The highest female voice, typically able to sing in a high range, often soaring above the melody in classical music.</p>';
         } else if (selectedRange === 'Mezzosoprano') {
-          rangeDescription.innerHTML = '<p>Descrizione Mezzosoprano</p>';
+          rangeDescription.innerHTML = '<p>A female voice between soprano and contralto, with a rich mid-range and the ability to sing lower notes while retaining brightness.</p>';
         } else if (selectedRange === 'Contralto') {
-          rangeDescription.innerHTML = '<p>Descrizione Contralto</p>';
-        } else if (selectedRange === 'Tenore') {
-          rangeDescription.innerHTML = '<p>Descrizione Tenore</p>';
+          rangeDescription.innerHTML = '<p>The lowest female voice, known for its deep, resonant tones that can reach into the lower registers of the male range.</p>';
+        } else if (selectedRange === 'Tenor') {
+          rangeDescription.innerHTML = '<p>The highest male voice, often characterized by its bright, powerful sound, capable of reaching high notes with strength and clarity.</p>';
         } else if (selectedRange === 'Baritono') {
-          rangeDescription.innerHTML = '<p>Descrizione Baritono</p>';
+          rangeDescription.innerHTML = '<p>A male voice with a rich mid-range, sitting comfortably between tenor and bass, capable of a broad vocal range.</p>';
         } else if (selectedRange === 'Bass') {
-          rangeDescription.innerHTML = '<p>Descrizione Basso</p>';
+          rangeDescription.innerHTML = '<p>The lowest male voice, known for its deep, powerful, and resonant tones, typically providing the foundation in choral settings.</p>';
         } else {
           rangeDescription.innerHTML = '<p> </p>';
         }

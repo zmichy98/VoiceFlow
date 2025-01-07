@@ -58,7 +58,8 @@ h2 {
   text-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
   padding: 15px; /* Reduced padding */
   border-radius: 20px;
-  margin-top: 90px; /* Increased margin-top to create more space */
+  margin-top: 20px; /* Increased margin-top to create more space */
+  margin-bottom: 10px;
 }
 
 a {
@@ -123,7 +124,7 @@ button {
   font-family: 'Kanit', sans-serif;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; /* Smooth transition */
-  margin: 10px;
+  margin: 5px;
 }
 
 button:hover {
@@ -136,6 +137,12 @@ button.active {
   background: linear-gradient(45deg, #4d9246, #7bd4a3); /* Darker color when active */
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
   transform: scale(1.05); /* Slightly enlarge when clicked */
+}
+
+button.notusable {
+  background: linear-gradient(45deg, #979d96, #cbd2ce); /* Darker color when active */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
+  transform: scale(0.00); /* Slightly enlarge when clicked */
 }
 /*--------------------------------------*/
 .gear-description-container {
@@ -429,7 +436,7 @@ button.active {
 
 }
 .range-description {
-  margin-top: 20px; /* space between buttons and description */
+  margin-top: 10px; /* space between buttons and description */
   font-size: 1.5em; /* font size of the description */
   color: #E0E0E0;    /* text color of the description */
   background: linear-gradient(45deg, #4d9246, #7bd4a3);
@@ -437,7 +444,7 @@ button.active {
   background-clip: text;
   text-align: center;
   text-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
-  padding: 20px;
+  padding: 10px;
   border-radius: 20px;
 }
 
@@ -449,17 +456,6 @@ button.active {
   justify-content: center;  /* Centers the button vertically */
   align-items: center;      /* Centers the button horizontally */
   margin: 0px 0px;           /* Adds space above and below */
-}
-
-.start-selecting-button {
-  background: linear-gradient(45deg, #4d9246, #7bd4a3); /* Button gradient */
-  color: white;
-  font-size: 1.5em;
-  padding: 15px 20px;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: transform 0.3s ease, background 0.3s ease;
 }
 
 .start-selecting-button:hover {
@@ -531,6 +527,7 @@ input[type="range"]:active {
   width: 840px; /* Three octaves width */
   height: 180px;
   margin: 20px;
+  margin-top: 5px;
 }
 
 .key {
@@ -608,6 +605,11 @@ input[type="range"]:active {
   background-color: #ffcc00; /* Change color when pressed */
 }
 
+/* Selected key animation */
+.key.selected {
+  background-color: #09ff00; /* Change color when pressed */
+}
+
 
 /*-------------------- Progress Bar -------------------*/
 /* Progress bar container */
@@ -625,4 +627,48 @@ input[type="range"]:active {
   height: 100%;
   background-color: green; /* Starting color */
   transition: width 10s linear, background-color 10s ease; /* Smooth transition for color and width */
+}
+
+/*-------------------- Pitch meter -------------------*/
+.meter {
+  width: 80%;
+  max-width: 500px;
+  height: 30px;
+  background-color: #e0e0e0;
+  border-radius: 15px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.level {
+  height: 100%;
+  width: 0%;
+  border-radius: 15px;
+  transition: width 0.3s ease;
+}
+
+.level.low {
+  background-color: red;
+}
+
+.level.mid {
+  background-color: yellow;
+}
+
+.level.high {
+  background-color: green;
+}
+
+.level.high {
+  background-color: rgba(0, 0, 0, 0.839);
+}
+
+.value {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  color: #fff;
+  font-size: 18px;
 }

@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800&display=swap" rel="stylesheet"></head>
     <title>VoiceFlow</title>
 </head>
+
 <body data-setting="3">
 
     <div class="settings-bar">
@@ -20,24 +21,144 @@
         <div class="setting">5</div>
     </div>
 
+    <h2>Detect your range</h2>
 
-    <h2></h2>
-    <button id="start">Start Detection</button>
-    <p>Detected Frequency: <span id="frequency">0</span> Hz</p>
-    <p>Target Note: <span id="note">A4</span></p>
-    <p>Status: <span id="status">--</span></p>
+    <!-- range description -->
+    <div id="rangeInterval" class="range-description">
+        <p>Select the lowest note and sing it after pressing the detecting button</p>
+    </div>
 
-    <script src="pitch_detector.js"></script>
+    <!-- Keyboard -->
+    <div class="keyboard">
+        <!-- First Octave -->
+        <div class="key white" data-note="C1" id="C1" data-octave="1">
+            <span class="note-name">C</span>
+        </div>
+        <div class="key black" data-note="C#1" id="C#1" data-octave="1">
+            <span class="note-name">C#</span>
+        </div>
+        <div class="key white" data-note="D1" id="D1" data-octave="1">
+            <span class="note-name">D</span>
+        </div>
+        <div class="key black" data-note="D#1" id="D#1" data-octave="1">
+            <span class="note-name">D#</span>
+        </div>
+        <div class="key white" data-note="E1" id="E1" data-octave="1">
+            <span class="note-name">E</span>
+        </div>
+        <div class="key white" data-note="F1" id="F1" data-octave="1">
+            <span class="note-name">F</span>
+        </div>
+        <div class="key black" data-note="F#1" id="F#1" data-octave="1">
+            <span class="note-name">F#</span>
+        </div>
+        <div class="key white" data-note="G1" id="G1" data-octave="1">
+            <span class="note-name">G</span>
+        </div>
+        <div class="key black" data-note="G#1" id="G#1" data-octave="1">
+            <span class="note-name">G#</span>
+        </div>
+        <div class="key white" data-note="A1" id="A1" data-octave="1">
+            <span class="note-name">A</span>
+        </div>
+        <div class="key black" data-note="A#1" id="A#1" data-octave="1">
+            <span class="note-name">A#</span>
+        </div>
+        <div class="key white" data-note="B1" id="B1" data-octave="1">
+            <span class="note-name">B</span>
+        </div>
+        
+        <!-- Second Octave -->
+    <div class="key white" data-note="C2" id="C2" data-octave="2">
+        <span class="note-name">C</span>
+    </div>
+    <div class="key black" data-note="C#2" id="Csharp2" data-octave="2">
+        <span class="note-name">C#</span>
+    </div>
+    <div class="key white" data-note="D2" id="D2" data-octave="2">
+        <span class="note-name">D</span>
+    </div>
+    <div class="key black" data-note="D#2" id="Dsharp2" data-octave="2">
+        <span class="note-name">D#</span>
+    </div>
+    <div class="key white" data-note="E2" id="E2" data-octave="2">
+        <span class="note-name">E</span>
+    </div>
+    <div class="key white" data-note="F2" id="F2" data-octave="2">
+        <span class="note-name">F</span>
+    </div>
+    <div class="key black" data-note="F#2" id="Fsharp2" data-octave="2">
+        <span class="note-name">F#</span>
+    </div>
+    <div class="key white" data-note="G2" id="G2" data-octave="2">
+        <span class="note-name">G</span>
+    </div>
+    <div class="key black" data-note="G#2" id="Gsharp2" data-octave="2">
+        <span class="note-name">G#</span>
+    </div>
+    <div class="key white" data-note="A2" id="A2" data-octave="2">
+        <span class="note-name">A</span>
+    </div>
+    <div class="key black" data-note="A#2" id="Asharp2" data-octave="2">
+        <span class="note-name">A#</span>
+    </div>
+    <div class="key white" data-note="B2" id="B2" data-octave="2">
+        <span class="note-name">B</span>
+    </div>
 
-    <!-- Setting menu 
-    <nav class="navbar">
-        <h3 class="navbar-title">Settings:</h3>
-        <ul>
-            <li><a href="setting1_level.html" id="selectedLevel"> </a></li>
-            <li><a href="setting2_time.html" id="sliderValue"></a></li>
-        </ul>
-    </nav>
-    -->
+    <!-- Third Octave -->
+    <div class="key white" data-note="C3" id="C3" data-octave="3">
+        <span class="note-name">C</span>
+    </div>
+    <div class="key black" data-note="C#3" id="Csharp3" data-octave="3">
+        <span class="note-name">C#</span>
+    </div>
+    <div class="key white" data-note="D3" id="D3" data-octave="3">
+        <span class="note-name">D</span>
+    </div>
+    <div class="key black" data-note="D#3" id="Dsharp3" data-octave="3">
+        <span class="note-name">D#</span>
+    </div>
+    <div class="key white" data-note="E3" id="E3" data-octave="3">
+        <span class="note-name">E</span>
+    </div>
+    <div class="key white" data-note="F3" id="F3" data-octave="3">
+        <span class="note-name">F</span>
+    </div>
+    <div class="key black" data-note="F#3" id="Fsharp3" data-octave="3">
+        <span class="note-name">F#</span>
+    </div>
+    <div class="key white" data-note="G3" id="G3" data-octave="3">
+        <span class="note-name">G</span>
+    </div>
+    <div class="key black" data-note="G#3" id="Gsharp3" data-octave="3">
+        <span class="note-name">G#</span>
+    </div>
+    <div class="key white" data-note="A3" id="A3" data-octave="3">
+        <span class="note-name">A</span>
+    </div>
+    <div class="key black" data-note="A#3" id="Asharp3" data-octave="3">
+        <span class="note-name">A#</span>
+    </div>
+    <div class="key white" data-note="B3" id="B3" data-octave="3">
+        <span class="note-name">B</span>
+    </div>
+    </div>
+
+    <!-- Start detecting button -->
+    <div class="container">
+        <button id = "select-note-btn" class="start-selecting-button">Start selection</button>
+        <button id="enable-mic" data-tracking="false" class="notusable">Enable detection</button>
+    </div>
+    <div class="range-description">
+        <div id="note" ></div> 
+        <div id="hz" ></div>
+        <div id="detune"></div>
+    </div>
+    <div class="meter">
+        <div class="level" id="level-bar"></div>
+        <div class="value" id="level-value">0</div>
+    </div>
 
     <!-- Next button -->
     <a href="setting4_vocgear.html" class="next_button">Next</a>
@@ -47,17 +168,7 @@
         <a href="setting3_vocalrange.html" class="bottomleft_button">Go back</a>
     </div>
 
-    <!-- Collegamento con lo script js: -->
-    <script src="vt_settings.js"></script>
-
-    <!-- Get the variables saved: -->
-    <!-- selectedLevel variable -->
-    <script>
-        document.getElementById("selectedLevel").innerHTML = "Singing level: " + localStorage.getItem("selectedLevel");
-    </script>
-    <!-- sliderValue variable -->
-    <script>
-        document.getElementById("sliderValue").innerHTML = "Training time: " + localStorage.getItem("sliderValue") + " min";
-    </script>
+    <!-- Collegamento con lo script js for the detection: -->
+    <script src="vt_detectrange.js"></script>
 </body>
 </html>

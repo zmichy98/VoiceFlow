@@ -1,5 +1,3 @@
-
-
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
@@ -17,6 +15,7 @@ let ex_length = 120;
 const pattern = [0, 2, 4, 5, 7, 5, 4, 2, 0];
 let vox = ["A2", "B2"];
 const work = ["es1", "es2"];
+let workout_length = 480;
 
 
 //Takes the variables from the previous pages (stored locally)
@@ -128,6 +127,8 @@ async function setExercise(es) {
     //console.log(speed);
   }
 
+    // Evaluates Exercise LENGTH
+
   async function setExerciseLength() {
     const qN = 60 / tempo;
     const hN = qN * 2;
@@ -136,8 +137,37 @@ async function setExercise(es) {
     const eM = Tone.Frequency(vox[1]).toMidi();
     const range_length = (eM - sM + 1) + (eM - sM)
 
-    ex_length = ((((pattern.length-5) * qN) + hN + qN) * range_length);
+    ex_length = ((((pattern.length-6) * qN) + hN) * range_length);
     console.log("Ex length: " + ex_length)
+  }
+
+  // Evaluates WORKOUT LENGTH
+
+  async function setWorkoutLength() {
+
+    const sM = Tone.Frequency(vox[0]).toMidi(); // Transform to MIDI
+    const eM = Tone.Frequency(vox[1]).toMidi();
+    let range_length_w = (eM - sM + 1) + (eM - sM)
+    console.log("sM: -----------" + eM)
+
+    workout_length = 0
+
+    for (let i=0; i < work.length; i++) {
+        let currEx = work[i];
+
+        const doc = await db.collection("store").doc("exercises").get();
+        const currPatt = doc.data()[currEx];
+
+        const qN = 60 / currPatt[3];
+        const hN = qN * 2;
+
+        let ex_length_i = ((((currPatt.length-6) * qN) + hN) * range_length_w);
+        console.log("Pattern length: " + range_length_w)
+        workout_length += (ex_length_i + 2)
+        console.log("Ex i length: " + ex_length_i)
+        console.log("Workout length: " + workout_length)
+    }
+
   }
 
   
@@ -167,15 +197,6 @@ async function setVocal(vol, man, first, second) {
 }
 
 
-// Evaluates WORKOUT LENGTH
-
-
-
-
-
-
-// Timebar
-
 
 
 
@@ -189,6 +210,7 @@ async function setVocal(vol, man, first, second) {
 
 const playNote = async (note, duration, time) => {
     piano.triggerAttackRelease(note, duration, time);
+    changeKeyColor(note)
 }
 
 // Plays a chord for a certain duration
@@ -201,11 +223,12 @@ const playChord = async (curr, duration, time) => {
     ];
     console.log(`Playing chord: ${chordNotes.join(", ")} for ${duration}`);
     chordNotes.forEach((note) => piano.triggerAttackRelease(note, duration, time));
+    chordNotes.forEach((note) => changeKeyColor(note));
 };
 
 // Plays a pattern
 
-const playPattern = async (curr, duration, now) => {
+const playPattern = async (curr, duration, pTime) => {
     let noteIndex = 7; // Start index of the pattern notes
     let direction = 1; // 1 for ascending, -1 for descending
     //const now = Tone.now(); // Ottieni il tempo corrente in Tone.js
@@ -219,7 +242,7 @@ const playPattern = async (curr, duration, now) => {
         Tone.Transport.schedule((time) => {
             playNote(currNote, duration, time); // Chiamata alla funzione playNote con il tempo corretto
             console.log(`Playing note: ${currNote} for ${duration}`);
-        }, now + timeOffset); // Programma la riproduzione in base al tempo corrente
+        }, pTime + timeOffset); // Programma la riproduzione in base al tempo corrente
 
         noteIndex++;
 
@@ -231,19 +254,18 @@ const playPattern = async (curr, duration, now) => {
 // Plays the exercise
 
 const playExercise = async (es) => {
-    
-    await setVocal(range, manual, firstmanNote, secondmanNote)
+
     await setExercise(es)
 
     await setExerciseLength();
-
-    console.log("Lunghezza esercizio ------------------- " + ex_length)
 
     const noteStart1 = vox[0]; // Starting note for the type of voice
     console.log("Prima nota" + noteStart1)
     const noteStart2 = vox[1]; // Ending note for the type of voice
     console.log("Seconda nota" + noteStart2)
     const qN = 60 / tempo;
+    const dqN = qN * 1.5
+    const hdqN = qN * 0.5
     const hN = qN * 2;
     console.log(qN)
 
@@ -256,9 +278,11 @@ const playExercise = async (es) => {
 
     let now = Tone.now(); // Get current time
 
+    await Tone.Transport.start()
+
     for (let currentMidi = startMidi; currentMidi <= endMidi; currentMidi++) {
 
-        Tone.Transport.stop()
+        //Tone.Transport.stop()
 
         const patt_length = (pattern.length-5) * qN;
         // Schedule playChord at the correct time
@@ -269,20 +293,20 @@ const playExercise = async (es) => {
         // Schedule playPattern at the correct time
         Tone.Transport.schedule((time) => {
             playPattern(currentMidi, qN, time);
-        }, now + hN);  // Wait until after the previous chord (hN)
+        }, now + dqN);  // Wait until after the previous chord (hN)
 
         Tone.Transport.schedule((time) => {
             playChord(currentMidi, qN, time);
-        }, now + patt_length + hN);  // Wait until after the previous chord (hN)
+        }, now + patt_length);  // Wait until after the previous chord (hN)
         
-        Tone.Transport.start()
+        //
 
-        now += hN + patt_length + qN; // Increment time for the next note's start time
+        now += qN + patt_length; // Increment time for the next note's start time
     }
 
     for (let currentMidi = endMidi - 1; currentMidi >= startMidi; currentMidi--) {
 
-        Tone.Transport.stop()
+        //Tone.Transport.stop()
 
         const patt_length = (pattern.length-5) * qN;
         // Schedule playChord at the correct time
@@ -293,15 +317,15 @@ const playExercise = async (es) => {
         // Schedule playPattern at the correct time
         Tone.Transport.schedule((time) => {
             playPattern(currentMidi, qN, time);
-        }, now + hN);  // Wait until after the previous chord (hN)
+        }, now + dqN);  // Wait until after the previous chord (hN)
 
         Tone.Transport.schedule((time) => {
             playChord(currentMidi, qN, time);
-        }, now + patt_length + hN);  // Wait until after the previous chord (hN)
+        }, now + patt_length);  // Wait until after the previous chord (hN)
         
-        Tone.Transport.start()
+        //Tone.Transport.start()
 
-        now += hN + patt_length + qN; // Increment time for the next note's start time
+        now += qN + patt_length; // Increment time for the next note's start time
     }
 }
 
@@ -335,10 +359,29 @@ const delay = (seconds) => new Promise(resolve => setTimeout(resolve, seconds * 
 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("playPattern").addEventListener("click", async function() {
-        await Tone.start();  // Avvia Tone.js
 
-        console.log("Audio context started");
+        await setVocal(range, manual, firstmanNote, secondmanNote)
         await setWorkout(workout);  // Imposta l'allenamento
+        await setWorkoutLength()
+
+        //timebar
+        const progress = document.getElementById("progress");
+        const duration = workout_length + 5;
+
+        console.log("Duration ----------------------" + duration)
+      
+        progress.style.width = "0"; // Reset della barra
+        progress.style.transition = `${duration}s linear`; // Imposta la durata dell'animazione
+        progress.style.width = "100%"; // Riempie la barra
+
+        //attendi
+        await delay(2);
+
+        //Play Workout
+        await Tone.start();  // Avvia Tone.js
+        console.log("Audio context started");
+
         playWorkout(work)
+        //playExercise(eser)
     });
 });

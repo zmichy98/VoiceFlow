@@ -625,7 +625,7 @@ input[type="range"]:active {
 #progress {
   width: 0;
   height: 100%;
-  background-color: green; /* Starting color */
+  background-color: #4d9246; /* Starting color */
   transition: width 10s linear, background-color 10s ease; /* Smooth transition for color and width */
 }
 

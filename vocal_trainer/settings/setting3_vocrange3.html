@@ -10,7 +10,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800&display=swap" rel="stylesheet"></head>
     <title>VoiceFlow</title>
 </head>
+<style>
+    /* Hover effect for white keys */
+    .key.white:hover {
+        background-color: #e0e0e0;
+        transform: scale(1.01);
+    }
 
+    /* Hover effect for black keys */
+    .key.black:hover {
+        background-color: #444;
+        transform: scale(1.01);
+    }
+</style>
 <body data-setting="3">
 
     <div class="settings-bar">
@@ -169,6 +181,6 @@
     </div>
 
     <!-- Collegamento con lo script js for the detection: -->
-    <script src="vt_detectrange.js"></script>
+    <script src="vt_settings.js"></script>
 </body>
 </html>

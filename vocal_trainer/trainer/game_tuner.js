@@ -1,7 +1,4 @@
 /*-------------- VARIABLES --------------*/
-let firstNote = null;
-let secondNote = null;
-
 let audioContext = null;
 let currStream = null; // global variable to save the audio stream
 let source = null; // Audio input (microphone stream)
@@ -149,40 +146,6 @@ enableMicBtn.addEventListener('click', () => {
 });
 
 /*-------------- DETECT THE SINGED NOTE: --------------*/
-// Continuously detects the pitch and updates the UI.
-function getPitch(goalNote, duration){
-    goalFreq = noteFrequencies.find(n => n.note === goalNote).freq; 
-
-    // repetitive Ui /window.requestAnimationFrame
-    analyser.getFloatTimeDomainData(buffer);
-    
-    let frequencyinHz = autoCorrelate(buffer, audioContext.sampleRate);
-    console.log("Singed freq:" + frequencyinHz);
-    
-    if(frequencyinHz === -1){
-      hzElem.innerHTML = "No note detected";
-    } else{
-        let detune = getNotediff(frequencyinHz);
-        hzElem.innerHTML = "The frequency you are singing is approximatly " + Math.round(frequencyinHz) + " Hz";
-        detuneElem.innerHTML = "You are detuned by " + detune + " cents";
-
-        if(Math.abs(detune) < tuneTollerance){
-            console.log("Note singed rigth");
-            main();
-            return 1;
-        }
-
-        updateLevelMeter(detune);
-    }
-
-    // Continue to call the function:
-
-    if (!window.requestAnimationFrame){
-        window.requestAnimationFrame = window.webkitRequestAnimationFrame;
-    }
-    requestAnimationFrameId = window.requestAnimationFrame(getPitch);
-}
-
 function getPitch(goalNote, duration) {
     const startTime = performance.now(); // Record the start time
     const elapsedTime = performance.now() - startTime; // Calculate elapsed time

@@ -94,9 +94,8 @@ function getMicrophoneStream(){
         })
         // On error:
         .catch((err) => {
-            // handle the error
-            console.log('Did not get microphone stream: \n' + err);
-            enableMicBtn.innerHTML = "Enable Microphone"
+            console.error('Error accessing microphone:', err);
+            alert("Microphone access is required for this application. Please enable it.");
         });
 }
 
@@ -127,13 +126,9 @@ function main(){
     enableMicBtn.setAttribute("data-tracking", !isTracking)
 
     if (!isTracking === true){
-        noteElem.innerHTML = "Sing " + goalNote + ", frequency: " + goalFreq + " Hz";
-        hzElem.innerHTML = "Please wait the tuner to load"
-        enableMicBtn.innerHTML = "enabling ..."
+        noteElem.innerHTML = " ";
+        hzElem.innerHTML = " "
         getMicrophoneStream();
-        enableMicBtn.innerHTML = "Disable detection"
-        enableMicBtn.classList.add('notusable');
-        selectNoteBtn.classList.remove('notusable');
     }
     else{
         stopMicrophoneStream()
@@ -141,14 +136,14 @@ function main(){
     }
 }
 
-// When the button is clicked the microphone is turned on
-enableMicBtn.addEventListener('click', () => {
-  main();
-});
+// When the page is opened turn the microphone on microphone is turned on
+window.onload = function() {
+    main();
+};
 
 /*-------------- DETECT THE SINGED NOTE: --------------*/
+let startTime = performance.now(); // Record the start time
 function getPitch(goalNote, duration) {
-    const startTime = performance.now(); // Record the start time
     const elapsedTime = performance.now() - startTime; // Calculate elapsed time
 
     if (elapsedTime >= duration) {
@@ -182,8 +177,9 @@ function getPitch(goalNote, duration) {
     updateLevelMeter(detune); // Update UI or level meter
     }
 
-    // Continue to call the function using requestAnimationFrame
-    requestAnimationFrameId = window.requestAnimationFrame(processPitch);   
+    // Continue to call the function using requestAnimationFrame  
+    requestAnimationFrameId = window.requestAnimationFrame(() => getPitch(goalNote, duration));
+
 }
 
 /*-------------- TUNER AND FUNCTIONS: --------------*/
@@ -239,49 +235,23 @@ function getNotediff(freq, goalFreq) {
   return centsDetune;
 }
 
-function updateLevelMeter(value) { // Function to update the level meter based on the cents value
-    const percentage = value + 50;
+function updateLevelMeter(value, tuneTolerance = 30) {
+    if (value === null || value === undefined) {
+        levelBar.className = "level norange";
+        levelBar.style.width = '50%';
+        levelValue.innerText = "No value";
+        return;
+    }
+    const maxRange = 100;
+    const normalizedValue = Math.max(-maxRange, Math.min(maxRange, value));
+    const percentage = ((normalizedValue + maxRange) / (2 * maxRange)) * 100;
 
-    // Write the value in the bar
     levelBar.style.width = percentage + '%';
     levelValue.innerText = value;
 
-    // Change color based on value
-    if (value < - tuneTollerance) {
-        levelBar.className = "level low";
-    } else if (value > tuneTollerance) {
-        levelBar.className = "level high";
-    } else if (value === null) {
-        levelBar.className = "level norange";
-    } else {
-        levelBar.className = "level mid";
-    }
-}
+    let levelClass = "level mid";
+    if (normalizedValue < -tuneTolerance) levelClass = "level low";
+    else if (normalizedValue > tuneTolerance) levelClass = "level high";
 
-function updateLevelMeter(value, tuneTolerance = 5) {
-  if (value === null || value === undefined) {
-      levelBar.className = "level norange";
-      levelBar.style.width = '50%'; // Neutral position
-      levelValue.innerText = "No value";
-      return;
-  }
-
-  // Map value to a percentage (assuming typical range of -100 to 100)
-  const maxRange = 100; // Maximum absolute value for visualization
-  const normalizedValue = Math.max(-maxRange, Math.min(maxRange, value)); // Clamp between -100 and 100
-  const percentage = ((normalizedValue + maxRange) / (2 * maxRange)) * 100;
-
-  // Update bar width and display value
-  levelBar.style.width = percentage + '%';
-  levelValue.innerText = value;
-
-  // Assign classes based on value
-  let levelClass = "level mid"; // Default to "mid"
-  if (normalizedValue < -tuneTolerance) {
-      levelClass = "level low";
-  } else if (normalizedValue > tuneTolerance) {
-      levelClass = "level high";
-  }
-
-  levelBar.className = levelClass;
+    levelBar.className = levelClass;
 }

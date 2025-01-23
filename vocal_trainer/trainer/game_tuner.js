@@ -10,6 +10,7 @@ const selectNoteBtn = document.getElementById('select-note-btn');
 const noteButtons = document.querySelectorAll('.key');
 
 const tuneTollerance = 30;
+
 const constraints = {audio: true, video: false};
 const enableMicBtn = document.getElementById("enable-mic");
 const noteElem = document.getElementById("note");

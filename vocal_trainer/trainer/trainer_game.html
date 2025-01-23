@@ -11,6 +11,16 @@
 </head>
 
 <body>
+    <!-- Title of the exercise -->
+    <div id="ex-title" class="ex-title">
+        <h2> Title </h2>
+    </div>
+
+    <!-- Exercise description -->
+    <div id="ex-description" class="ex-description">
+        <p> Description </p>
+    </div>
+
     <!-- Keyboard -->
     <div class="keyboard">
         <!-- First Octave -->
@@ -127,7 +137,17 @@
             <span class="note-name"></span>
         </div>
     </div>
-    
+
+    <div class="ex-description"></div>
+        <div id="note" > Note to play </div> 
+        <div id="hz" > Hz of the singer </div>
+        <div id="detune"> Detune  </div>
+    </div>
+    <div class="meter">
+        <div class="level" id="level-bar"></div>
+        <div class="value" id="level-value">0</div>
+    </div>
+
     <!-- Progress Bar -->
     <div id="progress-bar">
         <div id="progress"></div>
@@ -161,6 +181,9 @@
     
     <!-- Link to script_ceren js: -->
     <script type="module" src="script_ceren.js"></script>
+
+    <!-- Link to game_tuner js: -->
+    <script type="module" src="game_tuner.js"></script>
     
     <!-- Include Firebase SDK via CDN -->
     <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>

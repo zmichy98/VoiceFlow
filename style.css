@@ -672,3 +672,25 @@ input[type="range"]:active {
   color: #fff;
   font-size: 18px;
 }
+
+/*-------------------- Game -------------------*/
+.ex-title {
+  font-size: 1.5em;
+  color: #E0E0E0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-align: center;
+  text-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+  padding: 10px; /* Reduced padding */
+  border-radius: 5px;
+  margin-top: 5px; /* Increased margin-top to create more space */
+  margin-bottom: 5px;
+}
+
+.ex-description {
+  font-size: 1.2em; /* Description text size */
+  color: #E0E0E0; /* Gray text color */
+  text-align: center;
+  margin-top: 5px; /* Space between button and description */
+  width: 350px; /* Adjust size */
+}

@@ -1,0 +1,123 @@
+<html lang="en"></html>
+    <head>
+        <title>Pitch tracking app</title>
+        <meta name="viewport" content="width=devixe-width, initial-scale=1"></meta>
+        <meta name="description" content="This app pitch track your voice and tells you your pitch."></meta>
+        
+        <style>
+            /* General body styling */
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f3f3f3;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 36px;
+                margin-bottom: 20px;
+                color: #333;
+            }
+
+            /* Container for note, hz, detune, etc. */
+            .container {
+                margin-bottom: 40px;
+            }
+
+            #note {
+                font-size: 72px;
+                margin: 10px 0;
+                font-weight: bold;
+                color: #444;
+            }
+
+            #hz, #detune, #detune-warning {
+                font-size: 24px;
+                margin: 5px 0;
+                color: #555;
+            }
+
+            /* Button to enable microphone */
+            #enable-mic {
+                background-color: #4CAF50;
+                color: white;
+                padding: 12px 24px;
+                font-size: 18px;
+                border: none;
+                border-radius: 25px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+                margin-bottom: 20px;
+            }
+
+            #enable-mic:hover {
+                background-color: #45a049;
+            }
+
+            /* Pitch meter styling */
+            .meter {
+                width: 80%;
+                max-width: 500px;
+                height: 30px;
+                background-color: #e0e0e0;
+                border-radius: 15px;
+                position: relative;
+                margin-bottom: 20px;
+            }
+
+            .level {
+                height: 100%;
+                width: 0%;
+                border-radius: 15px;
+                transition: width 0.3s ease;
+            }
+
+            .level.low {
+                background-color: red;
+            }
+
+            .level.mid {
+                background-color: yellow;
+            }
+
+            .level.high {
+                background-color: green;
+            }
+
+            .level.high {
+                background-color: rgba(0, 0, 0, 0.839);
+            }
+
+            .value {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                font-weight: bold;
+                color: #fff;
+                font-size: 18px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Pitch Tracker</h1>
+            <button id="enable-mic" data-tracking="false">Enable microphone</button>
+            <div id="note">-</div> <!-- note -->
+            <div id="hz">-</div> <!-- heartz -->
+            <div id="detune">-</div> <!-- in cents -->
+            <div id="detune-warning">-</div> <!-- flat or sharp -->
+        </div>
+        <div class="meter">
+            <div class="level" id="level-bar"></div>
+            <div class="value" id="level-value">0</div>
+        </div>
+        <script src="tuner.js"></script>
+    </body>
+</html>

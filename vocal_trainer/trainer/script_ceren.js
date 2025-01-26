@@ -21,7 +21,6 @@ let secondmanNote = "D2"
 
 
 //Takes the variables from the previous pages (stored locally)
-document.addEventListener("DOMContentLoaded", () => {
     manual = localStorage.getItem("manual");
     range = localStorage.getItem("selectedRange").toString();
     firstmanNote = localStorage.getItem("firstNote").toString();
@@ -31,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
     experiece = localStorage.getItem("selectedLevel").toString(); // string: Beginner, Intermediate, Advanced
     mask = localStorage.getItem("mask"); // Can eather be true or false
     laxVox = localStorage.getItem("laxVox"); // Can eather be true or false
-});
 
 //Decides Workout to be played (TO BE DONE)
 

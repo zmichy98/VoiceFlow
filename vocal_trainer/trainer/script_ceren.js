@@ -16,6 +16,8 @@ const pattern = [0, 2, 4, 5, 7, 5, 4, 2, 0];
 let vox = ["A2", "B2"];
 const work = ["es1", "es2"];
 let workout_length = 480;
+let firstmanNote = "C2"
+let secondmanNote = "D2"
 
 
 //Takes the variables from the previous pages (stored locally)

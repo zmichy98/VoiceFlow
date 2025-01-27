@@ -441,7 +441,7 @@ const noteFrequencies = [
 
 
 /*-------------- PROGRESS BAR --------------*/
-/* 
+/*
 document.addEventListener("DOMContentLoaded", () => {
   const sliderValue = localStorage.getItem("sliderValue") || 0;
   const totalTime = parseInt(sliderValue);

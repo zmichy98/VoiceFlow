@@ -121,11 +121,15 @@ function stopMicrophoneStream(){
 }
 
 function main(){
+
+    let isTracking = false;
+
     console.log('I am hooked up to enableMicBtn')
     if(enableMicBtn){
-        let isTracking = enableMicBtn.getAttribute("data-tracking") == "true";
+        isTracking = enableMicBtn.getAttribute("data-tracking") == "true";
+        enableMicBtn.setAttribute("data-tracking", !isTracking)
     }
-    enableMicBtn.setAttribute("data-tracking", !isTracking)
+    
 
     if (!isTracking === true){
         noteElem.innerHTML = " ";

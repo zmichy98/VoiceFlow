@@ -55,6 +55,21 @@ laxVox = false;
 
 // HELPER FUNCTIONS
 
+// Shows all the variables values
+async function showValues() {
+    console.log("***************** VARIABLES ********************")
+    console.log("Workout: " + workout);
+    console.log("Vox type: " + range);
+    console.log("Training time: " + exDuration);
+    console.log("Manual? " + man);
+    console.log("Mask? " + mask);
+    console.log("Lax Vox? " + laxVox);
+    console.log("Experience: " + experience);
+    await setVocal(range, manual, firstmanNote, secondmanNote)
+    console.log("Vox range: " + vox);
+    console.log("*************************************************")
+}
+
 // Configures the piano
 const piano = new Tone.Sampler({
     urls: {
@@ -373,6 +388,7 @@ const delay = (seconds) => new Promise(resolve => setTimeout(resolve, seconds * 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("playPattern").addEventListener("click", async function() {
 
+        await showValues();
         await setVocal(range, manual, firstmanNote, secondmanNote)
         await setWorkout(workout);  // Imposta l'allenamento
         await setWorkoutLength()

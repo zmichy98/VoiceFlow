@@ -626,7 +626,7 @@ input[type="range"]:active {
   width: 0;
   height: 100%;
   background-color: #4d9246; /* Starting color */
-  transition: width 10s linear, background-color 10s ease; /* Smooth transition for color and width */
+  transition: width 10s linear, background-color 10s ease; /*maybe this?: width 1s ease-in-out;*/
 }
 
 /*-------------------- Pitch meter -------------------*/

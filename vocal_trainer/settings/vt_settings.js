@@ -664,9 +664,12 @@ function main(){ //Main function to activate and stop Microphone streaming
     }
 }
 
-enableMicBtn.addEventListener('click', () => {
-  main();
-});
+
+if (enableMicBtn) {
+    enableMicBtn.addEventListener('click', () => {
+      main();
+    });
+}
 
 /*-------------- STORE VARIABLES --------------*/
 function saveNote(goalNote) {

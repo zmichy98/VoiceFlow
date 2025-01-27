@@ -16,18 +16,20 @@ const pattern = [0, 2, 4, 5, 7, 5, 4, 2, 0];
 let vox = ["A2", "B2"];
 const work = ["es1", "es2"];
 let workout_length = 480;
+let firstmanNote = "C2"
+let secondmanNote = "D2"
 
 
 //Takes the variables from the previous pages (stored locally)
-manual = localStorage.getItem("manual");
-range = localStorage.getItem("selectedRange").toString();
-let firstmanNote = localStorage.getItem("firstNote").toString();
-let secondmanNote = localStorage.getItem("secondNote").toString();
-// To be inserted: time, experience, tools
-time = localStorage.getItem("sliderValue").toString(); // is a string now 5,10,15,20
-experiece = localStorage.getItem("selectedLevel").toString(); // string: Beginner, Intermediate, Advanced
-mask = localStorage.getItem("mask"); // Can eather be true or false
-laxVox = localStorage.getItem("laxVox"); // Can eather be true or false
+    manual = localStorage.getItem("manual");
+    range = localStorage.getItem("selectedRange").toString();
+    firstmanNote = localStorage.getItem("firstNote").toString();
+    secondmanNote = localStorage.getItem("secondNote").toString();
+    // To be inserted: time, experience, tools
+    time = localStorage.getItem("sliderValue").toString(); // is a string now 5,10,15,20
+    experiece = localStorage.getItem("selectedLevel").toString(); // string: Beginner, Intermediate, Advanced
+    mask = localStorage.getItem("mask"); // Can eather be true or false
+    laxVox = localStorage.getItem("laxVox"); // Can eather be true or false
 
 //Decides Workout to be played (TO BE DONE)
 

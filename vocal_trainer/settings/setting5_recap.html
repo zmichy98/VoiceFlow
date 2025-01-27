@@ -34,7 +34,7 @@
     </nav>
 
     <div>
-        <button class="play-button" onclick="location.href='../trainer/trainer_game.html'">PLAY</button>
+        <button class="play-button" id="play-button" onclick="location.href='../trainer/trainer_game.html'">PLAY</button>
     </div>
     
     <!-- Bottom left button container-->
@@ -50,8 +50,10 @@
         document.getElementById("selectedLevel").innerHTML = "Singing level: " + localStorage.getItem("selectedLevel");
         document.getElementById("sliderValue").innerHTML = "Training time: " + localStorage.getItem("sliderValue") + " min";
         document.getElementById("selectedRange").innerHTML = "Vocal range: " + localStorage.getItem("selectedRange");
-        document.getElementById("selectedGear").innerHTML = "Gear: " + localStorage.getItem("selectedGear");
-        document.getElementById("manual").innerHTML = "Manual? " + localStorage.getItem("manual");
+        document.getElementById("selectedGear").innerHTML = "Gear: " + (localStorage.getItem("selectedGear") || "No gear selected");
+        document.getElementById("manual").innerHTML = "Manual? " + (localStorage.getItem("manual") || "No");
+        document.getElementById("mask").innerHTML = localStorage.getItem("mask") || "Not selected";
+        document.getElementById("laxVox").innerHTML = localStorage.getItem("laxVox") || "Not selected";
     </script>
 </body>
 </html>

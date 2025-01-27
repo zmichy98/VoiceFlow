@@ -52,11 +52,10 @@
     <!-- Get the variables saved: -->
     <!-- selectedLevel variable -->
     <script>
-        document.getElementById("selectedLevel").innerHTML = "Singing level: " + localStorage.getItem("selectedLevel");
-    </script>
-    <!-- sliderValue variable -->
-    <script>
-        document.getElementById("sliderValue").innerHTML = "Training time: " + localStorage.getItem("sliderValue");
+        document.addEventListener('DOMContentLoaded', () => {
+            //document.getElementById("selectedLevel").innerHTML = "Singing level: " + localStorage.getItem("selectedLevel");
+            console.log("Singing level: " + localStorage.getItem("selectedLevel"))
+        });
     </script>
 </body>
 </html>

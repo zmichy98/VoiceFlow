@@ -11,6 +11,32 @@
 </head>
 
 <body>
+    <!-- Title of the exercise -->
+    <div id="ex-title" class="ex-title">
+        <h2> Title </h2>
+    </div>
+
+    <!-- Exercise description -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Get the values from localStorage or provide default text
+            const selectedLevel = localStorage.getItem("selectedLevel") || "Not selected";
+            console.log("Selected level: " + selectedLevel)
+            const sliderValue = localStorage.getItem("sliderValue") || "Not set";
+            console.log("Training time: " + sliderValue)
+            const selectedGear = localStorage.getItem("selectedGear") || "No gear selected";
+            console.log("Gear: " + selectedGear)
+    
+            // Create the description message
+            const descriptionMessage = `Your exercise for vocal warm-up for ${selectedLevel} level of ${sliderValue} minutes with ${selectedGear} is now ready!`;
+    
+            // Update the description in the page
+            document.getElementById("ex-description").innerHTML = `<p>${descriptionMessage}</p>`;
+        });
+    </script>
+    <div id="ex-description" class="ex-description">
+    </div>
+
     <!-- Keyboard -->
     <div class="keyboard">
         <!-- First Octave -->
@@ -61,7 +87,7 @@
         <div class="key white" data-note="D2" data-octave="2">
             <span class="note-name"></span>
         </div>
-        <div class="key black" data-note="D#" data-octave="2">
+        <div class="key black" data-note="D#2" data-octave="2">
             <span class="note-name"></span>
         </div>
         <div class="key white" data-note="E2" data-octave="2">
@@ -73,7 +99,7 @@
         <div class="key black" data-note="F#2" data-octave="2">
             <span class="note-name"></span>
         </div>
-        <div class="key white" data-note="G" data-octave="2">
+        <div class="key white" data-note="G2" data-octave="2">
             <span class="note-name"></span>
         </div>
         <div class="key black" data-note="G#2" data-octave="2">
@@ -127,7 +153,17 @@
             <span class="note-name"></span>
         </div>
     </div>
-    
+
+    <div class="ex-description"></div>
+        <div id="note" > Note to play </div> 
+        <div id="hz" > Hz of the singer </div>
+        <div id="detune"> Detune  </div>
+    </div>
+    <div class="meter">
+        <div class="level" id="level-bar"></div>
+        <div class="value" id="level-value">0</div>
+    </div>
+
     <!-- Progress Bar -->
     <div id="progress-bar">
         <div id="progress"></div>
@@ -139,25 +175,33 @@
 
 
     <!-- Link to settings script js: -->
-    <script src="vtsettings.js"></script>
+    <script src="../settings/vt_settings.js"></script>
 
     <!-- Get the variables from settings saved: -->
     <script>
-    // selectedLevel variable
-        document.getElementById("selectedLevel").innerHTML = localStorage.getItem("selectedLevel");
-    // sliderValue variable
-        document.getElementById("sliderValue").innerHTML = localStorage.getItem("sliderValue");
-    // manual variable
-       document.getElementById("manual").innerHTML = localStorage.getItem("manual"); 
-    // selectedRange variable
-        document.getElementById("selectedRange").innerHTML = localStorage.getItem("selectedRange");
-    // manual range note variables
-        document.getElementById("firstNote").innerHTML = localStorage.getItem("firstNote");
-        document.getElementById("secondNote").innerHTML = localStorage.getItem("secondNote");
+        document.addEventListener('DOMContentLoaded', () => {
+            // selectedLevel variable
+                document.getElementById("selectedLevel").innerHTML = localStorage.getItem("selectedLevel");
+            // sliderValue variable
+                document.getElementById("sliderValue").innerHTML = localStorage.getItem("sliderValue");
+            // manual variable
+                document.getElementById("manual").innerHTML = localStorage.getItem("manual"); 
+            // selectedRange variable
+                document.getElementById("selectedRange").innerHTML = localStorage.getItem("selectedRange");
+            // manual range note variables
+                document.getElementById("firstNote").innerHTML = localStorage.getItem("firstNote");
+                document.getElementById("secondNote").innerHTML = localStorage.getItem("secondNote");
+            // Gear variables
+                document.getElementById("mask").innerHTML = localStorage.getItem("mask");
+                document.getElementById("laxVox").innerHTML = localStorage.getItem("laxVox");
+        });
     </script>
     
     <!-- Link to script_ceren js: -->
     <script type="module" src="script_ceren.js"></script>
+
+    <!-- Link to game_tuner js: -->
+    <script type="module" src="game_tuner.js"></script>
     
     <!-- Include Firebase SDK via CDN -->
     <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>

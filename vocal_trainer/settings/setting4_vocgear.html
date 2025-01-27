@@ -20,12 +20,11 @@
       <div class="setting">5</div>
     </div>
 
-
     <h2>What vocal training tools do you have?</h2>
 
     <div class="gear-description-container">
         <div class="button-gear-item">
-          <button id="mask" class="button-gear"> Mask</button>
+          <button id="mask" class="button-gear">Mask</button>
           <p class="gear-description">A specialized mask designed to improve breathing control and enhance vocal performance during training.</p>
           <img src="imgVoiceMask.jpg" alt="Mask Image" class="gear-image">
         </div>
@@ -38,17 +37,6 @@
           <button id="none" class="button-gear">None of them</button>
         </div>
       </div>
-    
-    <!-- Setting menu 
-    <nav class="navbar">
-        <h3 class="navbar-title">Settings:</h3>
-        <ul>
-            <li><a href="setting1_level.html" id="selectedLevel"> </a></li>
-            <li><a href="setting2_time.html" id="sliderValue"></a> </li>
-            <li><a href="setting3_vocrange.html" id="selectedRange"></a> </li>
-        </ul>
-    </nav>
-    -->
 
     <!-- Next button-->
     <a href="setting5_recap.html" class="next_button">Next</a>
@@ -60,12 +48,5 @@
 
     <!-- Collegamento con lo script js: -->
     <script src="vt_settings.js"></script>
-
-    <!-- Get the variables saved: -->
-    <script>
-        document.getElementById("selectedLevel").innerHTML = "Singing level: " + localStorage.getItem("selectedLevel");
-        document.getElementById("sliderValue").innerHTML = "Training time: " + localStorage.getItem("sliderValue") + " min";
-        document.getElementById("selectedRange").innerHTML = "Vocal range: " + localStorage.getItem("selectedRange");
-    </script>
 </body>
 </html>

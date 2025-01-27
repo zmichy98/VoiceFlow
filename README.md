@@ -13,11 +13,10 @@ Selam!
 THINGS TO DO:
 
 GENERAL
-* Piano keyboard with more octaves
+* Piano keyboard with more octaves. HOW MANY?
 
 FIRST PAGES
 •⁠  ⁠Help me find my range -> to be checked
-•⁠  ⁠Cursor on the Selection of the notes -> something has to change
 * Tuner page at the beginning
 
 VOCAL TRAINER

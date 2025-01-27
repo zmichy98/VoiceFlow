@@ -626,7 +626,7 @@ input[type="range"]:active {
   width: 0;
   height: 100%;
   background-color: #4d9246; /* Starting color */
-  transition: width 10s linear, background-color 10s ease; /* Smooth transition for color and width */
+  transition: width 10s linear, background-color 10s ease; /*maybe this?: width 1s ease-in-out;*/
 }
 
 /*-------------------- Pitch meter -------------------*/
@@ -671,4 +671,26 @@ input[type="range"]:active {
   font-weight: bold;
   color: #fff;
   font-size: 18px;
+}
+
+/*-------------------- Game -------------------*/
+.ex-title {
+  font-size: 1.5em;
+  color: #E0E0E0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-align: center;
+  text-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+  padding: 10px; /* Reduced padding */
+  border-radius: 5px;
+  margin-top: 5px; /* Increased margin-top to create more space */
+  margin-bottom: 5px;
+}
+
+.ex-description {
+  font-size: 1.2em; /* Description text size */
+  color: #E0E0E0; /* Gray text color */
+  text-align: center;
+  margin-top: 5px; /* Space between button and description */
+  width: 350px; /* Adjust size */
 }

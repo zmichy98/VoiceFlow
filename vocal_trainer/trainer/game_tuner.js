@@ -149,7 +149,7 @@ window.onload = function() {
 
 /*-------------- DETECT THE SINGED NOTE: --------------*/
 let startTime = performance.now(); // Record the start time
-function getPitch(goalNote, duration) {
+export function getGamePitch(goalNote, duration) {
     const elapsedTime = performance.now() - startTime; // Calculate elapsed time
 
     if (elapsedTime >= duration) {

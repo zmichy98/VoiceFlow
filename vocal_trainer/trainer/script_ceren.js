@@ -41,7 +41,7 @@ let laxVox = false;
 
 //Variable values (for testing only)
 const workout = "wo1";
-range = "Tenor";
+range = "Bass";
 eser = "es3";
 exDuration = 30;
 manual = false;
@@ -57,17 +57,21 @@ laxVox = false;
 
 // Shows all the variables values
 async function showValues() {
-    console.log("***************** VARIABLES ********************")
+    console.log("*************************************************")
+    console.log("*************************************************")
+    console.log("***************** VARIABLES *********************")
     console.log("Workout: " + workout);
     console.log("Vox type: " + range);
     console.log("Training time: " + exDuration);
-    console.log("Manual? " + man);
+    console.log("Manual? " + manual);
     console.log("Mask? " + mask);
     console.log("Lax Vox? " + laxVox);
     console.log("Experience: " + experience);
     await setVocal(range, manual, firstmanNote, secondmanNote)
     console.log("Vox range: " + vox);
-    console.log("*************************************************")
+    console.log("**************************************************")
+    console.log("**************************************************")
+    console.log("**************************************************")
 }
 
 // Configures the piano

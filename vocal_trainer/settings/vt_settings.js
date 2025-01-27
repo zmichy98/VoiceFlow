@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Check if the range description exists in the DOM
   if (!rangeDescription) {
-    console.error('range-description element not found.');
+    console.log('range-description element not found.');
     return;
   }
 
@@ -712,6 +712,12 @@ function saveNote(goalNote) {
 }
 
 function finalizeSelection() {
+
+  // Initially hide the "Next" button
+  if(nextButton) {
+    nextButton.style.display = "none";
+  }
+
   enableMicBtn.classList.add('notusable');
   selectNoteBtn.classList.add('notusable');
   // Save the selected range to localStorage
@@ -720,6 +726,9 @@ function finalizeSelection() {
   localStorage.setItem("firstNote", firstNote);
   localStorage.setItem("secondNote", secondNote);
   localStorage.setItem("selectedRange", `from ${firstNote} to ${secondNote}`);
+
+  // Show the "Next" button
+  nextButton.style.display = "inline-block"; // Show the "Next" button if any option is selected
 
   // Optionally log for debugging
   console.log('First Note:', firstNote, 'Second Note:', secondNote);

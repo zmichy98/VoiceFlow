@@ -690,6 +690,7 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("Audio context started");
 
         playWorkout(work)
-        //playExercise(eser)
+
+        // Insert Button to go to game statistics
     });
 });

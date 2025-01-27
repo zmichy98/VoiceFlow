@@ -18,6 +18,10 @@ const work = ["es1", "es2"];
 let workout_length = 480;
 let firstmanNote = "C2"
 let secondmanNote = "D2"
+let time = 5
+let experience = "beginner";
+let mask = false;
+let laxVox = false;
 
 
 //Takes the variables from the previous pages (stored locally)
@@ -27,7 +31,7 @@ let secondmanNote = "D2"
     secondmanNote = localStorage.getItem("secondNote").toString();
     // To be inserted: time, experience, tools
     time = localStorage.getItem("sliderValue").toString(); // is a string now 5,10,15,20
-    experiece = localStorage.getItem("selectedLevel").toString(); // string: Beginner, Intermediate, Advanced
+    experience = localStorage.getItem("selectedLevel").toString(); // string: Beginner, Intermediate, Advanced
     mask = localStorage.getItem("mask"); // Can either be true or false
     laxVox = localStorage.getItem("laxVox"); // Can either be true or false
 
@@ -41,6 +45,10 @@ range = "Tenor";
 eser = "es3";
 exDuration = 30;
 manual = false;
+experience = "beginner";
+time = 5;
+mask = false;
+laxVox = false;
 
 
 ////////////////////////////////////////////////////////

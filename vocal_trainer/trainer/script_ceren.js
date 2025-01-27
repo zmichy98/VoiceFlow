@@ -28,8 +28,8 @@ let secondmanNote = "D2"
     // To be inserted: time, experience, tools
     time = localStorage.getItem("sliderValue").toString(); // is a string now 5,10,15,20
     experiece = localStorage.getItem("selectedLevel").toString(); // string: Beginner, Intermediate, Advanced
-    mask = localStorage.getItem("mask"); // Can eather be true or false
-    laxVox = localStorage.getItem("laxVox"); // Can eather be true or false
+    mask = localStorage.getItem("mask"); // Can either be true or false
+    laxVox = localStorage.getItem("laxVox"); // Can either be true or false
 
 //Decides Workout to be played (TO BE DONE)
 

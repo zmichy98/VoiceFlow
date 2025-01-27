@@ -431,6 +431,38 @@ const noteFrequencies = [
     { note: "C6", freq: 1046.50 }
 ];
 
+/*-------------- PROGRESS BAR --------------*/
+
+document.addEventListener("DOMContentLoaded", () => {
+  const sliderValue = localStorage.getItem("sliderValue") || 0;
+  const totalTime = parseInt(sliderValue);
+
+  const progressBar = document.getElementById("progress-bar");
+  const progress = document.getElementById("progress");
+
+  // initial progress bar width
+  progress.style.width = '0%';
+
+  // total duration for the animation in [ms]
+  const totalDuration = totalTime * 60 * 1000;
+
+  // animation
+  let elapsedTime = 0;
+  const interval = setInterval(() => {
+      if (elapsedTime < totalDuration) {
+          elapsedTime += 1000; // increase time by 1 second
+          const percentage = (elapsedTime / totalDuration) * 100; // calculate percentage
+
+          // update the progress bar width and turn it green
+          progress.style.width = percentage + '%';
+          progress.style.backgroundColor = `rgb(${255 - percentage}, ${percentage}, 0)`; //change from white to green
+
+      } else {
+          clearInterval(interval); // time is up
+      }
+  }, 1000); // Update the progress every second
+});
+
 /*-------------- TUNER --------------*/
 function autoCorrelate( buf, sampleRate ) {
 	var SIZE = buf.length;

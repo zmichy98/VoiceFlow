@@ -17,8 +17,21 @@
     </div>
 
     <!-- Exercise description -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Get the values from localStorage or provide default text
+            const selectedLevel = localStorage.getItem("selectedLevel") || "Not selected";
+            const sliderValue = localStorage.getItem("sliderValue") || "Not set";
+            const selectedGear = localStorage.getItem("selectedGear") || "No gear selected";
+    
+            // Create the description message
+            const descriptionMessage = `Your exercise for vocal warm-up for ${selectedLevel} level of ${sliderValue} minutes with ${selectedGear} is now ready!`;
+    
+            // Update the description in the page
+            document.getElementById("ex-description").innerHTML = `<p>${descriptionMessage}</p>`;
+        });
+    </script>
     <div id="ex-description" class="ex-description">
-        <p> Description </p>
     </div>
 
     <!-- Keyboard -->

@@ -297,21 +297,23 @@ function chooseWorkout() {
     
     }
 
-    console.log("Chosen workout: " + workout)
+    console.log("Chosen workout: " + w)
 
 }
 
 
 //Variable values (for testing only)
-const workout = w;
-range = "Alto";
-eser = "es3";
-exDuration = 30;
-manual = false;
-experience = "beginner";
-time = 5;
-mask = false;
-laxVox = false;
+async function testingValues() {
+    range = "Alto";
+    eser = "es3";
+    exDuration = 30;
+    manual = false;
+    experience = "beginner";
+    time = 5;
+    mask = false;
+    laxVox = false;
+}
+
 
 
 ////////////////////////////////////////////////////////
@@ -323,7 +325,7 @@ async function showValues() {
     console.log("*************************************************")
     console.log("***************** VARIABLES *********************")
     console.log("*************************************************")
-    console.log("Workout: " + workout);
+    console.log("Workout: " + w);
     console.log("Vox type: " + range);
     console.log("Training time: " + exDuration);
     console.log("Manual? " + manual);
@@ -655,9 +657,11 @@ const delay = (seconds) => new Promise(resolve => setTimeout(resolve, seconds * 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("playPattern").addEventListener("click", async function() {
 
-        await showValues();
+        await testingValues();
         await chooseWorkout();
         const workout = w;
+        console.log("Workout correct: " + workout)
+        await showValues();
         await setVocal(range, manual, firstmanNote, secondmanNote)
         await setWorkout(workout);  // Imposta l'allenamento
         await setWorkoutLength()

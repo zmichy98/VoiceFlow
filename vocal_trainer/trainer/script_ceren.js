@@ -22,9 +22,11 @@ let time = 5
 let experience = "beginner";
 let mask = false;
 let laxVox = false;
+let w = "";
 
 
 //Takes the variables from the previous pages (stored locally)
+document.addEventListener("DOMContentLoaded", function() {
     manual = localStorage.getItem("manual");
     range = localStorage.getItem("selectedRange").toString();
     firstmanNote = localStorage.getItem("firstNote").toString();
@@ -34,14 +36,275 @@ let laxVox = false;
     experience = localStorage.getItem("selectedLevel").toString(); // string: Beginner, Intermediate, Advanced
     mask = localStorage.getItem("mask"); // Can either be true or false
     laxVox = localStorage.getItem("laxVox"); // Can either be true or false
+});
 
 //Decides Workout to be played (TO BE DONE)
+// ORDER OF CHOICE: Level of skill, time, equipment
 
+function chooseWorkout() {
+
+    if (selectedLevel == "Beginner") {
+
+        if (time == "5") {
+    
+            if (mask == true && laxVox == false) {
+    
+                w = "wo1"
+    
+            } else if (mask == false && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else if (mask == true && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else {
+    
+                w = "wo1"
+    
+            }
+    
+        } else if (time == "10") {
+    
+            if (mask == true && laxVox == false) {
+    
+                w = "wo1"
+    
+            } else if (mask == false && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else if (mask == true && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else {
+    
+                w = "wo1"
+    
+            }
+    
+        } else if (time == "15") {
+    
+            if (mask == true && laxVox == false) {
+    
+                w = "wo1"
+    
+            } else if (mask == false && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else if (mask == true && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else {
+    
+                w = "wo1"
+    
+            }
+    
+        } else {
+    
+            if (mask == true && laxVox == false) {
+    
+                w = "wo1"
+    
+            } else if (mask == false && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else if (mask == true && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else {
+    
+                w = "wo1"
+    
+            }
+    
+        }
+    
+    } else if (selectedLevel == "Intermediate") {
+    
+        if (time == "5") {
+    
+            if (mask == true && laxVox == false) {
+    
+                w = "wo1"
+    
+            } else if (mask == false && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else if (mask == true && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else {
+    
+                w = "wo1"
+    
+            }
+    
+        } else if (time == "10") {
+    
+            if (mask == true && laxVox == false) {
+    
+                w = "wo1"
+    
+            } else if (mask == false && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else if (mask == true && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else {
+    
+                w = "wo1"
+    
+            }
+    
+        } else if (time == "15") {
+    
+            if (mask == true && laxVox == false) {
+    
+                w = "wo1"
+    
+            } else if (mask == false && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else if (mask == true && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else {
+    
+                w = "wo1"
+    
+            }
+    
+        } else {
+    
+            if (mask == true && laxVox == false) {
+    
+                w = "wo1"
+    
+            } else if (mask == false && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else if (mask == true && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else {
+    
+                w = "wo1"
+    
+            }
+    
+        }
+    
+    } else {
+    
+        if (time == "5") {
+    
+            if (mask == true && laxVox == false) {
+    
+                w = "wo1"
+    
+            } else if (mask == false && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else if (mask == true && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else {
+    
+                w = "wo1"
+    
+            }
+    
+        } else if (time == "10") {
+    
+            if (mask == true && laxVox == false) {
+    
+                w = "wo1"
+    
+            } else if (mask == false && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else if (mask == true && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else {
+    
+                w = "wo1"
+    
+            }
+    
+        } else if (time == "15") {
+    
+            if (mask == true && laxVox == false) {
+    
+                w = "wo1"
+    
+            } else if (mask == false && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else if (mask == true && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else {
+    
+                w = "wo1"
+    
+            }
+    
+        } else {
+    
+            if (mask == true && laxVox == false) {
+    
+                w = "wo1"
+    
+            } else if (mask == false && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else if (mask == true && laxVox == true) {
+    
+                w = "wo1"
+    
+            } else {
+    
+                w = "wo1"
+    
+            }
+    
+        }
+    
+    }
+
+    console.log("Chosen workout: " + workout)
+
+}
 
 
 //Variable values (for testing only)
-const workout = "wo1";
-range = "Bass";
+const workout = w;
+range = "Alto";
 eser = "es3";
 exDuration = 30;
 manual = false;
@@ -58,8 +321,8 @@ laxVox = false;
 // Shows all the variables values
 async function showValues() {
     console.log("*************************************************")
-    console.log("*************************************************")
     console.log("***************** VARIABLES *********************")
+    console.log("*************************************************")
     console.log("Workout: " + workout);
     console.log("Vox type: " + range);
     console.log("Training time: " + exDuration);
@@ -393,6 +656,8 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("playPattern").addEventListener("click", async function() {
 
         await showValues();
+        await chooseWorkout();
+        const workout = w;
         await setVocal(range, manual, firstmanNote, secondmanNote)
         await setWorkout(workout);  // Imposta l'allenamento
         await setWorkoutLength()

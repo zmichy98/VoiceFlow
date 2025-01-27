@@ -21,8 +21,11 @@
         document.addEventListener("DOMContentLoaded", () => {
             // Get the values from localStorage or provide default text
             const selectedLevel = localStorage.getItem("selectedLevel") || "Not selected";
+            console.log("Selected level: " + selectedLevel)
             const sliderValue = localStorage.getItem("sliderValue") || "Not set";
+            console.log("Training time: " + sliderValue)
             const selectedGear = localStorage.getItem("selectedGear") || "No gear selected";
+            console.log("Gear: " + selectedGear)
     
             // Create the description message
             const descriptionMessage = `Your exercise for vocal warm-up for ${selectedLevel} level of ${sliderValue} minutes with ${selectedGear} is now ready!`;
@@ -176,20 +179,22 @@
 
     <!-- Get the variables from settings saved: -->
     <script>
-    // selectedLevel variable
-        document.getElementById("selectedLevel").innerHTML = localStorage.getItem("selectedLevel");
-    // sliderValue variable
-        document.getElementById("sliderValue").innerHTML = localStorage.getItem("sliderValue");
-    // manual variable
-       document.getElementById("manual").innerHTML = localStorage.getItem("manual"); 
-    // selectedRange variable
-        document.getElementById("selectedRange").innerHTML = localStorage.getItem("selectedRange");
-    // manual range note variables
-        document.getElementById("firstNote").innerHTML = localStorage.getItem("firstNote");
-        document.getElementById("secondNote").innerHTML = localStorage.getItem("secondNote");
-    // Gear variables
-        document.getElementById("mask").innerHTML = localStorage.getItem("mask");
-        document.getElementById("laxVox").innerHTML = localStorage.getItem("laxVox");
+        document.addEventListener('DOMContentLoaded', () => {
+            // selectedLevel variable
+                document.getElementById("selectedLevel").innerHTML = localStorage.getItem("selectedLevel");
+            // sliderValue variable
+                document.getElementById("sliderValue").innerHTML = localStorage.getItem("sliderValue");
+            // manual variable
+                document.getElementById("manual").innerHTML = localStorage.getItem("manual"); 
+            // selectedRange variable
+                document.getElementById("selectedRange").innerHTML = localStorage.getItem("selectedRange");
+            // manual range note variables
+                document.getElementById("firstNote").innerHTML = localStorage.getItem("firstNote");
+                document.getElementById("secondNote").innerHTML = localStorage.getItem("secondNote");
+            // Gear variables
+                document.getElementById("mask").innerHTML = localStorage.getItem("mask");
+                document.getElementById("laxVox").innerHTML = localStorage.getItem("laxVox");
+        });
     </script>
     
     <!-- Link to script_ceren js: -->

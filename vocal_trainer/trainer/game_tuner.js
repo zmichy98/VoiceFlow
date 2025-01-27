@@ -122,7 +122,9 @@ function stopMicrophoneStream(){
 
 function main(){
     console.log('I am hooked up to enableMicBtn')
-    let isTracking = enableMicBtn.getAttribute("data-tracking") == "true";
+    if(enableMicBtn){
+        let isTracking = enableMicBtn.getAttribute("data-tracking") == "true";
+    }
     enableMicBtn.setAttribute("data-tracking", !isTracking)
 
     if (!isTracking === true){

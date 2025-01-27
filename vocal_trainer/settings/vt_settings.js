@@ -33,7 +33,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextButton = document.querySelector(".next_button"); // Select the "Next" button by class
 
   // Initially hide the "Next" button
-  nextButton.style.display = "none";
+  if(nextButton) {
+    nextButton.style.display = "none";
+  }
+ 
 
   levelButtons.forEach(button => {
     button.addEventListener("click", () => {
@@ -75,9 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const sliderValue = document.getElementById('trainingTime');
   const nextButton = document.querySelector(".next_button"); // Select the "Next" button by class
 
-  nextButton.style.display = "none";
-
-if(slider) {
+  if(nextButton) {
+    nextButton.style.display = "none";
+  }
+  if(slider) {
     slider.addEventListener('input', function() {
       sliderValue.textContent = slider.value;  // Aggiorna il testo con il valore dello slider
       if (slider.value > 0) {
@@ -105,7 +109,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Initially hide the "Next" button
-  nextButton.style.display = "none";
+  if(nextButton) {
+    nextButton.style.display = "none";
+  }
 
   rangeButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -156,7 +162,9 @@ function activeselect() {
   const nextButton = document.querySelector('.next_button'); // Select the "Next" button by class
 
   // Initially hide the "Next" button
-  nextButton.style.display = "none";
+  if(nextButton) {
+    nextButton.style.display = "none";
+  }
 
   button.classList.toggle('active');
 
@@ -281,7 +289,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let selectedNone = false; 
 
   // Initially hide the "Next" button
-  nextButton.style.display = "none";
+  if(nextButton) {
+    nextButton.style.display = "none";
+  }
 
   // Event listener on click
   buttons.forEach((button) => {

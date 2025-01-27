@@ -1,3 +1,6 @@
+/*------------------------ VARIABLES --------------------------*/
+let selectedLevel = "";
+
 /*------------------------ SETTINGS BAR ------------------------*/
 document.addEventListener("DOMContentLoaded", () => {
   const settings = document.querySelectorAll(".setting");
@@ -24,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /*------------------------ SELECTED LEVEL ------------------------*/
 document.addEventListener("DOMContentLoaded", () => {
-  let selectedLevel = "";
 
   const levelButtons = document.querySelectorAll(".level-button");
   const levelDescription = document.getElementById("level-description");
@@ -56,6 +58,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       localStorage.setItem("selectedLevel", selectedLevel);
+      const savedLevel = localStorage.getItem("selectedLevel");
+      if (savedLevel) {
+        console.log("Your Level: " + localStorage.getItem("selectedLevel"));
+      }
+
     });
   });
 });
@@ -432,8 +439,9 @@ const noteFrequencies = [
     { note: "C6", freq: 1046.50 }
 ];
 
-/*-------------- PROGRESS BAR --------------*/
 
+/*-------------- PROGRESS BAR --------------*/
+/* 
 document.addEventListener("DOMContentLoaded", () => {
   const sliderValue = localStorage.getItem("sliderValue") || 0;
   const totalTime = parseInt(sliderValue);
@@ -463,6 +471,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   }, 1000); // Update the progress every second
 });
+*/
 
 /*-------------- TUNER --------------*/
 function autoCorrelate( buf, sampleRate ) {

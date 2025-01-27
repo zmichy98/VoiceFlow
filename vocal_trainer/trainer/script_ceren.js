@@ -5,7 +5,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 //import Game Pitch
-import { getGamePitch } from './game_tuner.js';
+import { startGamePitchTrack } from './game_tuner.js';
 
 // Defines variables
 let manual = false;
@@ -512,7 +512,7 @@ async function setVocal(vol, man, first, second) {
 const playNote = async (note, duration, time) => {
     piano.triggerAttackRelease(note, duration, time);
     changeKeyColor(note)
-    countPoints += getGamePitch(note, duration) ////////////////////////////////////////////////
+    countPoints = countPoints + startGamePitchTrack(note, duration) ////////////////////////////////////////////////
     console.log("Points counter: " + countPoints)
 }
 

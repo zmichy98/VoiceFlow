@@ -89,21 +89,12 @@ function getMicrophoneStream(){
 
             audioContext = new AudioContext(); 
             source = audioContext.createMediaStreamSource(stream)
-
-            startPitchTrack()
         })
         // On error:
         .catch((err) => {
             console.error('Error accessing microphone:', err);
             alert("Microphone access is required for this application. Please enable it.");
         });
-}
-
-// Sets up the audio analyzer for pitch detection.
-function startPitchTrack(){
-    analyser = audioContext.createAnalyser();
-    analyser.fftSize = 2048;
-    source.connect(analyser);
 }
 
 // Stops the microphone and animation.
@@ -134,6 +125,7 @@ function main(){
     if (!isTracking === true){
         noteElem.innerHTML = " ";
         hzElem.innerHTML = " "
+        console.log('Call MicStrem function')
         getMicrophoneStream();
     }
     else{
@@ -148,43 +140,56 @@ window.onload = function() {
 };
 
 /*-------------- DETECT THE SINGED NOTE: --------------*/
-let startTime = performance.now(); // Record the start time
-export function getGamePitch(goalNote, duration) {
+// Sets up the audio analyzer for pitch detection.
+export function startGamePitchTrack(goalNote, duration){
+    console.log("Start PitchTrack")
+    analyser = audioContext.createAnalyser();
+    analyser.fftSize = 2048;
+    source.connect(analyser);
+
+    let startTime = performance.now(); // Record the start time
+
+    console.log("Starting time: " + startTime)
+    console.log("Goal note: " + goalNote)
+    console.log("Duration: " + duration)
+
+    return getGamePitch(goalNote, duration,startTime)
+}
+
+function getGamePitch(goalNote, duration, startTime) {
+    console.log("getGamePitch called")
+
     const elapsedTime = performance.now() - startTime; // Calculate elapsed time
+    console.log("elapsedTime = " + elapsedTime)
 
     if (elapsedTime >= duration) {
         console.log("Time duration exceeded, stopping detection.");
-        cancelAnimationFrame(requestAnimationFrameId); // Stop further calls
+        cancelAnimationFrame(requestAnimationFrameId);
         return 0;
     }
 
     const goalFreq = noteFrequencies.find(n => n.note === goalNote).freq;
+    console.log("goal frequency = " + goalFreq)
 
     // Perform pitch detection
     analyser.getFloatTimeDomainData(buffer);
-
     const frequencyinHz = autoCorrelate(buffer, audioContext.sampleRate);
     console.log("Sung freq: " + frequencyinHz);
 
     if (frequencyinHz === -1) {
-        hzElem.innerHTML = "No note detected";
+        console.log("No note detected")
     } else {
         const detune = getNotediff(frequencyinHz, goalFreq);
-        hzElem.innerHTML = "The frequency you are singing is approximately " + Math.round(frequencyinHz) + " Hz";
-        detuneElem.innerHTML = "You are detuned by " + detune + " cents";
-
-    if (Math.abs(detune) < tuneTollerance) {
-        console.log("Note sung correctly");
-        main(); // Assuming this is your success callback
-        cancelAnimationFrame(requestAnimationFrameId); // Stop further calls
-        return 1;
-    }
-
-    updateLevelMeter(detune); // Update UI or level meter
+        if (Math.abs(detune) < tuneTollerance) {
+            console.log("Note sung correctly");
+            cancelAnimationFrame(requestAnimationFrameId); // Stop further calls
+            return 1;
+            }
+        updateLevelMeter(detune); // Update UI or level meter
     }
 
     // Continue to call the function using requestAnimationFrame  
-    requestAnimationFrameId = window.requestAnimationFrame(() => getPitch(goalNote, duration));
+    requestAnimationFrameId = window.requestAnimationFrame(() => getGamePitch(goalNote, duration,startTime));
 
 }
 

@@ -70,16 +70,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   nextButton.style.display = "none";
 
-
-  slider.addEventListener('input', function() {
-    sliderValue.textContent = slider.value;  // Aggiorna il testo con il valore dello slider
-    if (slider.value > 0) {
-      nextButton.style.display = "inline-block";
-    } else {
-      nextButton.style.display = "none";
-    }
-    localStorage.setItem("sliderValue", slider.value)
-  });
+if(slider) {
+    slider.addEventListener('input', function() {
+      sliderValue.textContent = slider.value;  // Aggiorna il testo con il valore dello slider
+      if (slider.value > 0) {
+        nextButton.style.display = "inline-block";
+      } else {
+       nextButton.style.display = "none";
+      }
+      localStorage.setItem("sliderValue", slider.value)
+    });
+  }
 });
 
 /*------------------------ VOCAL RANGE 1 ------------------------*/
@@ -706,13 +707,15 @@ function finalizeSelection() {
 }
 
 /*-------------- NOTE SELECTION --------------*/
-selectNoteBtn.addEventListener('click', () => {
-  if (selectingNote) {
-    stopNoteSelection()
-  } else {
-    startNoteSelection()
-  }
-});
+if (selectNoteBtn) {
+  selectNoteBtn.addEventListener('click', () => {
+    if (selectingNote) {
+      stopNoteSelection()
+    } else {
+      startNoteSelection()
+    }
+  });
+}
 
 function startNoteSelection() {
   selectingNote = true;

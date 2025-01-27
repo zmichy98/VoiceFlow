@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create an Account</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js"></script>
+  <script type="module" src="script.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>Create an Account</h2>
+    <form id="accountForm">
+      <label for="nickname">Nickname:</label>
+      <input type="text" id="nickname" required>
+      
+      <label for="password">Password:</label>
+      <input type="password" id="password" required>
+      
+      <label for="email">Email for password recovery:</label>
+      <input type="email" id="email" required>
+      
+      <button type="submit">Create an Account</button>
+    </form>
+  </div>
+</body>
+</html>
+

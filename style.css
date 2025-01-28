@@ -361,7 +361,7 @@ button.notusable {
 .level-description {
   margin-top: 20px;
   font-size: 1.5em;
-  color: #E0E0E0;
+  color: #6b6b6b;
   background: linear-gradient(45deg, #4d9246, #7bd4a3);
   -webkit-background-clip: text;
   background-clip: text;
@@ -529,10 +529,12 @@ input[type="range"]:active {
 .keyboard {
   display: flex;
   position: relative;
-  width: 840px; /* Three octaves width */
+  width: 100%;
+  max-width: 1400px;
   height: 180px;
-  margin: 20px;
+  margin: 20px auto;
   margin-top: 5px;
+  justify-content: center;
 }
 
 .key {
@@ -558,7 +560,7 @@ input[type="range"]:active {
   background-color: black;
   position: absolute;
   z-index: 2;
-  margin-left: -15px; /* Centers black keys */
+  margin-left: 110px; /* Centers black keys */
   border-radius: 5px;
 }
 
@@ -591,19 +593,26 @@ input[type="range"]:active {
 .key.black:nth-of-type(9) { left: 200px; } /* G# */
 .key.black:nth-of-type(11) { left: 240px; } /* A# */
 
-/* Second octave black keys */
+/* third octave black keys */
 .key.black:nth-of-type(14) { left: 320px; } /* C# */
 .key.black:nth-of-type(16) { left: 360px; } /* D# */
 .key.black:nth-of-type(19) { left: 440px; } /* F# */
 .key.black:nth-of-type(21) { left: 480px; } /* G# */
 .key.black:nth-of-type(23) { left: 520px; } /* A# */
 
-/* Third octave black keys */
+/* fourth octave black keys */
 .key.black:nth-of-type(26) { left: 600px; } /* C# */
 .key.black:nth-of-type(28) { left: 640px; } /* D# */
 .key.black:nth-of-type(31) { left: 720px; } /* F# */
 .key.black:nth-of-type(33) { left: 760px; } /* G# */
 .key.black:nth-of-type(35) { left: 800px; } /* A# */
+
+/* fifth octave black keys */
+.key.black:nth-of-type(38) { left: 880px; }  /* C# */
+.key.black:nth-of-type(40) { left: 920px; }  /* D# */
+.key.black:nth-of-type(43) { left: 1000px; } /* F# */
+.key.black:nth-of-type(45) { left: 1040px; } /* G# */
+.key.black:nth-of-type(47) { left: 1080px; } /* A# */
 
 /* Pressed key animation */
 .key.pressed {

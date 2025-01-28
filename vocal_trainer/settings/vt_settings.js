@@ -125,17 +125,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Change the range description based on the selected range
         if (selectedRange === 'Soprano') {
-          rangeDescription.innerHTML = '<p>The highest female voice, typically able to sing in a high range, often soaring above the melody in classical music.</p>';
+          rangeDescription.innerHTML = '<p>The highest female voice, typically able to sing in a high range, often soaring above the melody in classical music. (C4-C6)</p>';
         } else if (selectedRange === 'Mezzosoprano') {
-          rangeDescription.innerHTML = '<p>A female voice between soprano and contralto, with a rich mid-range and the ability to sing lower notes while retaining brightness.</p>';
+          rangeDescription.innerHTML = '<p>A female voice between soprano and contralto, with a rich mid-range and the ability to sing lower notes while retaining brightness. (A3-A5)</p>';
         } else if (selectedRange === 'Contralto') {
-          rangeDescription.innerHTML = '<p>The lowest female voice, known for its deep, resonant tones that can reach into the lower registers of the male range.</p>';
+          rangeDescription.innerHTML = '<p>The lowest female voice, known for its deep, resonant tones that can reach into the lower registers of the male range. (F3-F5)</p>';
         } else if (selectedRange === 'Tenor') {
-          rangeDescription.innerHTML = '<p>The highest male voice, often characterized by its bright, powerful sound, capable of reaching high notes with strength and clarity.</p>';
+          rangeDescription.innerHTML = '<p>The highest male voice, often characterized by its bright, powerful sound, capable of reaching high notes with strength and clarity. (B2-B4)</p>';
         } else if (selectedRange === 'Baritone') {
-          rangeDescription.innerHTML = '<p>A male voice with a rich mid-range, sitting comfortably between tenor and bass, capable of a broad vocal range.</p>';
+          rangeDescription.innerHTML = '<p>A male voice with a rich mid-range, sitting comfortably between tenor and bass, capable of a broad vocal range. (G2-G4)</p>';
         } else if (selectedRange === 'Bass') {
-          rangeDescription.innerHTML = '<p>The lowest male voice, known for its deep, powerful, and resonant tones, typically providing the foundation in choral settings.</p>';
+          rangeDescription.innerHTML = '<p>The lowest male voice, known for its deep, powerful, and resonant tones, typically providing the foundation in choral settings. (E2-E4)</p>';
         } else {
           rangeDescription.innerHTML = '<p> </p>';
         }

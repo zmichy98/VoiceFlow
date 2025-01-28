@@ -411,6 +411,8 @@ button.notusable {
 /*---------Range buttons---------*/
 .range-buttons {
   display: flex;
+  top: 50%;
+  left: 50%;
   gap: 10px; /* Space between buttons */
   margin-top: 20px;
 }
@@ -438,9 +440,10 @@ button.notusable {
 
 }
 .range-description {
+  max-width: 550px;
   margin-top: 10px; /* space between buttons and description */
   font-size: 1.5em; /* font size of the description */
-  color: #E0E0E0;    /* text color of the description */
+  color:#6b6b6b;    /* text color of the description */
   background: linear-gradient(45deg, #4d9246, #7bd4a3);
   -webkit-background-clip: text;
   background-clip: text;

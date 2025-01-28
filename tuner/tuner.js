@@ -146,7 +146,7 @@ function getMicrophoneStream(){
         .catch((err) => {
             // handle the error
             console.log('Did not get microphone stream: \n' + err);
-            enableMicBtn.innerHTML = "Enable Microphone"
+            enableMicBtn.classList.add('error');
         });
 }
 
@@ -236,13 +236,15 @@ function main(){
     // What is the state of the app?
     // if the state is to pitch track
     if (!isTracking === true){
-        enableMicBtn.innerHTML = "enabling ..."
+        enableMicBtn.classList.add("enabling");
+        console.log("Enabling microphone...");
 
         // turn the mic on and begin tracking
         getMicrophoneStream();
 
-        // make enableMicBtn say "disable mic" <-- toggle state
-        enableMicBtn.innerHTML = "Disable Microphone"
+        // Update button style for active state
+        enableMicBtn.classList.remove("enabling");
+        enableMicBtn.classList.add("active"); // Add red (or other "active" color)
     }
 
     // else the state is to not track
@@ -250,11 +252,15 @@ function main(){
 
         // end the mic stream
         stopMicrophoneStream()
-
-        // make enableMicBtn say "enable mic" <-- toggle state
-        enableMicBtn.innerHTML = "Enable Microphone"
     }
 }
+
+const micButton = document.getElementById("enable-mic");
+micButton.addEventListener("click", () => {
+    micButton.classList.toggle("active");
+});
+
+
 
 // Variables
 let audioContext = null;

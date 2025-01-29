@@ -27,6 +27,7 @@ let mask = false;
 let laxVox = false;
 let w = "";
 let countPoints = 0;
+let title = "";
 
 
 //Takes the variables from the previous pages (stored locally)

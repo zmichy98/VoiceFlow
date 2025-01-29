@@ -15,7 +15,7 @@ let tempo = 120;
 let exDuration = 30;
 let exDuration_woSteps = 30;
 let ex_length = 120;
-const pattern = [0, 2, 4, 5, 7, 5, 4, 2, 0];
+const pattern = [0, 2, 4, 5, 7, 5, 4, 2, 0]; ///////////////////////////////////// CEREN
 let vox = ["A2", "B2"];
 const work = ["es1", "es2"];
 let workout_length = 480;
@@ -423,6 +423,7 @@ async function setExercise(es) {
     pattern.length = 0; // Pulisci l'array pattern
     pattern.push(...exercisePattern); // Carica i nuovi pattern
     tempo = pattern[3];
+    ///////////////////////////////////////////////////////////////////////// CEREN pattern[0]=title pattern[1]=description pattern[2]=mask/lv/none
     //const ex_length = (pattern.length) * 60 / tempo;
     //console.log("Ex length: " + ex_length)
     console.log("Tempo from firebase: " + tempo)

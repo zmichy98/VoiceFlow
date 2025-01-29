@@ -423,7 +423,21 @@ async function setExercise(es) {
     pattern.length = 0; // Pulisci l'array pattern
     pattern.push(...exercisePattern); // Carica i nuovi pattern
     tempo = pattern[3];
+
     ///////////////////////////////////////////////////////////////////////// CEREN pattern[0]=title pattern[1]=description pattern[2]=mask/lv/none
+    const exerciseTitle = document.getElementById("ex-title-text");
+    if (exerciseTitle) {
+        exerciseTitle.textContent = pattern[0]; // Update the title
+    }
+    console.log("Exercise title updated to:", pattern[0]);
+
+    // exercise description
+    const exerciseDetail = document.getElementById("ex-detail");
+    if (exerciseDetail) {
+        exerciseDetail.innerHTML = `<p>${descriptionMessage}</p>`; // Set new description
+    }
+    console.log("Exercise description updated to:", pattern[1]);
+    
     //const ex_length = (pattern.length) * 60 / tempo;
     //console.log("Ex length: " + ex_length)
     console.log("Tempo from firebase: " + tempo)

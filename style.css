@@ -359,7 +359,7 @@ button.notusable {
 
 }
 .level-description {
-  margin-top: 20px;
+  margin-top: 10px;
   font-size: 1.5em;
   color: #6b6b6b;
   background: linear-gradient(45deg, #4d9246, #7bd4a3);
@@ -526,6 +526,21 @@ input[type="range"]:active {
 }
 
 /*-------------Piano keyboard styling-------------*/
+.keyboard2 {
+  top: 35%;
+  position: fixed;
+}
+
+.keyboard3 {
+  top: 25%;
+  position: fixed;
+}
+
+.keyboard4 {
+  top: 35%;
+  position: fixed;
+}
+
 .keyboard {
   display: flex;
   position: relative;
@@ -560,7 +575,7 @@ input[type="range"]:active {
   background-color: black;
   position: absolute;
   z-index: 2;
-  margin-left: 110px; /* Centers black keys */
+  margin-left: -15px; /* Centers black keys */
   border-radius: 5px;
 }
 

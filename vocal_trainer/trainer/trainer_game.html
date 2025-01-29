@@ -10,12 +10,43 @@
     
 </head>
 
+<style>
+    .meter {
+        width: 80%;
+        max-width: 500px;
+        height: 30px;
+        background-color: #e0e0e0;
+        border-radius: 15px;
+        position: fixed;
+        top: 430px;
+    
+    }
+   .ex-description {
+        position: fixed;
+        top: 450px;
+        max-width: 700px;
+        font-size: 1.5em; /* font size of the description */
+        color:#6b6b6b;    /* text color of the description */
+        background: linear-gradient(45deg, #4d9246, #7bd4a3);
+        -webkit-background-clip: text;
+        background-clip: text;
+        text-align: center;
+        text-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+        padding: 10px;
+        border-radius: 20px;
+    }
+
+</style>
+
+
 <body>
     <!-- Title of the exercise -->
     <div id="ex-title" class="ex-title">
-        <h2> Title </h2>
+        <h2 style="position: fixed; top: 70px; left: 50%; transform: translate(-50%, -50%); font-size: 70px;">
+            Let's Start!
+        </h2>
     </div>
-
+    
     <!-- Exercise description -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -37,161 +68,162 @@
     <div id="ex-description" class="ex-description">
     </div>
 
-   <!-- Keyboard -->
-   <div class="keyboard">
-    <!-- Second Octave -->
-    <div class="key white" data-note="C2" id="C2" data-octave="2">
-        <span class="note-name">C2</span>
-    </div>
-    <div class="key black" data-note="C#2" id="Csharp2" data-octave="2">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="D2" id="D2" data-octave="2">
-        <span class="note-name"></span>
-    </div>
-    <div class="key black" data-note="D#2" id="Dsharp2" data-octave="2">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="E2" id="E2" data-octave="2">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="F2" id="F2" data-octave="2">
-        <span class="note-name"></span>
-    </div>
-    <div class="key black" data-note="F#2" id="Fsharp2" data-octave="2">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="G2" id="G2" data-octave="2">
-        <span class="note-name"></span>
-    </div>
-    <div class="key black" data-note="G#2" id="Gsharp2" data-octave="2">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="A2" id="A2" data-octave="2">
-        <span class="note-name"></span>
-    </div>
-    <div class="key black" data-note="A#2" id="Asharp2" data-octave="2">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="B2" id="B2" data-octave="2">
-        <span class="note-name"></span>
-    </div>
+    <div class="keyboard4">
+        <!-- Keyboard -->
+        <div class="keyboard">
+            <!-- Second Octave -->
+            <div class="key white" data-note="C2" id="C2" data-octave="2">
+                <span class="note-name">C2</span>
+            </div>
+            <div class="key black" data-note="C#2" id="Csharp2" data-octave="2">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="D2" id="D2" data-octave="2">
+                <span class="note-name"></span>
+            </div>
+            <div class="key black" data-note="D#2" id="Dsharp2" data-octave="2">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="E2" id="E2" data-octave="2">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="F2" id="F2" data-octave="2">
+                <span class="note-name"></span>
+            </div>
+            <div class="key black" data-note="F#2" id="Fsharp2" data-octave="2">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="G2" id="G2" data-octave="2">
+                <span class="note-name"></span>
+            </div>
+            <div class="key black" data-note="G#2" id="Gsharp2" data-octave="2">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="A2" id="A2" data-octave="2">
+                <span class="note-name"></span>
+            </div>
+            <div class="key black" data-note="A#2" id="Asharp2" data-octave="2">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="B2" id="B2" data-octave="2">
+                <span class="note-name"></span>
+            </div>
 
-    <!-- Third Octave -->
-    <div class="key white" data-note="C3" id="C3" data-octave="3">
-        <span class="note-name">C3</span>
-    </div>
-    <div class="key black" data-note="C#3" id="Csharp3" data-octave="3">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="D3" id="D3" data-octave="3">
-        <span class="note-name"></span>
-    </div>
-    <div class="key black" data-note="D#3" id="Dsharp3" data-octave="3">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="E3" id="E3" data-octave="3">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="F3" id="F3" data-octave="3">
-        <span class="note-name"></span>
-    </div>
-    <div class="key black" data-note="F#3" id="Fsharp3" data-octave="3">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="G3" id="G3" data-octave="3">
-        <span class="note-name"></span>
-    </div>
-    <div class="key black" data-note="G#3" id="Gsharp3" data-octave="3">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="A3" id="A3" data-octave="3">
-        <span class="note-name"></span>
-    </div>
-    <div class="key black" data-note="A#3" id="Asharp3" data-octave="3">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="B3" id="B3" data-octave="3">
-        <span class="note-name"></span>
-    </div>
+            <!-- Third Octave -->
+            <div class="key white" data-note="C3" id="C3" data-octave="3">
+                <span class="note-name">C3</span>
+            </div>
+            <div class="key black" data-note="C#3" id="Csharp3" data-octave="3">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="D3" id="D3" data-octave="3">
+                <span class="note-name"></span>
+            </div>
+            <div class="key black" data-note="D#3" id="Dsharp3" data-octave="3">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="E3" id="E3" data-octave="3">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="F3" id="F3" data-octave="3">
+                <span class="note-name"></span>
+            </div>
+            <div class="key black" data-note="F#3" id="Fsharp3" data-octave="3">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="G3" id="G3" data-octave="3">
+                <span class="note-name"></span>
+            </div>
+            <div class="key black" data-note="G#3" id="Gsharp3" data-octave="3">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="A3" id="A3" data-octave="3">
+                <span class="note-name"></span>
+            </div>
+            <div class="key black" data-note="A#3" id="Asharp3" data-octave="3">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="B3" id="B3" data-octave="3">
+                <span class="note-name"></span>
+            </div>
 
-    <!-- Fourth Octave -->
-    <div class="key white" data-note="C4" id="C4" data-octave="4">
-        <span class="note-name">C4</span>
-    </div>
-    <div class="key black" data-note="C#4" id="Csharp4" data-octave="4">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="D4" id="D4" data-octave="4">
-        <span class="note-name"></span>
-    </div>
-    <div class="key black" data-note="D#4" id="Dsharp4" data-octave="4">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="E4" id="E4" data-octave="4">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="F4" id="F4" data-octave="4">
-        <span class="note-name"></span>
-    </div>
-    <div class="key black" data-note="F#4" id="Fsharp4" data-octave="4">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="G4" id="G4" data-octave="4">
-        <span class="note-name"></span>
-    </div>
-    <div class="key black" data-note="G#4" id="Gsharp4" data-octave="4">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="A4" id="A4" data-octave="4">
-        <span class="note-name"></span>
-    </div>
-    <div class="key black" data-note="A#4" id="Asharp4" data-octave="4">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="B4" id="B4" data-octave="4">
-        <span class="note-name"></span>
-    </div>
+            <!-- Fourth Octave -->
+            <div class="key white" data-note="C4" id="C4" data-octave="4">
+                <span class="note-name">C4</span>
+            </div>
+            <div class="key black" data-note="C#4" id="Csharp4" data-octave="4">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="D4" id="D4" data-octave="4">
+                <span class="note-name"></span>
+            </div>
+            <div class="key black" data-note="D#4" id="Dsharp4" data-octave="4">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="E4" id="E4" data-octave="4">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="F4" id="F4" data-octave="4">
+                <span class="note-name"></span>
+            </div>
+            <div class="key black" data-note="F#4" id="Fsharp4" data-octave="4">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="G4" id="G4" data-octave="4">
+                <span class="note-name"></span>
+            </div>
+            <div class="key black" data-note="G#4" id="Gsharp4" data-octave="4">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="A4" id="A4" data-octave="4">
+                <span class="note-name"></span>
+            </div>
+            <div class="key black" data-note="A#4" id="Asharp4" data-octave="4">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="B4" id="B4" data-octave="4">
+                <span class="note-name"></span>
+            </div>
 
-    <!-- Fifth Octave -->
-    <div class="key white" data-note="C5" id="C5" data-octave="5">
-        <span class="note-name">C5</span>
+            <!-- Fifth Octave -->
+            <div class="key white" data-note="C5" id="C5" data-octave="5">
+                <span class="note-name">C5</span>
+            </div>
+            <div class="key black" data-note="C#5" id="Csharp5" data-octave="5">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="D5" id="D5" data-octave="5">
+                <span class="note-name"></span>
+            </div>
+            <div class="key black" data-note="D#5" id="Dsharp5" data-octave="5">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="E5" id="E5" data-octave="5">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="F5" id="F5" data-octave="5">
+                <span class="note-name"></span>
+            </div>
+            <div class="key black" data-note="F#5" id="Fsharp5" data-octave="5">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="G5" id="G5" data-octave="5">
+                <span class="note-name"></span>
+            </div>
+            <div class="key black" data-note="G#5" id="Gsharp5" data-octave="5">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="A5" id="A5" data-octave="5">
+                <span class="note-name"></span>
+            </div>
+            <div class="key black" data-note="A#5" id="Asharp5" data-octave="5">
+                <span class="note-name"></span>
+            </div>
+            <div class="key white" data-note="B5" id="B5" data-octave="5">
+                <span class="note-name"></span>
+            </div>
+        </div>
     </div>
-    <div class="key black" data-note="C#5" id="Csharp5" data-octave="5">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="D5" id="D5" data-octave="5">
-        <span class="note-name"></span>
-    </div>
-    <div class="key black" data-note="D#5" id="Dsharp5" data-octave="5">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="E5" id="E5" data-octave="5">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="F5" id="F5" data-octave="5">
-        <span class="note-name"></span>
-    </div>
-    <div class="key black" data-note="F#5" id="Fsharp5" data-octave="5">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="G5" id="G5" data-octave="5">
-        <span class="note-name"></span>
-    </div>
-    <div class="key black" data-note="G#5" id="Gsharp5" data-octave="5">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="A5" id="A5" data-octave="5">
-        <span class="note-name"></span>
-    </div>
-    <div class="key black" data-note="A#5" id="Asharp5" data-octave="5">
-        <span class="note-name"></span>
-    </div>
-    <div class="key white" data-note="B5" id="B5" data-octave="5">
-        <span class="note-name"></span>
-    </div>
-    
-</div>
 
     <div class="ex-description"></div>
         <div id="note" > Note to play </div> 
@@ -209,9 +241,13 @@
     </div>
 
     <!-- Play Pattern -->
-    <button id="playPattern">Start
+    <button id="playPattern" style="position: fixed; top: 150px;">Start
     </button>
 
+    <!-- Bottom left button container-->
+    <div class="button-container">
+        <a href="../../index.html" class="bottomleft_button">Home</a>
+    </div>
 
     <!-- Link to settings script js: -->
     <script src="../settings/vt_settings.js"></script>

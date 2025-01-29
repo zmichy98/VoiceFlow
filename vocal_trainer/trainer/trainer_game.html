@@ -6,11 +6,49 @@
     <title>Vocal Warmup - Demo</title>
     <link rel="stylesheet" href="../../style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"> <!-- for the font :) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.43/Tone.min.js"></script>
     
 </head>
 
 <style>
+    .keyboard4 {
+        top: 35%;
+        position: fixed;
+    }
+
+    button {
+        width: 30px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #4d9246;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+        margin-right: 10px;
+    }
+
+    /* Button to enable microphone */
+    #playPattern {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 24px;
+        font-size: 18px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-bottom: 20px;
+    }
+
+    #playPattern:hover {
+        background-color: #45a049;
+    }
+
     .meter {
         width: 80%;
         max-width: 500px;
@@ -18,12 +56,27 @@
         background-color: #e0e0e0;
         border-radius: 15px;
         position: fixed;
-        top: 430px;
+        top: 450px;
     
     }
    .ex-description {
         position: fixed;
-        top: 450px;
+        top: 500px;
+        max-width: 700px;
+        font-size: 1.5em; /* font size of the description */
+        color:#6b6b6b;    /* text color of the description */
+        background: linear-gradient(45deg, #4d9246, #7bd4a3);
+        -webkit-background-clip: text;
+        background-clip: text;
+        text-align: center;
+        text-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+        padding: 10px;
+        border-radius: 20px;
+    }
+
+    .ex-detail {
+        position: fixed;
+        top: 110px;
         max-width: 700px;
         font-size: 1.5em; /* font size of the description */
         color:#6b6b6b;    /* text color of the description */
@@ -43,7 +96,7 @@
     <!-- Title of the exercise -->
     <div id="ex-title" class="ex-title">
         <h2 style="position: fixed; top: 70px; left: 50%; transform: translate(-50%, -50%); font-size: 70px;">
-            Let's Start!
+            Let's Start
         </h2>
     </div>
     
@@ -62,14 +115,36 @@
             const descriptionMessage = `Your exercise for vocal warm-up for ${selectedLevel} level of ${sliderValue} minutes with ${selectedGear} is now ready!`;
     
             // Update the description in the page
-            document.getElementById("ex-description").innerHTML = `<p>${descriptionMessage}</p>`;
+            document.getElementById("ex-detail").innerHTML = `<p>${descriptionMessage}</p>`;
         });
     </script>
-    <div id="ex-description" class="ex-description">
+
+    <div id="ex-detail" class="ex-detail">
     </div>
 
+    <div id="ex-description" class="ex-description">
+        <div id="note" > Note to play </div> 
+        <div id="hz" > Hz of the singer </div>
+        <div id="detune"> Detune  </div>
+    </div>
+    
+    <!-- Play Pattern -->
+    <button id="playPattern" style="position: fixed; top: 435px; left: 350px;">
+        <i class="fas fa-microphone"></i> 
+    </button>
+
+    <div class="meter">
+        <div class="level" id="level-bar"></div>
+        <div class="value" id="level-value">0</div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div id="progress-bar">
+        <div id="progress"></div>
+    </div>
+
+    <!-- Keyboard -->
     <div class="keyboard4">
-        <!-- Keyboard -->
         <div class="keyboard">
             <!-- Second Octave -->
             <div class="key white" data-note="C2" id="C2" data-octave="2">
@@ -225,29 +300,7 @@
         </div>
     </div>
 
-    <div class="ex-description"></div>
-        <div id="note" > Note to play </div> 
-        <div id="hz" > Hz of the singer </div>
-        <div id="detune"> Detune  </div>
-    </div>
-    <div class="meter">
-        <div class="level" id="level-bar"></div>
-        <div class="value" id="level-value">0</div>
-    </div>
 
-    <!-- Progress Bar -->
-    <div id="progress-bar">
-        <div id="progress"></div>
-    </div>
-
-    <!-- Play Pattern -->
-    <button id="playPattern" style="position: fixed; top: 150px;">Start
-    </button>
-
-    <!-- Bottom left button container-->
-    <div class="button-container">
-        <a href="../../index.html" class="bottomleft_button">Home</a>
-    </div>
 
     <!-- Link to settings script js: -->
     <script src="../settings/vt_settings.js"></script>

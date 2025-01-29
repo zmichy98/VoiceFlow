@@ -526,21 +526,6 @@ input[type="range"]:active {
 }
 
 /*-------------Piano keyboard styling-------------*/
-.keyboard2 {
-  top: 35%;
-  position: fixed;
-}
-
-.keyboard3 {
-  top: 25%;
-  position: fixed;
-}
-
-.keyboard4 {
-  top: 35%;
-  position: fixed;
-}
-
 .keyboard {
   display: flex;
   position: relative;

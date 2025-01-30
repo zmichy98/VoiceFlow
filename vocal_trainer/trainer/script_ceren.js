@@ -41,7 +41,27 @@ document.addEventListener("DOMContentLoaded", function() {
     experience = localStorage.getItem("selectedLevel").toString(); // string: Beginner, Intermediate, Advanced
     mask = localStorage.getItem("mask"); // Can either be true or false
     laxVox = localStorage.getItem("laxVox"); // Can either be true or false
+
+        // Create an empty div for the icon
+    const iconContainer = document.createElement("div");
+
+    // Check conditions and add the appropriate icons
+    if (laxVox === "true" && mask === "true") {
+        iconContainer.textContent = "ⓂⓁ"; // Both selected
+    }
+    else if (laxVox === "true") {
+        iconContainer.textContent = "Ⓛ"; // Only laxVox selected
+    }
+    else if (mask === "true") {
+        iconContainer.textContent = "Ⓜ"; // Only mask selected
+    }
+    // If any icon is selected, append the icon container to the body
+    if (iconContainer.textContent) {
+        iconContainer.classList.add("icon");
+        document.body.appendChild(iconContainer); // Append to body or a specific container
+    }
 });
+
 
 //Decides Workout to be played (TO BE DONE)
 // ORDER OF CHOICE: Level of skill, time, equipment
@@ -318,7 +338,6 @@ async function testingValues() {
     mask = false;
     laxVox = false;
 }
-
 
 
 ////////////////////////////////////////////////////////

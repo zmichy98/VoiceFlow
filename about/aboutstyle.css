@@ -1,0 +1,41 @@
+body {
+    font-family: 'Kanit', sans-serif;
+    background-color: #2E2E2E;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;  /* Align content to the top */
+    align-items: center;  /* Keep everything horizontally centered */
+    height: 300vh;
+}
+
+/* The main container that holds the pages */
+.page {
+    display: flex;
+    flex-direction: column;  /* Allow the content to stack vertically */
+    align-items: center;  /* Center items horizontally within the page */
+    justify-content: flex-start;  /* Align content to the top */
+    height: 100vh;  /* Ensure each page fills the screen height */
+    scroll-snap-align: start;
+    padding-top: 30px; /* Adjust space from the top if needed */
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: left;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #4d9246;
+}
+
+h2 {
+    max-width: 1000px;
+    font-size: 18px;
+    text-align: justify;
+    margin: 0 20px;
+    color: #b8b8b8;
+    padding: 10px;
+    font-weight: normal;
+}

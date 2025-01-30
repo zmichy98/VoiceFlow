@@ -10,6 +10,37 @@
     <title>About VoiceFlow</title>
 </head>
 
+<style>
+    .image-container {
+    display: flex;
+    justify-content: space-evenly; /* Equal spacing between images */
+    align-items: center;
+    position: fixed;
+    bottom: 20px; /* Position the container at the bottom */
+    width: 100%; /* Take full width of the page */
+    }
+
+    .image-link {
+        display: block;
+        width: 50px; /* Set the size of the image */
+        height: 50px; /* Make sure the image is a circle */
+        overflow: hidden; /* Hide the overflow */
+        border-radius: 50%; /* Crop the image into a circle */
+        transition: transform 0.3s ease; /* Add smooth scaling effect */
+    }
+
+    .image-link:hover {
+        transform: scale(1.1); /* Increase size slightly when hovered */
+    }
+
+    .image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensure image fills the circle */
+    }
+</style>
+
+
 <body> 
     <div  class="page">
 
@@ -28,6 +59,24 @@
         <h2>
             This project was developed as the final project for the Advanced Coding Tools and Methodology course in the Music and Acoustic Engineering program at Politecnico di Milano by Michele Zanardi, Gianluigi Vecchini, Federico Capitani, and İpek Ceren Bayram.
         </h2>
+
+
+
+        <div class="image-container">
+            <a href="mailto:federico1.capitani@mail.polimi.it" class="image-link">
+                <img src="1.jpg" alt="Fed" class="image">
+            </a>
+            <a href="mailto:ipekceren.bayram@mail.polimi.it" class="image-link">
+                <img src="2.jpg" alt="Cer" class="image">
+            </a>
+            <a href="mailto:gianluigi.vecchini@mail.polimi.it" class="image-link">
+                <img src="3.jpg" alt="Lui" class="image">
+            </a>
+            <a href="mailto:michele.zanardi@mail.polimi.it" class="image-link">
+                <img src="4.jpg" alt="Mich" class="image">
+            </a>
+        </div>
+        
     </div>
 
 

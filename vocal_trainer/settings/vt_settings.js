@@ -394,7 +394,19 @@ const detuneElem = document.getElementById("detune");
 const detuneWarning = document.getElementById("detune-warning");
 const levelBar = document.getElementById("level-bar");
 const levelValue = document.getElementById("level-value");
-const nextButton = document.querySelector("next_button");
+const next3Button = document.querySelectorAll('.next3_button');
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (enableMicBtn) {
+    enableMicBtn.style.display = 'none';
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  next3Button.forEach(button => {
+    button.style.display = 'none';
+  })
+});
 
 // Notes-Frequencies
 const noteFrequencies = [
@@ -655,7 +667,9 @@ function saveNote(goalNote) {
     selectingButtonState = "NotSelecting"
     selectNoteBtn.innerHTML = "Start selection";
     selectNoteBtn.classList.remove('active');
-    enableMicBtn.classList.add('notusable');
+    if (enableMicBtn) {
+      enableMicBtn.style.display = 'none';
+    }
   }
   // If it's the second note and different from the first
   else if (secondNote === null && firstNote !== null) {
@@ -668,15 +682,12 @@ function saveNote(goalNote) {
 }
 
 function finalizeSelection() {
-
-  // Initially hide the "Next" button
-  if(nextButton) {
-    nextButton.style.display = "none";
+  if (enableMicBtn) {
+    enableMicBtn.style.display = 'none';
   }
-
-  changeNoteBtn.classList.add('notusable');
-  enableMicBtn.classList.add('notusable');
-  selectNoteBtn.classList.add('notusable');
+  selectNoteBtn.forEach(button => {
+    button.style.display = 'none';
+  });
   // Save the selected range to localStorage
   manual = true;
   localStorage.setItem("manual", manual);
@@ -684,8 +695,15 @@ function finalizeSelection() {
   localStorage.setItem("secondNote", secondNote);
   localStorage.setItem("selectedRange", `from ${firstNote} to ${secondNote}`);
 
-  // Show the "Next" button
-  nextButton.style.display = "inline-block"; // Show the "Next" button if any option is selected
+  if (firstNote && secondNote) {
+    next3Button.forEach(button => {
+      button.style.display = 'inline-block';
+    });
+  } else {
+    next3Button.forEach(button => {
+      button.style.display = 'none';
+    });
+  }
 
   // Optionally log for debugging
   console.log('First Note:', firstNote, 'Second Note:', secondNote);
@@ -730,10 +748,12 @@ function noteClickHandler() {
 
 function stopNoteSelection() {
   selectingButtonState = "ChangeNote";  // Transition state
-  selectNoteBtn.innerHTML = "Change selected note";
+  selectNoteBtn.innerHTML = "Change note";
   selectNoteBtn.classList.remove('active');
 
-  enableMicBtn.classList.remove('notusable');
+  if (enableMicBtn) {
+    enableMicBtn.style.display = 'inline-block';
+  }
 
   // Remove event listener from note buttons
   noteButtons.forEach(button => {
@@ -744,6 +764,11 @@ function stopNoteSelection() {
 }
 
 function resetNoteSelection() {
+  enableMicBtn.innerHTML = "Enable detection";
+  noteElem.innerHTML = "";
+  hzElem.innerHTML = "";
+  detuneElem.innerHTML = "";
+
   // Stop the microphone
   stopMicrophoneStream();
 
@@ -756,7 +781,9 @@ function resetNoteSelection() {
   goalNote = null;
   goalFreq = null;
 
-  enableMicBtn.classList.add('notusable');
+  if (enableMicBtn) {
+    enableMicBtn.style.display = 'none';
+  }
 
   console.log("Selection reset. Restarting selection...");
   startNoteSelection();

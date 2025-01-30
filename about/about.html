@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Collegamento con il file css: -->
+    <link rel="stylesheet" href="aboutstyle.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.25/Tone.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>About VoiceFlow</title>
+</head>
+
+<style>
+    .image-container {
+    display: flex;
+    justify-content: space-evenly; /* Equal spacing between images */
+    align-items: center;
+    position: fixed;
+    bottom: 20px; /* Position the container at the bottom */
+    width: 100%; /* Take full width of the page */
+    }
+
+    .image-link {
+        display: block;
+        width: 50px; /* Set the size of the image */
+        height: 50px; /* Make sure the image is a circle */
+        overflow: hidden; /* Hide the overflow */
+        border-radius: 50%; /* Crop the image into a circle */
+        transition: transform 0.3s ease; /* Add smooth scaling effect */
+    }
+
+    .image-link:hover {
+        transform: scale(1.1); /* Increase size slightly when hovered */
+    }
+
+    .image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensure image fills the circle */
+    }
+</style>
+
+
+<body> 
+    <div  class="page">
+
+        <a href="../../index.html">
+            <img src="logo.jpg" alt="Go to Main Page" style="position:fixed; top:15px; left:20px; width: 100px; cursor: pointer;">
+        </a> 
+
+        <h1>About VoiceFlow</h1>
+
+        <h2>
+            VoiceFlow is an innovative exercise platform designed specifically for musicians and singers, enabling them to warm up their voices before performances. Whether you're a beginner or an advanced performer, VoiceFlow offers a range of customizable exercises tailored to suit every skill level. The platform allows users to create personalized warm-up routines, helping them gradually improve their vocal technique.            
+        </h2>
+        <h2>
+            In addition to the diverse exercises, VoiceFlow provides an engaging way for users to monitor their progress over time, allowing them to visualize improvements and continue refining their vocal abilities. Our goal is to create a comprehensive space where singers and musicians alike can prepare their voices for any performance, all while fostering growth and development.
+        </h2>
+        <h2>
+            This project was developed as the final project for the Advanced Coding Tools and Methodology course in the Music and Acoustic Engineering program at Politecnico di Milano by Michele Zanardi, Gianluigi Vecchini, Federico Capitani, and İpek Ceren Bayram.
+        </h2>
+
+
+
+        <div class="image-container">
+            <a href="mailto:federico1.capitani@mail.polimi.it" class="image-link">
+                <img src="1.jpg" alt="Fed" class="image">
+            </a>
+            <a href="mailto:ipekceren.bayram@mail.polimi.it" class="image-link">
+                <img src="2.jpg" alt="Cer" class="image">
+            </a>
+            <a href="mailto:gianluigi.vecchini@mail.polimi.it" class="image-link">
+                <img src="3.jpg" alt="Lui" class="image">
+            </a>
+            <a href="mailto:michele.zanardi@mail.polimi.it" class="image-link">
+                <img src="4.jpg" alt="Mich" class="image">
+            </a>
+        </div>
+        
+    </div>
+
+
+
+
+
+
+
+
+
+
+</body>

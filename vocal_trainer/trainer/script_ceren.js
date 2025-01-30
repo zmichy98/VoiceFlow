@@ -15,7 +15,7 @@ let tempo = 120;
 let exDuration = 30;
 let exDuration_woSteps = 30;
 let ex_length = 120;
-const pattern = [0, 2, 4, 5, 7, 5, 4, 2, 0];
+const pattern = [0, 2, 4, 5, 7, 5, 4, 2, 0]; ///////////////////////////////////// CEREN
 let vox = ["A2", "B2"];
 const work = ["es1", "es2"];
 let workout_length = 480;
@@ -27,6 +27,7 @@ let mask = false;
 let laxVox = false;
 let w = "";
 let countPoints = 0;
+let title = "";
 
 
 //Takes the variables from the previous pages (stored locally)
@@ -40,7 +41,27 @@ document.addEventListener("DOMContentLoaded", function() {
     experience = localStorage.getItem("selectedLevel").toString(); // string: Beginner, Intermediate, Advanced
     mask = localStorage.getItem("mask"); // Can either be true or false
     laxVox = localStorage.getItem("laxVox"); // Can either be true or false
+
+        // Create an empty div for the icon
+    const iconContainer = document.createElement("div");
+
+    // Check conditions and add the appropriate icons
+    if (laxVox === "true" && mask === "true") {
+        iconContainer.textContent = "ⓂⓁ"; // Both selected
+    }
+    else if (laxVox === "true") {
+        iconContainer.textContent = "Ⓛ"; // Only laxVox selected
+    }
+    else if (mask === "true") {
+        iconContainer.textContent = "Ⓜ"; // Only mask selected
+    }
+    // If any icon is selected, append the icon container to the body
+    if (iconContainer.textContent) {
+        iconContainer.classList.add("icon");
+        document.body.appendChild(iconContainer); // Append to body or a specific container
+    }
 });
+
 
 //Decides Workout to be played (TO BE DONE)
 // ORDER OF CHOICE: Level of skill, time, equipment
@@ -319,7 +340,6 @@ async function testingValues() {
 }
 
 
-
 ////////////////////////////////////////////////////////
 
 // HELPER FUNCTIONS
@@ -422,6 +442,21 @@ async function setExercise(es) {
     pattern.length = 0; // Pulisci l'array pattern
     pattern.push(...exercisePattern); // Carica i nuovi pattern
     tempo = pattern[3];
+
+    ///////////////////////////////////////////////////////////////////////// CEREN pattern[0]=title pattern[1]=description pattern[2]=mask/lv/none
+    const exerciseTitle = document.getElementById("ex-title-text");
+    if (exerciseTitle) {
+        exerciseTitle.textContent = pattern[0]; // Update the title
+    }
+    console.log("Exercise title updated to:", pattern[0]);
+
+    // exercise description
+    const exerciseDetail = document.getElementById("ex-detail");
+    if (exerciseDetail) {
+        exerciseDetail.innerHTML = `<p>${descriptionMessage}</p>`; // Set new description
+    }
+    console.log("Exercise description updated to:", pattern[1]);
+    
     //const ex_length = (pattern.length) * 60 / tempo;
     //console.log("Ex length: " + ex_length)
     console.log("Tempo from firebase: " + tempo)

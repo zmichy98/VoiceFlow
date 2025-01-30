@@ -548,7 +548,7 @@ const playNote = async (note, duration, time) => {
     piano.triggerAttackRelease(note, duration, time);
     changeKeyColor(note);
 
-    // Rileva la nota cantata e aggiorna i punti
+    // Gets the note and assign the points
     try {
         const result = await startGamePitchTrack(note, duration); // Rileva la nota
         countPoints += result; // Aggiungi il risultato

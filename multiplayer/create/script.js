@@ -1,78 +1,79 @@
-// Importa i moduli di Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
+// Import Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+import CryptoJS from "https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js";
 
-// Configurazione Firebase (sostituisci con i tuoi dati)
+// Firebase Config (Usiamo i tuoi dati)
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyB-BaTehljfDtni-HAPrYh6rKT9sJyTKaU",
+  authDomain: "database-for-singing.firebaseapp.com",
+  projectId: "database-for-singing",
+  storageBucket: "database-for-singing.firebasestorage.app",
+  messagingSenderId: "397721112623",
+  appId: "1:397721112623:web:c5ec8963358f8e014736da"
 };
 
-// Inizializza Firebase e Firestore
+// Initialize Firebase and Firestore
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Funzione per generare una keyword unica
-function generateKeyword() {
-  return 'keyword-' + Math.random().toString(36).substring(2, 10);
+// Function to hash passwords before storing them
+function hashPassword(password) {
+  return CryptoJS.SHA256(password).toString();
 }
 
-// Variabili predefinite fornite dalla piattaforma
-const predefinedLevel = 1; // Livello di difficoltà iniziale
-const predefinedScore = 0; // Punteggio iniziale
-
-// Gestione del modulo
+// Handle form submission for creating an account
 document.getElementById('accountForm').addEventListener('submit', async function (e) {
   e.preventDefault();
 
-  // Recupera i valori dal modulo
+  // Retrieve input values
   const nickname = document.getElementById('nickname').value;
   const password = document.getElementById('password').value;
   const email = document.getElementById('email').value;
 
-  // Valida i dati
+  // Validate input
   if (!nickname || !password || !email) {
-    alert('Compila tutti i campi!');
+    alert('Please fill in all fields!');
     return;
   }
 
   try {
-    // Verifica se il nickname è già utilizzato
-    const accountsRef = collection(db, 'accounts');
+    // Check if the nickname is already in use
+    const accountsRef = collection(db, 'store/accounts'); // Percorso aggiornato
     const q = query(accountsRef, where('nickname', '==', nickname));
     const querySnapshot = await getDocs(q);
 
     if (!querySnapshot.empty) {
-      alert('Questo nickname è già in uso. Scegline un altro.');
+      alert('This nickname is already taken. Please choose another one.');
       return;
     }
 
-    // Genera una keyword unica per l'account
-    const keyword = generateKeyword();
+    // Hash the password before storing it
+    const hashedPassword = hashPassword(password);
 
-    // Crea l'oggetto da salvare nel database
-    const accountData = {
+    // Store account data in Firestore
+    await addDoc(collection(db, 'store/accounts'), {
       nickname: nickname,
-      password: password, // Nota: evita di salvare password in chiaro in un'app reale
+      password: hashedPassword, // Hashed password for security
       email: email,
-      keyword: keyword,
-      level: predefinedLevel,
-      score: predefinedScore
-    };
-
-    // Salva i dati nel database Firestore
-    await addDoc(collection(db, 'accounts'), accountData);
-
-    alert('Account creato con successo!');
+      points_beg: 0,  // Punteggio iniziale Beginner
+      points_int: 0,  // Punteggio iniziale Intermediate
+      points_adv: 0,  // Punteggio iniziale Advanced
+      level: "beginner", // Default level at signup
+      range_predefined: true, // Assume default range is predefined
+      manual: false, // Default to false (not manual)
+      first_note: "C3", // Default lowest note
+      last_note: "G5", // Default highest note
+      time: 0 // Default training time (in minutes)
+    });
+    
+    alert('Account successfully created!');
+    window.location.href = "/multiplayer/login/login.html";
     document.getElementById('accountForm').reset();
   } catch (error) {
-    console.error('Errore durante la creazione dell\'account:', error);
-    alert('Si è verificato un errore. Riprova.');
+    console.error('Error while creating the account:', error);
+    alert('An error occurred. Please try again.');
   }
 });
 
-  
+

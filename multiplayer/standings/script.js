@@ -1,76 +1,75 @@
-// Importa i moduli di Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-import { getFirestore, collection, getDocs, orderBy, query, where } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
+// Import Firebase modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
-// Configurazione Firebase (sostituisci con i tuoi dati)
+// Firebase configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyB-BaTehljfDtni-HAPrYh6rKT9sJyTKaU",
+  authDomain: "database-for-singing.firebaseapp.com",
+  projectId: "database-for-singing",
+  storageBucket: "database-for-singing.firebasestorage.app",
+  messagingSenderId: "397721112623",
+  appId: "1:397721112623:web:c5ec8963358f8e014736da"
 };
 
-// Inizializza Firebase e Firestore
+// Initialize Firebase and Firestore
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Funzione per generare le classifiche
-async function generateLeaderboard(level) {
+// Function to fetch and sort leaderboard data
+async function fetchLeaderboard(level) {
   try {
-    // Recupera gli account con il livello specifico
-    const accountsRef = collection(db, 'accounts');
-    const q = query(accountsRef, where('level', '==', level), orderBy('score', 'desc'));
-    const querySnapshot = await getDocs(q);
+    const accountsRef = collection(db, "accounts");
+    const querySnapshot = await getDocs(accountsRef);
 
-    // Estrai i dati e prendi solo i primi 20
     const leaderboard = [];
-    querySnapshot.forEach(doc => {
+    
+    querySnapshot.forEach((doc) => {
       const data = doc.data();
-      leaderboard.push({
-        nickname: data.nickname,
-        score: data.score
-      });
+      if (data.scores && data.scores[level] !== undefined) {
+        leaderboard.push({
+          nickname: data.nickname,
+          score: data.scores[level]
+        });
+      }
     });
 
-    return leaderboard.slice(0, 20); // Limita alla top 20
+    // Sort leaderboard in descending order and get top 20
+    leaderboard.sort((a, b) => b.score - a.score);
+    return leaderboard.slice(0, 20);
   } catch (error) {
-    console.error(`Errore nel recupero della classifica per il livello ${level}:`, error);
+    console.error(`Error fetching leaderboard for ${level}:`, error);
     return [];
   }
 }
 
-// Funzione per visualizzare le classifiche
+// Function to display leaderboards
 async function displayLeaderboards() {
-  const beginnerLeaderboard = await generateLeaderboard(1); // Livello Beginner
-  const intermediateLeaderboard = await generateLeaderboard(2); // Livello Intermediate
-  const advancedLeaderboard = await generateLeaderboard(3); // Livello Advanced
+  const beginnerLeaderboard = await fetchLeaderboard("beginner");
+  const intermediateLeaderboard = await fetchLeaderboard("intermediate");
+  const advancedLeaderboard = await fetchLeaderboard("advanced");
 
-  // Crea il contenuto HTML per ogni classifica
-  renderLeaderboard('beginnerLeaderboard', beginnerLeaderboard, 'Beginner');
-  renderLeaderboard('intermediateLeaderboard', intermediateLeaderboard, 'Intermediate');
-  renderLeaderboard('advancedLeaderboard', advancedLeaderboard, 'Advanced');
+  renderLeaderboard("beginnerList", beginnerLeaderboard);
+  renderLeaderboard("intermediateList", intermediateLeaderboard);
+  renderLeaderboard("advancedList", advancedLeaderboard);
 }
 
-// Funzione per creare la classifica HTML
-function renderLeaderboard(containerId, leaderboard, title) {
+// Function to render leaderboard in HTML
+function renderLeaderboard(containerId, leaderboard) {
   const container = document.getElementById(containerId);
-  container.innerHTML = `<h3>${title} Leaderboard</h3>`;
+  container.innerHTML = ""; // Clear previous data
+
   if (leaderboard.length === 0) {
-    container.innerHTML += '<p>No data available</p>';
+    container.innerHTML = "<p>No data available</p>";
     return;
   }
 
-  const list = document.createElement('ol'); // Lista ordinata
-  leaderboard.forEach(player => {
-    const listItem = document.createElement('li');
-    listItem.textContent = `${player.nickname}: ${player.score}`;
-    list.appendChild(listItem);
+  leaderboard.forEach((player, index) => {
+    const listItem = document.createElement("li");
+    listItem.textContent = `#${index + 1} ${player.nickname}: ${player.score}`;
+    container.appendChild(listItem);
   });
-
-  container.appendChild(list);
 }
 
-// Avvia il caricamento delle classifiche all'apertura della pagina
+// Load leaderboards on page load
 displayLeaderboards();

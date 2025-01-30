@@ -6,6 +6,7 @@
   <title>Login</title>
   <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
 <body>
   <a href="../../index.html">
@@ -24,6 +25,9 @@
       <button type="submit">Login</button>
     </form>
 
+    <!-- Forgot your password -->
+    <p id="forgotPassword" class="forgot-password">Forgot your password?</p>
+
     <!-- Section to recover the account -->
     <div id="recoverySection" class="hidden">
       <h3>Recover Account</h3>
@@ -38,15 +42,12 @@
     
     <div class="create-account">
       <p>Don't have an account?</p>
-      <!--<button id="createAccountButton">Create an Account</button> -->
       <a href="/multiplayer/create/multiplayer.html">
-        <button>
-            Create an Account</button>
-    </a>
+        <button>Create an Account</button>
+      </a>
     </div>
   </div>
 
-  <script type="module" src="login.js"></script> <!-- Link to the JavaScript file -->
+  <script type="module" src="script.js"></script> <!-- Link to the JavaScript file -->
 </body>
 </html>
-

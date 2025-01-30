@@ -72,3 +72,15 @@ button:hover {
 .create-account{
   text-align: center;
 }
+
+.forgot-password {
+  color: #4CAF50;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+

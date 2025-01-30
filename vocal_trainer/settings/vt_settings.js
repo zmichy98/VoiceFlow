@@ -363,28 +363,30 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
-
 /*------------------------ VOCAL RANGE 3 ------------------------*/
 /*-------------- VARIABLES --------------*/
-let selectingNote = false;
+// Variables for storing notes
+let selectingButtonState = "NotSelecting"
 let goalNote = null;
 let goalFreq = null;
 let firstNote = null;
 let secondNote = null;
 
+// Variables for the tuner
 let audioContext = null;
-let currStream = null; // global variable to save the audio stream
-let source = null; // Audio input (microphone stream)
+let currStream = null;
+let source = null;
 let analyser = null;
-let buffer = new Float32Array(1024); // length of array = fftSize/2
+let buffer = new Float32Array(1024);
 let requestAnimationFrameId = null;
+const constraints = {audio: true, video: false};
 
+// Tollerance range to get the right note
+const tuneTollerance = 30;
+
+// Get elements by Id
 const selectNoteBtn = document.getElementById('select-note-btn');
 const noteButtons = document.querySelectorAll('.key');
-
-const tuneTollerance = 30;
-const constraints = {audio: true, video: false};
 const enableMicBtn = document.getElementById("enable-mic");
 const noteElem = document.getElementById("note");
 const hzElem = document.getElementById("hz");
@@ -392,7 +394,9 @@ const detuneElem = document.getElementById("detune");
 const detuneWarning = document.getElementById("detune-warning");
 const levelBar = document.getElementById("level-bar");
 const levelValue = document.getElementById("level-value");
+const nextButton = document.querySelector("next_button");
 
+// Notes-Frequencies
 const noteFrequencies = [
     { note: "C2", freq: 65.41 },
     { note: "C#2", freq: 69.30 },
@@ -449,40 +453,6 @@ const noteFrequencies = [
     { note: "C6", freq: 1046.50 }
 ];
 
-
-/*-------------- PROGRESS BAR --------------*/
-/*
-document.addEventListener("DOMContentLoaded", () => {
-  const sliderValue = localStorage.getItem("sliderValue") || 0;
-  const totalTime = parseInt(sliderValue);
-
-  const progressBar = document.getElementById("progress-bar");
-  const progress = document.getElementById("progress");
-
-  // initial progress bar width
-  progress.style.width = '0%';
-
-  // total duration for the animation in [ms]
-  const totalDuration = totalTime * 60 * 1000;
-
-  // animation
-  let elapsedTime = 0;
-  const interval = setInterval(() => {
-      if (elapsedTime < totalDuration) {
-          elapsedTime += 1000; // increase time by 1 second
-          const percentage = (elapsedTime / totalDuration) * 100; // calculate percentage
-
-          // update the progress bar width and turn it green
-          progress.style.width = percentage + '%';
-          progress.style.backgroundColor = `rgb(${255 - percentage}, ${percentage}, 0)`; //change from white to green
-
-      } else {
-          clearInterval(interval); // time is up
-      }
-  }, 1000); // Update the progress every second
-});
-*/
-
 /*-------------- TUNER --------------*/
 function autoCorrelate( buf, sampleRate ) {
 	var SIZE = buf.length;
@@ -536,15 +506,19 @@ function getNotediff(freq) {
   return centsDetune;
 }
 
-function updateLevelMeter(value) { // Function to update the level meter based on the cents value
-    const percentage = value + 50;
+function updateLevelMeter(value) {
+    const now = Date.now();
 
-    // Write the value in the bar
+    value = Math.max(-50, Math.min(50, value));
+
+    const percentage = value + 50; // Normalize for the meter
+
+    // Update the level bar width
     levelBar.style.width = percentage + '%';
     levelValue.innerText = value;
 
-    // Change color based on value
-    if (value < - tuneTollerance) {
+    // Change color based on detune range
+    if (value < -tuneTollerance) {
         levelBar.className = "level low";
     } else if (value > tuneTollerance) {
         levelBar.className = "level high";
@@ -553,34 +527,6 @@ function updateLevelMeter(value) { // Function to update the level meter based o
     } else {
         levelBar.className = "level mid";
     }
-}
-
-function updateLevelMeter(value, tuneTolerance = 5) {
-  if (value === null || value === undefined) {
-      levelBar.className = "level norange";
-      levelBar.style.width = '50%'; // Neutral position
-      levelValue.innerText = "No value";
-      return;
-  }
-
-  // Map value to a percentage (assuming typical range of -100 to 100)
-  const maxRange = 100; // Maximum absolute value for visualization
-  const normalizedValue = Math.max(-maxRange, Math.min(maxRange, value)); // Clamp between -100 and 100
-  const percentage = ((normalizedValue + maxRange) / (2 * maxRange)) * 100;
-
-  // Update bar width and display value
-  levelBar.style.width = percentage + '%';
-  levelValue.innerText = value;
-
-  // Assign classes based on value
-  let levelClass = "level mid"; // Default to "mid"
-  if (normalizedValue < -tuneTolerance) {
-      levelClass = "level low";
-  } else if (normalizedValue > tuneTolerance) {
-      levelClass = "level high";
-  }
-
-  levelBar.className = levelClass;
 }
 
 function getMicrophoneStream(){ //  Initializes the microphone input and prepares it for audio analysis.
@@ -639,20 +585,27 @@ function getPitch(){
       hzElem.innerHTML = "No note detected";
     } else{
         let detune = getNotediff(frequencyinHz);
+
         hzElem.innerHTML = "The frequency you are singing is approximatly " + Math.round(frequencyinHz) + " Hz";
         detuneElem.innerHTML = "You are detuned by " + detune + " cents";
 
         if(Math.abs(detune) < tuneTollerance){
-            saveNote(goalNote);
-            console.log("Note saved");
 
-            enableMicBtn.innerHTML = "Enable detection";
-            noteElem.innerHTML = "";
-            hzElem.innerHTML = "";
-            detuneElem.innerHTML = "";
-            main();
-            return;
+          
+          saveNote(goalNote);
+          console.log("Note saved");
+          
+          enableMicBtn.innerHTML = "Enable detection";
+          noteElem.innerHTML = "";
+          hzElem.innerHTML = "";
+          detuneElem.innerHTML = "";
+          main();
+          
+          selectingButtonState = "NotSelecting"
+          selectNoteBtn.innerHTML = "Start selection";
+          return;
         }
+
         updateLevelMeter(detune);
     }
 
@@ -673,17 +626,16 @@ function main(){ //Main function to activate and stop Microphone streaming
         noteElem.innerHTML = "Sing " + goalNote + ", frequency: " + goalFreq + " Hz";
         hzElem.innerHTML = "Please wait the tuner to load"
         enableMicBtn.innerHTML = "enabling ..."
+
         getMicrophoneStream();
+
         enableMicBtn.innerHTML = "Disable detection"
-        enableMicBtn.classList.add('notusable');
-        selectNoteBtn.classList.remove('notusable');
     }
     else{
         stopMicrophoneStream()
         enableMicBtn.innerHTML = "Enable detection"
     }
 }
-
 
 if (enableMicBtn) {
     enableMicBtn.addEventListener('click', () => {
@@ -700,6 +652,10 @@ function saveNote(goalNote) {
     element.classList.add('selected');
     rangeInterval.innerHTML = `<p>Range starts at ${firstNote}, now select and detect the high note</p>`;
     goalNote = null;
+    selectingButtonState = "NotSelecting"
+    selectNoteBtn.innerHTML = "Start selection";
+    selectNoteBtn.classList.remove('active');
+    enableMicBtn.classList.add('notusable');
   }
   // If it's the second note and different from the first
   else if (secondNote === null && firstNote !== null) {
@@ -718,6 +674,7 @@ function finalizeSelection() {
     nextButton.style.display = "none";
   }
 
+  changeNoteBtn.classList.add('notusable');
   enableMicBtn.classList.add('notusable');
   selectNoteBtn.classList.add('notusable');
   // Save the selected range to localStorage
@@ -737,49 +694,70 @@ function finalizeSelection() {
 /*-------------- NOTE SELECTION --------------*/
 if (selectNoteBtn) {
   selectNoteBtn.addEventListener('click', () => {
-    if (selectingNote) {
-      stopNoteSelection()
-    } else {
-      startNoteSelection()
+    console.log(selectingButtonState)
+    if (selectingButtonState === "NotSelecting") {
+      startNoteSelection();
+    } else if (selectingButtonState === "Selecting") {
+      stopNoteSelection();
+    } else if (selectingButtonState === "ChangeNote") {
+      resetNoteSelection();
     }
   });
 }
 
 function startNoteSelection() {
-  selectingNote = true;
-  selectingNote = null; // Reset selected note
+  selectingButtonState = "Selecting";
   selectNoteBtn.innerHTML = "Stop selection"; // Change button text
   selectNoteBtn.classList.add('active'); // Optional styling
 
+  console.log("Selection started:", selectingButtonState);
+
   noteButtons.forEach(button => {
-    button.addEventListener('click', noteClickHandler); 
+    button.addEventListener('click', noteClickHandler);
   });
-}
-
-function stopNoteSelection() {
-  selectingNote = false;
-  selectNoteBtn.innerHTML = "Start selection"; // Change button text
-  selectNoteBtn.classList.remove('active'); // Remove optional styling
-
-  // Remove event listener from each note button
-  noteButtons.forEach(button => {
-    button.removeEventListener('click', noteClickHandler);
-  });
-
-  // Debugging or further use of the selected note
-  if (goalNote) {
-    console.log("Selected note:", goalNote);
-  } else {
-    console.log("No note selected.");
-  }
 }
 
 function noteClickHandler() {
   goalNote = this.getAttribute('data-note'); // Get the note from the data attribute
   goalFreq = noteFrequencies.find(n => n.note === goalNote).freq; 
+
   this.classList.add('pressed'); // Highlight the key 
-  console.log('Note:', goalNote);
-  enableMicBtn.classList.remove('notusable');
-  selectNoteBtn.classList.add('notusable');
+
+  console.log('Selected Note:', goalNote);
+
   stopNoteSelection();
-};
+}
+
+function stopNoteSelection() {
+  selectingButtonState = "ChangeNote";  // Transition state
+  selectNoteBtn.innerHTML = "Change selected note";
+  selectNoteBtn.classList.remove('active');
+
+  enableMicBtn.classList.remove('notusable');
+
+  // Remove event listener from note buttons
+  noteButtons.forEach(button => {
+    button.removeEventListener('click', noteClickHandler);
+  });
+
+  console.log("Note selection stopped. Current note:", goalNote);
+}
+
+function resetNoteSelection() {
+  // Stop the microphone
+  stopMicrophoneStream();
+
+  // Remove "pressed" class from all keys
+  document.querySelectorAll('.key.pressed').forEach(key => {
+    key.classList.remove('pressed');
+  });
+
+  // Reset goal note
+  goalNote = null;
+  goalFreq = null;
+
+  enableMicBtn.classList.add('notusable');
+
+  console.log("Selection reset. Restarting selection...");
+  startNoteSelection();
+}

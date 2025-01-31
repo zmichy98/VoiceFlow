@@ -168,25 +168,6 @@ function updateLevelMeter(detune) {
     // Imposta la posizione in percentuale rispetto alla larghezza della barra
     indicator.style.left = position + "%";
 }
-/*
-function updateLevelMeter(value) {
-    const percentage = ((value + 50) / 100) * 100; // Scale the value to 0-100
-
-    // Write the value in the bar
-    levelBar.style.width = percentage + '%';
-    levelValue.innerText = value;
-
-    // Change color based on value
-    if (value < - tuneTollerance) {
-        levelBar.className = "level low";
-    } else if (value > tuneTollerance) {
-        levelBar.className = "level high";
-    } else if (value === null) {
-        levelBar.className = "level norange";
-    } else {
-        levelBar.className = "level mid";
-    }
-}*/
 
 //  Initializes the microphone input and prepares it for audio analysis.
 function getMicrophoneStream(){

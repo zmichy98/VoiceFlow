@@ -324,33 +324,6 @@ button.notusable {
   transform: scale(1);
 }
 
-/*---------Next button for vocal range 3---------*/
-.next3_button {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  padding: 10px 20px;
-  background: linear-gradient(45deg, rgb(160, 160, 160), #f7f7f7);
-  color: rgb(79, 79, 79);
-  font-size: 1em;
-  text-decoration: none;
-  border-radius: 100px;
-  font-family: 'Kanit', sans-serif;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-}
-
-.next3_button:hover {
-  transform: scale(1.05);
-  background: linear-gradient(45deg, rgba(109, 109, 109, 0.989), #9c9c9c);
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
-  color: black;
-}
-
-.next3_button:active {
-  transform: scale(1);
-}
-
 /*---------Level buttons---------*/
 .level-buttons {
   display: flex;

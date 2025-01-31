@@ -1,3 +1,51 @@
+// Initialize the Salamander piano sampler
+const piano = new Tone.Sampler({
+    urls: {
+      "A0": "A0.mp3",
+      "C1": "C1.mp3",
+      "D#1": "Ds1.mp3",
+      "F#1": "Fs1.mp3",
+      "A1": "A1.mp3",
+      "A2": "A2.mp3",
+      "C2": "C2.mp3",
+      "D#2": "Ds2.mp3",
+      "F#2": "Fs2.mp3",
+      "C3": "C3.mp3",
+      "D#3": "Ds3.mp3",
+      "F#3": "Fs3.mp3",
+      "A3": "A3.mp3",
+      "C4": "C4.mp3",
+      "D#4": "Ds4.mp3",
+      "F#4": "Fs4.mp3",
+      "A4": "A4.mp3",
+      "C5": "C5.mp3",
+      "D#5": "Ds5.mp3",
+      "F#5": "Fs5.mp3",
+      "A5": "A5.mp3",
+      "C6": "C6.mp3",
+      "D#6": "Ds6.mp3",
+      "F#6": "Fs6.mp3",
+      "A6": "A6.mp3",
+      "C7": "C7.mp3",
+      "D#7": "Ds7.mp3",
+      "F#7": "Fs7.mp3",
+      "A7": "A7.mp3",
+      "C8": "C8.mp3"
+    },
+    baseUrl: "https://tonejs.github.io/audio/salamander/",
+    onload: () => {
+      console.log("Piano loaded");
+    }
+  }).toDestination();
+  
+  // Add sound to all keys (independent of "Select" button)
+  document.querySelectorAll('.key').forEach(key => {
+    key.addEventListener('click', () => {
+      const note = key.getAttribute('data-note');
+      piano.triggerAttackRelease(note, "6n");
+    });
+});
+
 /* This first function was found on gitHub: https://github.com/cwilso/PitchDetect/blob/main/js/pitchdetect.js,
 it returns the dominant freq in Hz of the buffer (array) */
 function autoCorrelate( buf, sampleRate ) {
@@ -103,6 +151,24 @@ function getClosestNote(freq) {
 }
 
 // Function to update the level meter based on the cents value
+function updateLevelMeter(detune) {
+    let indicator = document.getElementById("tuner-indicator");
+    
+    if (!indicator) {
+        console.error("Errore: elemento tuner-indicator non trovato!");
+        return;
+    }
+
+    // Normalizziamo il valore tra -50 e +50 -> tra 0% e 100% nella barra
+    let position = ((detune + 50) / 100) * 100; 
+
+    // Assicuriamoci che l'indicatore non esca dalla barra
+    position = Math.min(100, Math.max(0, position));
+
+    // Imposta la posizione in percentuale rispetto alla larghezza della barra
+    indicator.style.left = position + "%";
+}
+/*
 function updateLevelMeter(value) {
     const percentage = ((value + 50) / 100) * 100; // Scale the value to 0-100
 
@@ -120,7 +186,7 @@ function updateLevelMeter(value) {
     } else {
         levelBar.className = "level mid";
     }
-}
+}*/
 
 //  Initializes the microphone input and prepares it for audio analysis.
 function getMicrophoneStream(){
@@ -195,7 +261,7 @@ function getPitch(){
         let [closerNote, detune] = getClosestNote(frequencyinHz);
         noteElem.innerHTML = closerNote.note;
         hzElem.innerHTML = "Your frequency is approximatly " + Math.round(frequencyinHz) + " Hz";
-        detuneElem.innerHTML = "You are detuned by " + detune + " cents";
+        detuneElem.innerHTML = "Detune: " + detune + " cents";
 
         if(detune < 0){
             detuneWarning.innerHTML = "You are Flat";
@@ -210,10 +276,16 @@ function getPitch(){
             detuneWarning.className = "in-tune";
         }
 
-        if(Math.abs(detune) > 50){
+        if(detune > 50){
             noteElem.innerHTML = "No note detected";
             detuneWarning.innerHTML = "Out of range";
-            detune = null;
+            detune = 50;
+        }
+
+        if(detune < -50){
+            noteElem.innerHTML = "No note detected";
+            detuneWarning.innerHTML = "Out of range";
+            detune = -50;
         }
 
         updateLevelMeter(detune);

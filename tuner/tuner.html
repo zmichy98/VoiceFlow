@@ -3,11 +3,12 @@
         <title>VoiceFlow</title>
         <meta name="viewport" content="width=devixe-width, initial-scale=1"></meta>
         <meta name="description" content="This app pitch track your voice and tells you your pitch."></meta>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.25/Tone.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tone@14.8.29/build/Tone.js"></script>
         <link rel="stylesheet" href="../style.css">
         <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <style>
-
             body {
                 margin: 0;
                 padding: 0;
@@ -16,20 +17,23 @@
 
             /* Container for note, Hz, detune, etc. */
             .container {
-                margin-top: 100px; /* Adds space below the meter bar */
+                margin: 0px; /* Adds space below the meter bar */
                 text-align: center; /* Center text */
             }
 
             /* Styling for note (e.g., C1, D#2, etc.) */
             #note {
                 font-size: 72px;
-                margin: 10px 0;
+                margin: 0 !important; /* Remove margins */
+                padding: 0 !important; /* Remove padding */
+                display: block; /* Ensure proper spacing behavior */
                 font-weight: bold;
                 color: #444;
+                line-height: 1;
             }
 
             /* Styling for Hz, detune, warning */
-            #hz, #detune, #detune-warning {
+            #hz, #detune, #detune-warning, #labels {
                 font-size: 24px;
                 margin: 5px 0;
                 color: #555;
@@ -45,30 +49,69 @@
                 border-radius: 25px;
                 cursor: pointer;
                 transition: background-color 0.3s;
-                margin-bottom: 20px;
+                margin-bottom: 10px;
             }
 
             #enable-mic:hover {
                 background-color: #45a049;
             }
 
-            .mic-container {
+            /* Contenitore flessibile per microfono e tachimetro */
+
+            /* Pulsante microfono (a sinistra) */
+            .mic-button-container {
+                min-width: 80px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                z-index: 10;
-                gap: 20px;
             }
 
+
+            /* Contenitore del tuner */
+            #tuner-container {
+                flex-grow: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Barra del tachimetro */
+            #tuner-bar {
+                position: relative;
+                width: 600px; /* Puoi allargarlo se vuoi */
+                height: 10px;
+                background-color: #ddd;
+                border-radius: 5px;
+                overflow: hidden;
+            }
+
+            /* Indicatore del tuner */
+            #tuner-indicator {
+                position: absolute;
+                width: 9px;
+                height: 20px;
+                background-color: red;
+                top: -5px;
+                left: 50%;
+                transform: translateX(-50%);
+                transition: left 0.1s ease-out;
+            }
+
+            /* Label sotto il tuner adattate alla nuova larghezza */
+            .tuner-labels {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                max-width: 600px; /* Deve essere uguale alla larghezza del tuner */
+            }
+
+            /* Pulsante microfono */
             .mic-button {
-                width: 50px;
-                height: 50px;
+                width: 60px;
+                height: 60px;
                 border-radius: 50%;
-                background-color: #4d9246; /* Green color */
+                background-color: #4CAF50;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -76,42 +119,21 @@
                 font-size: 24px;
                 cursor: pointer;
                 transition: background-color 0.3s, transform 0.2s;
-                margin-right: 10px; /* Adds space between button and meter */
-           }
-
-            /* Pitch meter styling */
-            .meter {
-                width: 500px;
-                /*max-width: 500px;*/
-                height: 30px;
-                background-color: #e0e0e0;
-                border-radius: 15px;
-                position: relative;
+            }
+            /* Contenitore flessibile per mic + tuner */
+            #mic-tuner-container {
+               display: flex;
+                align-items: center; /* Allinea verticalmente */
+                justify-content: center; /* Mantiene tutto centrato */
+                gap: 20px; /* Distanza tra il microfono e il tachimetro */
+                margin-top: 20px; /* Evita sovrapposizioni */
+                width: 100%;
             }
 
-            .level {
-                height: 100%;
-                width: 0%;
-                border-radius: 15px;
-                transition: width 0.3s ease;
+            /* Contenitore della tastiera */
+            .keyboard3 {
+                margin-top: 5px; /* Aggiunge spazio tra la tastiera e gli altri elementi */
             }
-
-            .level.low {
-                background-color: #ff1e00;
-            }
-
-            .level.mid {
-                background-color: yellow;
-            }
-
-            .level.high {
-                background-color: #4d9246;
-            }
-
-            .level.high {
-                background-color: rgba(0, 0, 0, 0.839);
-            }
-
         </style>
     </head>
     
@@ -123,21 +145,184 @@
                 </text>                
             </svg>
             
-            <div class="mic-container">
-                <button class="mic-button" id="enable-mic" data-tracking="false">
-                    <i class="fas fa-microphone"></i>
-                </button>
-                <div class="meter">
-                    <div class="level" id="level-bar"></div>
-                    <div class="value" id="level-value">0</div>
+            <div class="keyboard3">
+                <!-- Keyboard -->
+                <div class="keyboard">
+                    <!-- Second Octave -->
+                    <div class="key white" data-note="C2" id="C2" data-octave="2">
+                        <span class="note-name">C2</span>
+                    </div>
+                    <div class="key black" data-note="C#2" id="Csharp2" data-octave="2">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="D2" id="D2" data-octave="2">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key black" data-note="D#2" id="Dsharp2" data-octave="2">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="E2" id="E2" data-octave="2">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="F2" id="F2" data-octave="2">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key black" data-note="F#2" id="Fsharp2" data-octave="2">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="G2" id="G2" data-octave="2">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key black" data-note="G#2" id="Gsharp2" data-octave="2">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="A2" id="A2" data-octave="2">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key black" data-note="A#2" id="Asharp2" data-octave="2">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="B2" id="B2" data-octave="2">
+                        <span class="note-name"></span>
+                    </div>
+        
+                    <!-- Third Octave -->
+                    <div class="key white" data-note="C3" id="C3" data-octave="3">
+                        <span class="note-name">C3</span>
+                    </div>
+                    <div class="key black" data-note="C#3" id="Csharp3" data-octave="3">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="D3" id="D3" data-octave="3">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key black" data-note="D#3" id="Dsharp3" data-octave="3">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="E3" id="E3" data-octave="3">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="F3" id="F3" data-octave="3">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key black" data-note="F#3" id="Fsharp3" data-octave="3">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="G3" id="G3" data-octave="3">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key black" data-note="G#3" id="Gsharp3" data-octave="3">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="A3" id="A3" data-octave="3">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key black" data-note="A#3" id="Asharp3" data-octave="3">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="B3" id="B3" data-octave="3">
+                        <span class="note-name"></span>
+                    </div>
+        
+                    <!-- Fourth Octave -->
+                    <div class="key white" data-note="C4" id="C4" data-octave="4">
+                        <span class="note-name">C4</span>
+                    </div>
+                    <div class="key black" data-note="C#4" id="Csharp4" data-octave="4">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="D4" id="D4" data-octave="4">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key black" data-note="D#4" id="Dsharp4" data-octave="4">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="E4" id="E4" data-octave="4">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="F4" id="F4" data-octave="4">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key black" data-note="F#4" id="Fsharp4" data-octave="4">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="G4" id="G4" data-octave="4">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key black" data-note="G#4" id="Gsharp4" data-octave="4">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="A4" id="A4" data-octave="4">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key black" data-note="A#4" id="Asharp4" data-octave="4">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="B4" id="B4" data-octave="4">
+                        <span class="note-name"></span>
+                    </div>
+        
+                    <!-- Fifth Octave -->
+                    <div class="key white" data-note="C5" id="C5" data-octave="5">
+                        <span class="note-name">C5</span>
+                    </div>
+                    <div class="key black" data-note="C#5" id="Csharp5" data-octave="5">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="D5" id="D5" data-octave="5">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key black" data-note="D#5" id="Dsharp5" data-octave="5">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="E5" id="E5" data-octave="5">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="F5" id="F5" data-octave="5">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key black" data-note="F#5" id="Fsharp5" data-octave="5">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="G5" id="G5" data-octave="5">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key black" data-note="G#5" id="Gsharp5" data-octave="5">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="A5" id="A5" data-octave="5">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key black" data-note="A#5" id="Asharp5" data-octave="5">
+                        <span class="note-name"></span>
+                    </div>
+                    <div class="key white" data-note="B5" id="B5" data-octave="5">
+                        <span class="note-name"></span>
+                    </div>
                 </div>
             </div>
             
+            <div id="mic-tuner-container">
+                <div id="tuner-container">
+                    <div id="tuner-bar">
+                        <div id="tuner-indicator"></div>
+                    </div>
+                    <div class="tuner-labels" id="labels">
+                        <span>-50</span>
+                        <span id="detune">0</span>
+                        <span>+50</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="mic-button" id="enable-mic" data-tracking="false">
+                <i class="fas fa-microphone"></i>
+            </button>
+
             <div class="container">
-                <div id="note">C1</div>
-                <div id="hz">440Hz</div>
-                <div id="detune">+2.3 cents</div>
-                <div id="detune-warning">Warning: Detune Detected!</div>
+                <div id="note">Note</div>
+                <div id="hz">Note in hz</div>
+                <div id="detune-warning">Warnings</div>
             </div>
 
         <div class="button-container">

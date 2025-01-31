@@ -385,6 +385,7 @@ const constraints = {audio: true, video: false};
 const tuneTollerance = 30;
 
 // Get elements by Id
+const instructions = document.getElementById('instructions');
 const selectNoteBtn = document.getElementById('select-note-btn');
 const noteButtons = document.querySelectorAll('.key');
 const enableMicBtn = document.getElementById("enable-mic");
@@ -394,18 +395,16 @@ const detuneElem = document.getElementById("detune");
 const detuneWarning = document.getElementById("detune-warning");
 const levelBar = document.getElementById("level-bar");
 const levelValue = document.getElementById("level-value");
-const next3Button = document.querySelectorAll('.next3_button');
+const next3Button = document.getElementById("next_button");
+//const next3Button = document.querySelectorAll('.next3_button');
 
 document.addEventListener("DOMContentLoaded", () => {
   if (enableMicBtn) {
     enableMicBtn.style.display = 'none';
   }
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  next3Button.forEach(button => {
-    button.style.display = 'none';
-  })
+  if (next3Button) {
+    next3Button.style.display = 'none';
+  }
 });
 
 // Notes-Frequencies
@@ -662,7 +661,7 @@ function saveNote(goalNote) {
     firstNote = goalNote.trim();
     var element = document.getElementById(firstNote);
     element.classList.add('selected');
-    rangeInterval.innerHTML = `<p>Range starts at ${firstNote}, now select and detect the high note</p>`;
+    instructions.innerHTML = `<p>Range starts at ${firstNote}, now select and detect the high note</p>`;
     goalNote = null;
     selectingButtonState = "NotSelecting"
     selectNoteBtn.innerHTML = "Start selection";
@@ -676,7 +675,7 @@ function saveNote(goalNote) {
     secondNote = goalNote.trim();
     var element = document.getElementById(secondNote);
     element.classList.add('selected');
-    rangeInterval.innerHTML = `<p>Range starts at ${firstNote} and ends at ${secondNote}</p>`; 
+    instructions.innerHTML = `<p>Range starts at ${firstNote} and ends at ${secondNote}</p>`; 
     finalizeSelection();
   }
 }
@@ -684,26 +683,15 @@ function saveNote(goalNote) {
 function finalizeSelection() {
   if (enableMicBtn) {
     enableMicBtn.style.display = 'none';
+    next3Button.style.display = 'inline-block';
+    selectNoteBtn.style.display = 'none';
   }
-  selectNoteBtn.forEach(button => {
-    button.style.display = 'none';
-  });
   // Save the selected range to localStorage
   manual = true;
   localStorage.setItem("manual", manual);
   localStorage.setItem("firstNote", firstNote);
   localStorage.setItem("secondNote", secondNote);
   localStorage.setItem("selectedRange", `from ${firstNote} to ${secondNote}`);
-
-  if (firstNote && secondNote) {
-    next3Button.forEach(button => {
-      button.style.display = 'inline-block';
-    });
-  } else {
-    next3Button.forEach(button => {
-      button.style.display = 'none';
-    });
-  }
 
   // Optionally log for debugging
   console.log('First Note:', firstNote, 'Second Note:', secondNote);
@@ -770,7 +758,7 @@ function resetNoteSelection() {
   detuneElem.innerHTML = "";
 
   // Stop the microphone
-  stopMicrophoneStream();
+  main();
 
   // Remove "pressed" class from all keys
   document.querySelectorAll('.key.pressed').forEach(key => {

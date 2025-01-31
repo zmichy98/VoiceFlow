@@ -17,9 +17,10 @@
     }
 
     .container {
-        position: fixed;
-        top: 370px;
-        left: 32%;
+        position: absolute;
+        top: 600px; /* Assicurati che sia più basso della tastiera */
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .meter {
@@ -74,7 +75,7 @@
         <img src="logo.jpg" alt="Go to Main Page" style="position:fixed; top:15px; left:20px; width: 100px; cursor: pointer;">
     </a> 
 
-    <h2 style="position: absolute; top: 70px; font-size: 30px;">
+    <h2 style="position: absolute; top: 70px; font-size: 30px;" id="instructions">
         Select the lowest note and sing it after pressing the detecting button
     </h2>
       
@@ -244,7 +245,7 @@
     <!-- Start detecting button -->
     <div class="container">
         <button id = "select-note-btn" class="start-selecting-button">Start selection</button>
-        <button id="enable-mic" data-tracking="false">Enable detection</button>
+        <button id = "enable-mic" data-tracking="false">Enable detection</button>
     </div>
 
     <div class="meter">
@@ -259,7 +260,7 @@
     </div>
 
     <!-- Next button -->
-    <a href="setting4_vocgear.html" class="next3_button">Next</a>
+    <a href="setting4_vocgear.html" class="next_button" id="next_button">Next</a>
 
     <!-- Bottom left button container-->
     <div class="button-container">

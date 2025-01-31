@@ -1,4 +1,6 @@
 // Import CryptoJS
+import firebase from "firebase/app";
+import "firebase/firestore";
 import CryptoJS from "https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js";
 
 // Initialize Firebase and Firestore
@@ -27,7 +29,7 @@ document.getElementById('accountForm').addEventListener('submit', async function
 
   try {
     // Check if the nickname is already in use
-    const accountsRef = collection(db, 'store/accounts'); // Percorso aggiornato
+    const accountsRef = db.collection("store").doc("accounts"); // Percorso aggiornato
     const q = query(accountsRef, where('nickname', '==', nickname));
     const querySnapshot = await getDocs(q);
 
@@ -39,8 +41,10 @@ document.getElementById('accountForm').addEventListener('submit', async function
     // Hash the password before storing it
     const hashedPassword = hashPassword(password);
 
+
     // Store account data in Firestore
-    await addDoc(collection(db, 'store/accounts'), {
+    /*
+    await addDoc(db.collection("store").doc("accounts"), {
       nickname: nickname,
       password: hashedPassword, // Hashed password for security
       email: email,
@@ -54,6 +58,30 @@ document.getElementById('accountForm').addEventListener('submit', async function
       last_note: "G5", // Default highest note
       time: 0 // Default training time (in minutes)
     });
+
+    */
+
+    // Funzione per salvare l'array in Firestore
+    async function salvaArray() {
+      try {
+        // Controlla se il documento esiste
+        const docSnap = await accountRef.get();
+    
+        if (docSnap.exists) {
+          // Se il documento esiste, aggiorna solo il campo "ilmioarray"
+          await accountRef.update({ ilmioarray: pattern });
+          console.log("✅ Array aggiornato con successo!");
+        } else {
+          // Se il documento non esiste, crealo con il campo "ilmioarray"
+          await accountRef.set({ ilmioarray: pattern });
+          console.log("✅ Documento creato e array salvato con successo!");
+        }
+      } catch (error) {
+        console.error("❌ Errore nel salvataggio:", error);
+      }
+    }
+
+    salvaArray();
     
     alert('Account successfully created!');
     window.location.href = "/multiplayer/login/login.html";

@@ -69,6 +69,7 @@
 
             /* Contenitore del tuner */
             #tuner-container {
+                margin-top: 20px;
                 flex-grow: 0;
                 display: flex;
                 flex-direction: column;
@@ -120,15 +121,7 @@
                 cursor: pointer;
                 transition: background-color 0.3s, transform 0.2s;
             }
-            /* Contenitore flessibile per mic + tuner */
-            #mic-tuner-container {
-               display: flex;
-                align-items: center; /* Allinea verticalmente */
-                justify-content: center; /* Mantiene tutto centrato */
-                gap: 20px; /* Distanza tra il microfono e il tachimetro */
-                margin-top: 20px; /* Evita sovrapposizioni */
-                width: 100%;
-            }
+            
 
             /* Contenitore della tastiera */
             .keyboard3 {
@@ -302,16 +295,15 @@
                 </div>
             </div>
             
-            <div id="mic-tuner-container">
-                <div id="tuner-container">
-                    <div id="tuner-bar">
-                        <div id="tuner-indicator"></div>
-                    </div>
-                    <div class="tuner-labels" id="labels">
-                        <span>-50</span>
-                        <span id="detune">0</span>
-                        <span>+50</span>
-                    </div>
+            
+            <div id="tuner-container">
+                <div id="tuner-bar">
+                    <div id="tuner-indicator"></div>
+                </div>
+                <div class="tuner-labels" id="labels">
+                    <span>-50</span>
+                    <span id="detune">0</span>
+                    <span>+50</span>
                 </div>
             </div>
 

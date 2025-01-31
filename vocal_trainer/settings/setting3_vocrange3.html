@@ -11,9 +11,56 @@
     <title>VoiceFlow</title>
 </head>
 <style>
+    #labels {
+        font-size: 24px;
+        margin: 5px 0;
+        color: #555;
+    }
+
+    /* Contenitore del tuner */
+    #tuner-container {
+        margin-top: 20px;
+        margin-bottom: 120px;
+        flex-grow: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Barra del tachimetro */
+    #tuner-bar {
+        position: relative;
+        width: 600px; /* Puoi allargarlo se vuoi */
+        height: 10px;
+        background-color: #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    /* Indicatore del tuner */
+    #tuner-indicator {
+        position: absolute;
+        width: 9px;
+        height: 20px;
+        background-color: red;
+        top: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: left 0.1s ease-out;
+    }
+
+    /* Label sotto il tuner adattate alla nuova larghezza */
+    .tuner-labels {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 600px; /* Deve essere uguale alla larghezza del tuner */
+    }
+
+    /* Contenitore della tastiera */
     .keyboard3 {
-        top: 25%;
-        position: fixed;
+        margin-top: 5px; /* Aggiunge spazio tra la tastiera e gli altri elementi */
     }
 
     .container {
@@ -23,16 +70,6 @@
         transform: translateX(-50%);
     }
 
-    .meter {
-        width: 80%;
-        max-width: 500px;
-        height: 30px;
-        background-color: #e0e0e0;
-        border-radius: 15px;
-        position: fixed;
-        top: 450px;
-    
-    }
     /* Hover effect for white keys */
     .key.white:hover {
         background-color: #e0e0e0;
@@ -248,9 +285,15 @@
         <button id = "enable-mic" data-tracking="false">Enable detection</button>
     </div>
 
-    <div class="meter">
-        <div class="level" id="level-bar"></div>
-        <div class="value" id="level-value">0</div>
+    <div id="tuner-container">
+        <div id="tuner-bar">
+            <div id="tuner-indicator"></div>
+        </div>
+        <div class="tuner-labels" id="labels">
+            <span>-50</span>
+            <span id="detune">0</span>
+            <span>+50</span>
+        </div>
     </div>
 
     <div class="range-description">
@@ -267,7 +310,7 @@
         <a href="setting3_vocrange.html" class="bottomleft_button">Go back</a>
     </div>
 
-    <!-- Collegamento con lo script js for the detection: -->
-    <script src="vt_settings.js"></script>
+    <script src="vt_noteDetector.js"></script>
+    <!-- <script src="vt_settings.js"></script> -->
 </body>
 </html>

@@ -49,3 +49,4 @@ document.getElementById('accountForm').addEventListener('submit', async function
 });
 
 
+<script type="module" src="script.js"></script>

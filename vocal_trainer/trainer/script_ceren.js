@@ -452,10 +452,13 @@ async function setExercise(es) {
 
     // exercise description
     const exerciseDetail = document.getElementById("ex-detail");
-    if (exerciseDetail) {
-        exerciseDetail.innerHTML = `<p>${descriptionMessage}</p>`; // Set new description
+
+    if (exerciseDetail && pattern && pattern.length > 1) {
+        exerciseDetail.innerHTML = `<p>${pattern[1]}</p>`; // Set new description from pattern[1]
+        console.log("Exercise description updated to:", pattern[1]);
+    } else {
+        console.log("Pattern[1] is undefined or empty.");
     }
-    console.log("Exercise description updated to:", pattern[1]);
     
     //const ex_length = (pattern.length) * 60 / tempo;
     //console.log("Ex length: " + ex_length)
@@ -734,6 +737,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
         playWorkout(work)
 
-        // Insert Button to go to game statistics
+        // Redirect to results page after workout is done
+        setTimeout(() => {
+            setTimeout(() => {
+                window.location.href = "resume.html";
+            }, 1000); // 1-second delay before redirecting
+        }, duration * 1000);
     });
 });

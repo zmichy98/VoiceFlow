@@ -13,26 +13,10 @@
 
 <style>
     .keyboard4 {
-        top: 35%;
+        top: 220px;
         position: fixed;
     }
 
-    button {
-        width: 30px;
-        height: 50px;
-        border-radius: 50%;
-        background-color: #4d9246;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 24px;
-        cursor: pointer;
-        transition: background-color 0.3s, transform 0.2s;
-        margin-right: 10px;
-    }
-
-    /* Button to enable microphone */
     #playPattern {
         background-color: #4CAF50;
         color: white;
@@ -43,25 +27,82 @@
         cursor: pointer;
         transition: background-color 0.3s;
         margin-bottom: 20px;
+
     }
 
     #playPattern:hover {
         background-color: #45a049;
     }
 
+    .mic-container {
+        display: flex;
+        align-items: center;  /* Center items vertically */
+        justify-content: center; /* Center them horizontally */
+        position: absolute;
+        top: 445px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        z-index: 10;
+        gap: 10px; /* Adjust spacing between button and meter */
+        height: 50px; /* Ensure a consistent height */
+    }
+
+    .mic-button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #4d9246; /* Green color */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+        border: none; /* Remove default border */
+        outline: none;
+        padding: 0; /* Prevent extra spacing */
+    }
+
     .meter {
-        width: 80%;
-        max-width: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 500px;
         height: 30px;
         background-color: #e0e0e0;
         border-radius: 15px;
-        position: fixed;
-        top: 450px;
-    
+        position: relative;
     }
-   .ex-description {
+
+    .level {
+        height: 100%;
+        width: 0%;
+        background-color: #76c7c0;
+        border-radius: 15px;
+        transition: width 0.3s ease;
+    }
+
+
+    .level.low {
+        background-color: #ff1e00;
+    }
+
+    .level.mid {
+        background-color: yellow;
+    }
+
+    .level.high {
+        background-color: #4d9246;
+    }
+
+    .level.high {
+        background-color: rgba(0, 0, 0, 0.839);
+    }
+
+    .ex-detail {
         position: fixed;
-        top: 500px;
+        top: 110px;
         max-width: 700px;
         font-size: 1.5em; /* font size of the description */
         color:#6b6b6b;    /* text color of the description */
@@ -73,10 +114,10 @@
         padding: 10px;
         border-radius: 20px;
     }
-
-    .ex-detail {
+ 
+   .ex-description {
         position: fixed;
-        top: 110px;
+        top: 500px;
         max-width: 700px;
         font-size: 1.5em; /* font size of the description */
         color:#6b6b6b;    /* text color of the description */
@@ -105,23 +146,6 @@
     </a> 
        
     <!-- Exercise description -->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // Get the values from localStorage or provide default text
-            const selectedLevel = localStorage.getItem("selectedLevel") || "Not selected";
-            console.log("Selected level: " + selectedLevel)
-            const sliderValue = localStorage.getItem("sliderValue") || "Not set";
-            console.log("Training time: " + sliderValue)
-            const selectedGear = localStorage.getItem("selectedGear") || "No gear selected";
-            console.log("Gear: " + selectedGear)
-    
-            // Create the description message
-            const descriptionMessage = `Your exercise for vocal warm-up for ${selectedLevel} level of ${sliderValue} minutes with ${selectedGear} is now ready!`;
-    
-            // Update the description in the page
-            document.getElementById("ex-detail").innerHTML = `<p>${descriptionMessage}</p>`;
-        });
-    </script>
 
     <div id="ex-detail" class="ex-detail">
     </div>
@@ -133,15 +157,16 @@
     </div>
     
     <!-- Play Pattern -->
-    <button id="playPattern" style="position: fixed; top: 435px; left: 350px;">
-        <i class="fas fa-microphone"></i> 
-    </button>
-
-    <div class="meter">
-        <div class="level" id="level-bar"></div>
-        <div class="value" id="level-value">0</div>
+    <div class="mic-container">
+        <button class="mic-button" id="playPattern" data-tracking="false">
+            <i class="fas fa-microphone"></i>
+        </button>
+        <div class="meter">
+            <div class="level" id="level-bar"></div>
+            <div class="value" id="level-value">0</div>
+        </div>
     </div>
-
+    
     <!-- Progress Bar -->
     <div id="progress-bar">
         <div id="progress"></div>
@@ -352,7 +377,7 @@
      };
     </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.43/Tone.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.43/Tone.min.js"></script>
 </body>
 </html>
 

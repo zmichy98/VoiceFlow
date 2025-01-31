@@ -44,10 +44,11 @@ document.addEventListener("DOMContentLoaded", function() {
     experience = localStorage.getItem("selectedLevel").toString(); // string: Beginner, Intermediate, Advanced
     mask = localStorage.getItem("mask"); // Can either be true or false
     laxVox = localStorage.getItem("laxVox"); // Can either be true or false
-    //gear = localStorage.getItem("selectedGear");
-    //nickname = localStorage.getItem("nick");
-    //password = localStorage.getItem("pass");
+    gear = localStorage.getItem("selectedGear");
+    nickname = localStorage.getItem("nick");
+    password = localStorage.getItem("pass");
 
+    
         // Create an empty div for the icon
     const iconContainer = document.createElement("div");
 
@@ -66,7 +67,9 @@ document.addEventListener("DOMContentLoaded", function() {
         iconContainer.classList.add("icon");
         document.body.appendChild(iconContainer); // Append to body or a specific container
     }
+    
 });
+
 
 
 //Decides Workout to be played (TO BE DONE)
@@ -541,9 +544,9 @@ async function setVocal(vol, man, first, second) {
     console.log(vox);
 }
 
-/*
 async function setLoginValues() {
     logged = localStorage.getItem("loggedIn");
+    console.log("Quanto vale il login? " + logged);
 
     if(logged) {
         const accountsRef = db.collection("store").doc("accounts");
@@ -565,7 +568,11 @@ async function setLoginValues() {
         console.log("CE L'ABBIAMO FATTA!!! -------------------------------------------------------------")
     }
 }
-*/
+
+
+
+
+
 
 
 
@@ -583,6 +590,7 @@ const playNote = async (note, duration, time) => {
     piano.triggerAttackRelease(note, duration, time);
     changeKeyColor(note);
 
+    
     // Gets the note and assign the points
     try {
         const result = await startGamePitchTrack(note, duration); // Rileva la nota
@@ -592,6 +600,7 @@ const playNote = async (note, duration, time) => {
     }
 
     console.log("Points counter: " + countPoints);
+    
 };
 
 // Plays a chord for a certain duration
@@ -740,6 +749,8 @@ const delay = (seconds) => new Promise(resolve => setTimeout(resolve, seconds * 
 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("playPattern").addEventListener("click", async function() {
+
+        await setLoginValues();
         await testingValues();
         await chooseWorkout();
         const workout = w;
@@ -774,5 +785,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 window.location.href = "resume.html";
             }, 1000); // 1-second delay before redirecting
         }, duration * 1000);
+
     });
 });

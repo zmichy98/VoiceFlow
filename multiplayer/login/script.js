@@ -1,29 +1,57 @@
-// Import Firebase & EmailJS
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
-import emailjs from "https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js";
 
-// Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyB-BaTehljfDtni-HAPrYh6rKT9sJyTKaU",
   authDomain: "database-for-singing.firebaseapp.com",
   projectId: "database-for-singing",
-  storageBucket: "database-for-singing.firebasestorage.app",
+  storageBucket: "database-for-singing.appspot.com",
   messagingSenderId: "397721112623",
   appId: "1:397721112623:web:c5ec8963358f8e014736da"
 };
 
-// Initialize Firebase and Firestore
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// Inizializza Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
 // Initialize EmailJS
-emailjs.init("VoiceFlow"); // User ID di EmailJS
+//emailjs.init("VoiceFlow"); // User ID di EmailJS
 
 // References to HTML elements
 const forgotPassword = document.getElementById("forgotPassword");
 const recoverySection = document.getElementById("recoverySection");
 const recoveryForm = document.getElementById("recoveryForm");
+
+
+// Funzione per salvare i dati localmente /////////////////////////////////
+async function dataRedirectingAndSave(a) {
+
+  if(a[5] === "n") {
+    window.location.href = "/vocal_trainer/settings/setting1_level.html"; // Redirect to recap page
+    return
+  }
+  if(a[6] === "n") {
+    window.location.href = "/vocal_trainer/settings/setting2_time.html"; // Redirect to recap page
+    return
+  }
+  if(a[7] === "n") {
+    window.location.href = "/vocal_trainer/settings/setting3_vocrange.html"; // Redirect to recap page
+    return
+  }
+  if(a[8] === "n") {
+    window.location.href = "/vocal_trainer/settings/setting4_vocgear.html"; // Redirect to recap page
+    return
+  }
+
+  localStorage.setItem("selectedLevel", a[5]);
+  localStorage.setItem("sliderValue", a[6]);
+  localStorage.setItem("selectedRange", a[7]);
+  localStorage.setItem("selectedGear", a[8]);
+  localStorage.setItem("manual", a[9]);
+  localStorage.setItem("mask", a[10]);
+  localStorage.setItem("laxVox", a[11]);
+  localStorage.setItem("loggedIn", true);
+  
+  window.location.href = "/vocal_trainer/settings/setting5_recap.html"; // Redirect to recap page
+}
 
 // Toggle recovery form visibility
 forgotPassword.addEventListener("click", () => {
@@ -37,19 +65,21 @@ recoveryForm.addEventListener("submit", async (e) => {
 
   try {
     // Query Firestore to find the account by email
-    const accountsRef = collection(db, "store/accounts"); // Percorso aggiornato per Firestore
-    const q = query(accountsRef, where("email", "==", recoveryEmail));
-    const querySnapshot = await getDocs(q);
+    const accountsRef = db.collection("store").where("email", "==", recoveryEmail);
 
+    const querySnapshot = await accountsRef.get();
+    
     if (querySnapshot.empty) {
       alert("Error: Email not found in the database.");
       return;
     }
-
+    
     let account;
     querySnapshot.forEach((doc) => {
       account = doc.data();
     });
+    
+    console.log("Account trovato:", account);
 
     // Prepare email content
     const templateParams = {
@@ -84,28 +114,35 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 
   try {
     // Query Firestore to find the user by nickname
-    const accountsRef = collection(db, "store/accounts");
-    const q = query(accountsRef, where("nickname", "==", nickname));
-    const querySnapshot = await getDocs(q);
-
-    if (querySnapshot.empty) {
+    const accountsRef = db.collection("store").doc("accounts");
+    const docSnap = await accountsRef.get();
+    
+    if (!docSnap.exists) {
+      alert("Error: No accounts found.");
+      return;
+    }
+    
+    const accountsData = docSnap.data(); // Otteniamo il contenuto del documento
+    
+    // Cerchiamo il nickname come chiave nell'oggetto
+    if (!accountsData[nickname]) {
       alert("Error: Incorrect nickname or password.");
       return;
     }
+    
+    // Account trovato 🎉
+    const account = accountsData[nickname];
+    console.log("✅ Account trovato:", account);
 
-    let account;
-    querySnapshot.forEach((doc) => {
-      account = doc.data();
-    });
-
-    // Hash the password before comparing
-    const hashedPassword = CryptoJS.SHA256(password).toString();
-
-    if (account.password === hashedPassword) {
+    if (account[1] === password) {
       alert("✅ Login successful! Redirecting...");
-      window.location.href = "/vocal_trainer/settings/setting5_recap.html"; // Redirect to recap page
+
+      //CHIAMARE FUNZIONE PER SALVARE LOCALMENTE i VALORI
+      await dataRedirectingAndSave(account)
+
     } else {
       alert("Error: Incorrect nickname or password.");
+      return;
     }
 
   } catch (error) {
@@ -115,3 +152,4 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 });
 
 
+//<script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>

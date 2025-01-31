@@ -1,21 +1,9 @@
-// Import Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+// Import CryptoJS
 import CryptoJS from "https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js";
 
-// Firebase Config (Usiamo i tuoi dati)
-const firebaseConfig = {
-  apiKey: "AIzaSyB-BaTehljfDtni-HAPrYh6rKT9sJyTKaU",
-  authDomain: "database-for-singing.firebaseapp.com",
-  projectId: "database-for-singing",
-  storageBucket: "database-for-singing.firebasestorage.app",
-  messagingSenderId: "397721112623",
-  appId: "1:397721112623:web:c5ec8963358f8e014736da"
-};
-
 // Initialize Firebase and Firestore
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
 // Function to hash passwords before storing them
 function hashPassword(password) {
@@ -77,3 +65,33 @@ document.getElementById('accountForm').addEventListener('submit', async function
 });
 
 
+/*
+        //test **************************************************************
+        // Riferimento al documento "account" dentro la collezione "store"
+        const accountRef = db.collection("store").doc("accounts");
+
+        // Funzione per salvare l'array in Firestore
+        async function salvaArray() {
+            try {
+              // Controlla se il documento esiste
+              const docSnap = await accountRef.get();
+          
+              if (docSnap.exists) {
+                // Se il documento esiste, aggiorna solo il campo "ilmioarray"
+                await accountRef.update({ ilmioarray: pattern });
+                console.log("✅ Array aggiornato con successo!");
+              } else {
+                // Se il documento non esiste, crealo con il campo "ilmioarray"
+                await accountRef.set({ ilmioarray: pattern });
+                console.log("✅ Documento creato e array salvato con successo!");
+              }
+            } catch (error) {
+              console.error("❌ Errore nel salvataggio:", error);
+            }
+          }
+          
+
+        // Chiama la funzione per salvare l'array
+        salvaArray();
+        //test **************************************************************
+*/

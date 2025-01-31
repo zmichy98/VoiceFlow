@@ -735,6 +735,35 @@ document.addEventListener("DOMContentLoaded", function() {
         await Tone.start();  // Avvia Tone.js
         console.log("Audio context started");
 
+        //test **************************************************************
+        // Riferimento al documento "account" dentro la collezione "store"
+        const accountRef = db.collection("store").doc("accounts");
+
+        // Funzione per salvare l'array in Firestore
+        async function salvaArray() {
+            try {
+              // Controlla se il documento esiste
+              const docSnap = await accountRef.get();
+          
+              if (docSnap.exists) {
+                // Se il documento esiste, aggiorna solo il campo "ilmioarray"
+                await accountRef.update({ ilmioarray: pattern });
+                console.log("✅ Array aggiornato con successo!");
+              } else {
+                // Se il documento non esiste, crealo con il campo "ilmioarray"
+                await accountRef.set({ ilmioarray: pattern });
+                console.log("✅ Documento creato e array salvato con successo!");
+              }
+            } catch (error) {
+              console.error("❌ Errore nel salvataggio:", error);
+            }
+          }
+          
+
+        // Chiama la funzione per salvare l'array
+        salvaArray();
+        //test **************************************************************
+
         playWorkout(work)
 
         // Redirect to results page after workout is done

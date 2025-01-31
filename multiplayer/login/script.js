@@ -41,6 +41,11 @@ async function dataRedirectingAndSave(a) {
     return
   }
 
+  localStorage.setItem("nick", a[0]);
+  localStorage.setItem("pass", a[1]);
+  localStorage.setItem("begPoint", a[2]);
+  localStorage.setItem("intPoint", a[3]);
+  localStorage.setItem("advPoint", a[4]);
   localStorage.setItem("selectedLevel", a[5]);
   localStorage.setItem("sliderValue", a[6]);
   localStorage.setItem("selectedRange", a[7]);
@@ -48,7 +53,11 @@ async function dataRedirectingAndSave(a) {
   localStorage.setItem("manual", a[9]);
   localStorage.setItem("mask", a[10]);
   localStorage.setItem("laxVox", a[11]);
+  localStorage.setItem("firstNote", a[12]);
+  localStorage.setItem("secondNote", a[13]);
   localStorage.setItem("loggedIn", true);
+  logged = localStorage.getItem("loggedIn");
+  console.log("Logged in status: " + logged);
   
   window.location.href = "/vocal_trainer/settings/setting5_recap.html"; // Redirect to recap page
 }

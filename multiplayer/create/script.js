@@ -27,7 +27,7 @@ async function sendLoginToFirestore() {
     const accountsRef = db.collection("store").doc("accounts");
 
     // Creiamo l'array di dati dell'utente
-    const userData = [nickname, password, 0, 0, 0, "n", "n", "n", "n", "n", "n", "n"];
+    const userData = [nickname, password, 0, 0, 0, "n", "n", "n", "n", "n", "n", "n", "n", "n"];
 
     // Aggiorna Firestore con il nuovo array senza sovrascrivere
     const doc = await accountsRef.get();

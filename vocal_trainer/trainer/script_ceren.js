@@ -27,7 +27,10 @@ let mask = false;
 let laxVox = false;
 let w = "";
 let countPoints = 0;
-let title = "";
+let gear = "";
+let logged;
+let nickname;
+let password;
 
 
 //Takes the variables from the previous pages (stored locally)
@@ -41,6 +44,9 @@ document.addEventListener("DOMContentLoaded", function() {
     experience = localStorage.getItem("selectedLevel").toString(); // string: Beginner, Intermediate, Advanced
     mask = localStorage.getItem("mask"); // Can either be true or false
     laxVox = localStorage.getItem("laxVox"); // Can either be true or false
+    gear = localStorage.getItem("selectedGear");
+    nickname = localStorage.getItem("nick");
+    password = localStorage.getItem("pass");
 
         // Create an empty div for the icon
     const iconContainer = document.createElement("div");
@@ -535,6 +541,31 @@ async function setVocal(vol, man, first, second) {
     console.log(vox);
 }
 
+async function setLoginValues() {
+    logged = localStorage.getItem("loggedIn");
+
+    if(logged) {
+        const accountsRef = db.collection("store").doc("accounts");
+        // Creiamo l'array di dati dell'utente
+        const userData = [nickname, password, 0, 0, 0, experience, time, range, gear, manual, firstmanNote, secondmanNote];
+
+        // Aggiorna Firestore con il nuovo array senza sovrascrivere
+        const doc = await accountsRef.get();
+        if (doc.exists) {
+        await accountsRef.update({
+            [userData[0]]: userData
+        });
+        } else {
+        await accountsRef.set({
+            [userData[0]]: userData
+        });
+        }
+
+        console.log("CE L'ABBIAMO FATTA!!! -------------------------------------------------------------")
+    }
+}
+
+
 
 
 
@@ -709,6 +740,7 @@ const delay = (seconds) => new Promise(resolve => setTimeout(resolve, seconds * 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("playPattern").addEventListener("click", async function() {
 
+        setLoginValues();
         await testingValues();
         await chooseWorkout();
         const workout = w;

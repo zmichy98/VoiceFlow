@@ -1,18 +1,8 @@
-// Import Firebase 8
-//import firebase from "https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js";
-//import "https://www.gstatic.com/firebasejs/7.2.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyB-BaTehljfDtni-HAPrYh6rKT9sJyTKaU",
-  authDomain: "database-for-singing.firebaseapp.com",
-  projectId: "database-for-singing",
-  storageBucket: "database-for-singing.firebasestorage.app",
-  messagingSenderId: "397721112623",
-  appId: "1:397721112623:web:c5ec8963358f8e014736da"
-};
 
 // Initialize Firebase and Firestore (Firebase 8 syntax)
-firebase.initializeApp(firebaseConfig);
+//firebase.initializeApp(firebaseConfig);
+
 const db = firebase.firestore();
 
 // Funzione per hashare la password
@@ -36,7 +26,6 @@ document.getElementById('accountForm').addEventListener('submit', async function
         return;
       }
     }
-
 
     // Creiamo l'array di dati dell'utente
     const userData = [0, 1, 2];

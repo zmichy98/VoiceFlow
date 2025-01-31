@@ -1,19 +1,32 @@
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-// Access Firestore
-const db = firebase.firestore();
-
+// Import Firebase 8
+import firebase from "https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js";
+import "https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js";
 const CryptoJS = await import("https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js");
+
+// Firebase Config (Usiamo i tuoi dati)
+const firebaseConfig = {
+  apiKey: "AIzaSyB-BaTehljfDtni-HAPrYh6rKT9sJyTKaU",
+  authDomain: "database-for-singing.firebaseapp.com",
+  projectId: "database-for-singing",
+  storageBucket: "database-for-singing.firebasestorage.app",
+  messagingSenderId: "397721112623",
+  appId: "1:397721112623:web:c5ec8963358f8e014736da"
+};
+
+// Initialize Firebase and Firestore (Firebase 8 syntax)
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
 // Funzione per hashare la password
 function hashPassword(password) {
   return CryptoJS.SHA256(password).toString();
 }
 
-// Gestione del form
+// Gestione del form di registrazione
 document.getElementById('accountForm').addEventListener('submit', async function (e) {
   e.preventDefault();
 
+  // Recupera i valori inseriti nel form
   const nickname = document.getElementById('nickname').value;
   const password = document.getElementById('password').value;
   const email = document.getElementById('email').value;
@@ -24,98 +37,44 @@ document.getElementById('accountForm').addEventListener('submit', async function
   }
 
   try {
-    // Controlla se il nickname è già in uso
+    // Controlla se il nickname esiste già
     const accountsRef = db.collection("store").doc("accounts");
-    const snapshot = await accountsRef.get();
+    const docSnapshot = await accountsRef.get();
 
-    if (snapshot.exists) {
-      const data = snapshot.data();
-      if (data[0] === nickname) {
+    let usersArray = [];
+    
+    if (docSnapshot.exists) {
+      usersArray = docSnapshot.data().users || [];
+      
+      // Controlla se il nickname è già presente
+      if (usersArray.some(user => user[0] === nickname)) {
         alert('This nickname is already taken. Please choose another one.');
         return;
       }
     }
 
-    // Hashtag password
+    // Hash della password
     const hashedPassword = hashPassword(password);
 
-    // Crea l'array
-    const login_array = [nickname, password, email];
+    // Creiamo l'array di dati dell'utente
+    const userData = [nickname, hashedPassword, email, 0, 0, 0, "beginner", true, false, "C3", "G5", 0];
 
-    // Crea il documento con i dati dell'account
-    /*
-    await accountsRef.set({
-      nickname,
-      password: hashedPassword,
-      email,
-      points_beg: 0,
-      points_int: 0,
-      points_adv: 0,
-      level: "beginner",
-      range_predefined: true,
-      manual: false,
-      first_note: "C3",
-      last_note: "G5",
-      time: 0
-    });
-    */
+    // Aggiunge il nuovo utente all'array
+    usersArray.push(userData);
 
-    // Funzione per salvare l'array in Firestore
-    async function salvaArray() {
-      try {
-        const docSnap = await accountsRef.get();
-    
-        if (docSnap.exists) {
-          await accountsRef.update({ ilmioarray: login_array });
-          console.log("✅ Array aggiornato con successo!");
-        } else {
-          await accountsRef.set({ ilmioarray: login_array }, { merge: true });
-          console.log("✅ Documento creato e array salvato con successo!");
-        }
-      } catch (error) {
-        console.error("❌ Errore nel salvataggio:", error);
-      }
-    }
+    // Aggiorna Firestore con il nuovo array senza sovrascrivere
+    await accountsRef.set({ users: usersArray }, { merge: true });
 
-    await salvaArray();
+    console.log("✅ Account aggiunto correttamente!");
 
-    alert('Account successfully created!');
-    window.location.href = "/multiplayer/login/login.html";
+    alert('✅ Account successfully created!');
+    window.location.href = "/multiplayer/login/login.html"; // Redirect alla pagina di login
     document.getElementById('accountForm').reset();
+
   } catch (error) {
-    console.error('Error while creating the account:', error);
+    console.error('❌ Error while creating the account:', error);
     alert('An error occurred. Please try again.');
   }
 });
 
 
-/*
-        //test **************************************************************
-        // Riferimento al documento "account" dentro la collezione "store"
-        const accountRef = db.collection("store").doc("accounts");
-
-        // Funzione per salvare l'array in Firestore
-        async function salvaArray() {
-            try {
-              // Controlla se il documento esiste
-              const docSnap = await accountRef.get();
-          
-              if (docSnap.exists) {
-                // Se il documento esiste, aggiorna solo il campo "ilmioarray"
-                await accountRef.update({ ilmioarray: pattern });
-                console.log("✅ Array aggiornato con successo!");
-              } else {
-                // Se il documento non esiste, crealo con il campo "ilmioarray"
-                await accountRef.set({ ilmioarray: pattern });
-                console.log("✅ Documento creato e array salvato con successo!");
-              }
-            } catch (error) {
-              console.error("❌ Errore nel salvataggio:", error);
-            }
-          }
-          
-
-        // Chiama la funzione per salvare l'array
-        salvaArray();
-        //test **************************************************************
-*/

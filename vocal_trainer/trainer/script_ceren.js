@@ -44,9 +44,9 @@ document.addEventListener("DOMContentLoaded", function() {
     experience = localStorage.getItem("selectedLevel").toString(); // string: Beginner, Intermediate, Advanced
     mask = localStorage.getItem("mask"); // Can either be true or false
     laxVox = localStorage.getItem("laxVox"); // Can either be true or false
-    gear = localStorage.getItem("selectedGear");
-    nickname = localStorage.getItem("nick");
-    password = localStorage.getItem("pass");
+    //gear = localStorage.getItem("selectedGear");
+    //nickname = localStorage.getItem("nick");
+    //password = localStorage.getItem("pass");
 
         // Create an empty div for the icon
     const iconContainer = document.createElement("div");
@@ -541,6 +541,7 @@ async function setVocal(vol, man, first, second) {
     console.log(vox);
 }
 
+/*
 async function setLoginValues() {
     logged = localStorage.getItem("loggedIn");
 
@@ -564,7 +565,7 @@ async function setLoginValues() {
         console.log("CE L'ABBIAMO FATTA!!! -------------------------------------------------------------")
     }
 }
-
+*/
 
 
 
@@ -739,8 +740,6 @@ const delay = (seconds) => new Promise(resolve => setTimeout(resolve, seconds * 
 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("playPattern").addEventListener("click", async function() {
-
-        setLoginValues();
         await testingValues();
         await chooseWorkout();
         const workout = w;

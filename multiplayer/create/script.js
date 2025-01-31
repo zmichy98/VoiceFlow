@@ -1,10 +1,9 @@
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
 // Access Firestore
 const db = firebase.firestore();
 
-import CryptoJS from "https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js";
+const CryptoJS = await import("https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js");
 
 // Funzione per hashare la password
 function hashPassword(password) {
@@ -31,7 +30,7 @@ document.getElementById('accountForm').addEventListener('submit', async function
 
     if (snapshot.exists) {
       const data = snapshot.data();
-      if (data.nickname === nickname) {
+      if (data[0] === nickname) {
         alert('This nickname is already taken. Please choose another one.');
         return;
       }
@@ -40,7 +39,11 @@ document.getElementById('accountForm').addEventListener('submit', async function
     // Hashtag password
     const hashedPassword = hashPassword(password);
 
+    // Crea l'array
+    const login_array = [nickname, password, email];
+
     // Crea il documento con i dati dell'account
+    /*
     await accountsRef.set({
       nickname,
       password: hashedPassword,
@@ -55,9 +58,7 @@ document.getElementById('accountForm').addEventListener('submit', async function
       last_note: "G5",
       time: 0
     });
-
-    // Array da salvare
-    const pattern = ["valore1", "valore2", "valore3"]; // Sostituiscilo con il tuo array
+    */
 
     // Funzione per salvare l'array in Firestore
     async function salvaArray() {
@@ -65,10 +66,10 @@ document.getElementById('accountForm').addEventListener('submit', async function
         const docSnap = await accountsRef.get();
     
         if (docSnap.exists) {
-          await accountsRef.update({ ilmioarray: pattern });
+          await accountsRef.update({ ilmioarray: login_array });
           console.log("✅ Array aggiornato con successo!");
         } else {
-          await accountsRef.set({ ilmioarray: pattern }, { merge: true });
+          await accountsRef.set({ ilmioarray: login_array }, { merge: true });
           console.log("✅ Documento creato e array salvato con successo!");
         }
       } catch (error) {

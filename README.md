@@ -11,29 +11,15 @@ Selam!
 
 
 THINGS TO DO:
-
-GENERAL
-* Piano keyboard with more octaves. HOW MANY?
-
-FIRST PAGES
-•⁠  ⁠Help me find my range -> to be checked
-* Tuner page at the beginning
-
-VOCAL TRAINER
-•⁠  ⁠Change the start button
-•⁠  ⁠Implement the pitch detector
-•⁠  ⁠Implement the timebar
-•⁠  ⁠Change completely the UI
-•⁠  ⁠Implement the Workouts, Exercises and other stuff from database
-•⁠  ⁠Create the actual exercise with timings
-
-VOCAL "TUNER"
-•⁠  UI
-
-(EXTRA FEATURES)
-•⁠  ⁠accounts and custom workouts
-
-Cheren is working on the UI, while I’m working on the database to create workouts. You can join with whatever you prefer. During the holidays of course most of the work must be done, so maybe we can see each other soon on Discord or other platforms. Let me know what you think and what you want to work on.
+ DONE - Control buttons on “detect your range” (easy)   -- > Gian
+ - Make the game tuner great again (Might be the hardest part) -- > Gian
+ DONE - Change the tuner meter (easy/medium)  -- > Gian / Ceren
+ - Finish the workouts (easy) -- > Michele
+ - Finish the UI of the training game, time bar (easy) -- > Ceren
+ - Create a resume page that shows how the workout went (easy) -- > Ceren 
+ - Manage to have the account updated (hard) -- > Federico / Michele
+ - Take an overview of everything, change file names and maybe “clean” the codes (easy)
+ - Finish the README (easy) -- > Michele
 
 TUNER DOCUMENTATION:
 - Video: https://www.youtube.com/watch?v=VbooGjogzVM

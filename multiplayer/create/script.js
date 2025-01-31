@@ -1,6 +1,4 @@
-const CryptoJS = await import("https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js");
 
-// Your web app's Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyB-BaTehljfDtni-HAPrYh6rKT9sJyTKaU",
     authDomain: "database-for-singing.firebaseapp.com",
@@ -14,18 +12,13 @@ const CryptoJS = await import("https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/cryp
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// Funzione per hashare la password
-function hashPassword(password) {
-  return CryptoJS.SHA256(password).toString();
-}
-
 async function sendLoginToFirestore() {
+  try {
   // Recupera i valori inseriti nel form
   const nickname = document.getElementById('nickname').value;
   const password = document.getElementById('password').value;
-  const email = document.getElementById('email').value;
 
-  if (!nickname || !password || !email) {
+  if (!nickname || !password) {
     alert('Please fill in all fields!');
     return;
   }
@@ -33,15 +26,12 @@ async function sendLoginToFirestore() {
   // Controlla se il nickname esiste già
   const accountsRef = db.collection("store").doc("accounts");
 
-  // Hash della password
-  const hashedPassword = hashPassword(password);
-
   // Creiamo l'array di dati dell'utente
-  const userData = [nickname, hashedPassword, email, 0, 0, 0, "beginner", true, false, "C3", "G5", 0];
+  const userData = [nickname, password, 0, 0, 0, "beginner", true, false, "C3", "G5", 0];
 
   // Aggiorna Firestore con il nuovo array senza sovrascrivere
   await accountsRef.set({
-    nickname: userData // Nome del campo "ilmioarray" con l'array
+    [userData[0]]: userData // Nome del campo "ilmioarray" con l'array
   });
 
   console.log("✅ Account aggiunto correttamente!");
@@ -49,9 +39,14 @@ async function sendLoginToFirestore() {
   alert('✅ Account successfully created!');
   window.location.href = "/multiplayer/login/login.html"; // Redirect alla pagina di login
   document.getElementById('accountForm').reset();
+} catch (error) {
+  console.error('❌ Error while creating the account:', error);
+  alert('An error occurred. Please try again.');
 }
 
-document.getElementById("accountForm").addEventListener("submit", sendLoginToFirestore);
+}
+
+document.getElementById("submit").addEventListener("click", sendLoginToFirestore);
 
 
 

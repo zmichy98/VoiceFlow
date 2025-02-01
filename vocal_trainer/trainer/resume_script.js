@@ -19,7 +19,7 @@ let logged = localStorage.getItem("loggedIn");
 console.log("Logged In: " + logged)
 
 //let currScore = localStorage.getItem("currentScore"); /////////////////////////////////// CAMBIARE
-let currScore = 10;
+let currScore = 25;
 
 // Recupera tutte le liste di punteggi
 async function showTop10() {
@@ -110,7 +110,7 @@ async function updateYourScore() {
                 console.log("✅ Punteggio aggiornato correttamente!");
                 alert("Nuovo record personale!");
             }
-            
+
         } catch (error) {
             console.error('❌ Error while updating the score:', error);
             alert('An error occurred. Please try again.');
@@ -122,7 +122,7 @@ async function showCurrentScore() {
     document.getElementById("punteggio").textContent = "You've done: " + currScore;
 }
 
-async function updateTop10(){
+async function updateTop10() {
     const doc = await db.collection("store").doc("scores").get();
 
     if (!doc.exists) {
@@ -146,59 +146,60 @@ async function updateTop10(){
         console.log("Error loading the level.")
     }
 
+    let mioNome = "unknown";
+
+    if (logged) {
+        mioNome = localStorage.getItem("nick"); // Il tuo nome
+    }
+
+    let mioPunteggio = currScore; // Il tuo punteggio
+
+    // Convertiamo l'oggetto in un array di valori
+    let classificaArray = Object.values(top10);
+
+    // Aggiungiamo il nostro punteggio alla classifica
+    classificaArray.push([mioNome, mioPunteggio]);
+
+    // Ordiniamo la classifica in base al punteggio (secondo elemento dell'array)
+    classificaArray.sort((a, b) => b[1] - a[1]);
+
+    // Prendiamo solo le prime 10 posizioni
+    let top10Finale = classificaArray.slice(0, 10);
+
+    // Stampiamo il risultato
+    console.log("Classifica aggiornata (Top 10):");
+    top10Finale.forEach(([nickname, punteggio], index) => {
+        console.log(`${index + 1}. ${nickname} - ${punteggio}`);
+    });
+
+    let posizione = 0;
+    // Riferimento al documento specifico
+    let docRef = db.collection("store").doc("scores");
+
+    let classifica = "top10_" + experience.toLowerCase();
+    console.log("classifica da aggiornare: " + classifica)
+
+    for (posizione; posizione < top10Finale.length; posizione++) {
+        docRef.update({
+            [`${classifica}.${posizione}`]: [top10Finale[posizione][0], top10Finale[posizione][1]]  // Usa la notazione con le parentesi quadre
+        })
+            .then(() => console.log("Posizione aggiornata correttamente!"))
+            .catch(error => console.error("Errore durante l'aggiornamento:", error));
+    }
     
 
 
 
 
-    // Classifica con formato: "nome" -> [posizione, punteggio]
-let classifica = new Map([
-    ["Alice", [1, 90]],
-    ["Bob", [2, 85]],
-    ["Charlie", [3, 80]],
-    ["David", [4, 75]],
-    ["Eve", [5, 70]]
-]);
-
-let mioNome = "unknown";
-
-if(logged) {
-    mioNome = localStorage.getItem("nick"); // Il tuo nome
-}
-
-let mioPunteggio = currScore; // Il tuo punteggio
-
-// Convertiamo la mappa in array per ordinarla facilmente
-let classificaArray = Array.from(top10.entries());
-
-// Aggiungiamo il nostro punteggio alla classifica
-classificaArray.push([mioNome, [mioNome, mioPunteggio]]);
-
-// Ordiniamo la classifica in base al punteggio (secondo elemento dell'array)
-classificaArray.sort((a, b) => b[1][1] - a[1][1]);
-
-// Riassegnamo le posizioni corrette dopo l'ordinamento
-classificaArray.forEach((item, index) => {
-    item[1][0] = index + 1; // La posizione è l'indice +1
-});
-
-// Stampiamo la nuova classifica
-console.log("Classifica aggiornata:");
-classificaArray.forEach(([nome, [posizione, punteggio]]) => {
-    console.log(`${posizione}. ${nome} - ${punteggio}`);
-});
-
-
-
-
 
 
 
 }
 
-// Chiamare la funzione per recuperare e mostrare i dati
-document.addEventListener("DOMContentLoaded", async function () {
-    await showCurrentScore();
-    await showTop10();
-    await updateYourScore();
-});
+    // Chiamare la funzione per recuperare e mostrare i dati
+    document.addEventListener("DOMContentLoaded", async function () {
+        await showCurrentScore();
+        await updateTop10();
+        await showTop10();
+        await updateYourScore();
+    });

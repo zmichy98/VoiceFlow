@@ -12,7 +12,7 @@ const noteButtons = document.querySelectorAll('.key');
 const tuneTollerance = 30;
 
 const constraints = {audio: true, video: false};
-const enableMicBtn = document.getElementById("enable-mic");
+const enableMicBtn = document.getElementById("playPattern");
 const noteElem = document.getElementById("note");
 const hzElem = document.getElementById("hz");
 const detuneElem = document.getElementById("detune");
@@ -130,76 +130,111 @@ function main(){
     }
     else{
         stopMicrophoneStream()
-        enableMicBtn.innerHTML = "Enable detection"
     }
 }
 
-// When the page is opened turn the microphone on microphone is turned on
-window.onload = function() {
+/*document.addEventListener('DOMContentLoaded', () => {
     main();
-};
+});*/
 
 /*-------------- DETECT THE SINGED NOTE: --------------*/
-// Sets up the audio analyzer for pitch detection.
+
+// Variabile globale per riutilizzare il nodo Analyser
+let globalAnalyser = null;
+// Variabile per il throttling del pitch detection
+let lastDetectionTime = 0;
+const detectionInterval = 50; // intervallo in millisecondi, regolabile in base alle performance
+
 export function startGamePitchTrack(goalNote, duration) {
     console.log("-----------Start PitchTrack-----------");
-    analyser = audioContext.createAnalyser();
-    analyser.fftSize = 1024;
-    source.connect(analyser);
-
-    const startTime = performance.now(); // Record the start time
+    
+    // Se il nodo globale non esiste, crealo e collegalo alla sorgente
+    if (!globalAnalyser) {
+        globalAnalyser = audioContext.createAnalyser();
+        globalAnalyser.fftSize = 1024;
+        source.connect(globalAnalyser);
+    }
+    
+    const startTime = performance.now();
     console.log("Starting time: " + startTime);
     console.log("Goal note: " + goalNote);
     console.log("Duration: " + duration);
-
-    // Restituisce una promessa che risolve con 0 o 1
+    
     return new Promise((resolve) => {
+        // Funzione di callback per il ciclo di rilevamento
         function trackPitch() {
             getGamePitch(goalNote, duration, startTime, resolve, trackPitch);
         }
-
-        // Avvia il ciclo
         trackPitch();
+    }).finally(() => {
+        // Al termine del rilevamento, scollega il nodo per liberare risorse
+        if (globalAnalyser) {
+            source.disconnect(globalAnalyser);
+            globalAnalyser = null;
+        }
     });
 }
 
 function getGamePitch(goalNote, duration, startTime, resolve, callback) {
-    console.log("getGamePitch called");
-
-    const elapsedTime = performance.now() - startTime; // Calcola il tempo trascorso
+    const currentTime = performance.now();
+    const elapsedTime = currentTime - startTime;
     console.log("Elapsed Time: " + elapsedTime);
 
+    // Se il tempo di rilevamento è scaduto, interrompi il ciclo e restituisci 0
     if (elapsedTime >= duration * 1000) {
         console.log("Time duration exceeded, stopping detection.");
         cancelAnimationFrame(requestAnimationFrameId);
-        resolve(0); // Restituisci 0 se il tempo è scaduto
+        resolve(0);
         return;
     }
-
-    const goalFreq = noteFrequencies.find((n) => n.note === goalNote)?.freq;
+    
+    // Throttling: controlla che sia trascorso l'intervallo desiderato prima del prossimo campionamento
+    if (currentTime - lastDetectionTime < detectionInterval) {
+        requestAnimationFrameId = window.requestAnimationFrame(callback);
+        return;
+    }
+    lastDetectionTime = currentTime;
+    
+    // Trova la frequenza target associata alla nota obiettivo
+    const goalFreqObj = noteFrequencies.find((n) => n.note === goalNote);
+    if (!goalFreqObj) {
+        console.error("Goal note not found in frequencies list");
+        cancelAnimationFrame(requestAnimationFrameId);
+        resolve(0);
+        return;
+    }
+    const goalFreq = goalFreqObj.freq;
     console.log("Goal frequency: " + goalFreq);
 
-    // Esegui il rilevamento della frequenza
-    analyser.getFloatTimeDomainData(buffer);
-    const frequencyinHz = autoCorrelate(buffer, audioContext.sampleRate);
-    console.log("Sung freq: " + frequencyinHz);
-
-    if (frequencyinHz === -1) {
+    noteElem.innerHTML = "Sing" + goalNote + ": " + goalFreq;
+    
+    // Preleva i dati audio dal nodo Analyser
+    globalAnalyser.getFloatTimeDomainData(buffer);
+    const frequencyInHz = autoCorrelate(buffer, audioContext.sampleRate);
+    console.log("Sung freq: " + frequencyInHz);
+    
+    // Se non viene rilevata alcuna nota (valore -1), prosegui il ciclo
+    if (frequencyInHz === -1) {
         console.log("No note detected");
     } else {
-        const detune = getNotediff(frequencyinHz, goalFreq);
+        const detune = getNotediff(frequencyInHz, goalFreq);
+        hzElem.innerHTML = "Your frequency is approximatly " + Math.round(frequencyinHz) + " Hz";
+
+        // Se lo scarto in frequenza rientra nella tolleranza, risolvi la Promise con 1
         if (Math.abs(detune) < tuneTollerance) {
             console.log("Note sung correctly");
             cancelAnimationFrame(requestAnimationFrameId);
-            resolve(1); // Restituisci 1 se la nota è corretta
+            resolve(1);
             return;
         }
-        updateLevelMeter(detune); // Aggiorna il livello UI o indicatore
+        // Aggiorna il livello UI per dare un feedback visivo all'utente
+        updateLevelMeter(detune);
     }
-
-    // Pianifica il prossimo frame
+    
+    // Pianifica il prossimo frame per continuare il rilevamento
     requestAnimationFrameId = window.requestAnimationFrame(callback);
 }
+
 
 /*-------------- TUNER AND FUNCTIONS: --------------*/
 function autoCorrelate( buf, sampleRate ) {
@@ -254,23 +289,21 @@ function getNotediff(freq, goalFreq) {
   return centsDetune;
 }
 
-function updateLevelMeter(value, tuneTolerance = 30) {
-    if (value === null || value === undefined) {
-        levelBar.className = "level norange";
-        levelBar.style.width = '50%';
-        levelValue.innerText = "No value";
+// Function to update the level meter based on the cents value
+function updateLevelMeter(detune) {
+    let indicator = document.getElementById("tuner-indicator");
+    
+    if (!indicator) {
+        console.error("Errore: elemento tuner-indicator non trovato!");
         return;
     }
-    const maxRange = 100;
-    const normalizedValue = Math.max(-maxRange, Math.min(maxRange, value));
-    const percentage = ((normalizedValue + maxRange) / (2 * maxRange)) * 100;
 
-    levelBar.style.width = percentage + '%';
-    levelValue.innerText = value;
+    // Normalizziamo il valore tra -50 e +50 -> tra 0% e 100% nella barra
+    let position = ((detune + 50) / 100) * 100; 
 
-    let levelClass = "level mid";
-    if (normalizedValue < -tuneTolerance) levelClass = "level low";
-    else if (normalizedValue > tuneTolerance) levelClass = "level high";
+    // Assicuriamoci che l'indicatore non esca dalla barra
+    position = Math.min(100, Math.max(0, position));
 
-    levelBar.className = levelClass;
+    // Imposta la posizione in percentuale rispetto alla larghezza della barra
+    indicator.style.left = position + "%";
 }

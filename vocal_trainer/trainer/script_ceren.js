@@ -583,24 +583,22 @@ async function setLoginValues() {
 
 
 ///////////// ACTUAL FUNCTIONS
-
 // Plays a note for a certain duration
 const playNote = async (note, duration, time) => {
     // Suona la nota e cambia il colore del tasto
     piano.triggerAttackRelease(note, duration, time);
     changeKeyColor(note);
 
-    
-    // Gets the note and assign the points
-    try {
+    // Ottiene la nota rilevata e assegna i punti
+    /*try {
         const result = await startGamePitchTrack(note, duration); // Rileva la nota
         countPoints += result; // Aggiungi il risultato
     } catch (error) {
         console.error("Error during pitch tracking:", error);
     }
-
     console.log("Points counter: " + countPoints);
-    
+    */
+   
 };
 
 // Plays a chord for a certain duration

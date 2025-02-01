@@ -12,8 +12,8 @@ const firebaseConfig = {
   const db = firebase.firestore();
 
   // VARIABLES
-  //const experience = localStorage.getItem("selectedLevel");
-  const experience = "Advanced"
+  const experience = localStorage.getItem("selectedLevel");
+//   const experience = "Advanced"
   console.log("selected level: " + experience);
   let top10;
 

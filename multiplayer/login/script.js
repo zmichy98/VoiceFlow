@@ -62,58 +62,6 @@ async function dataRedirectingAndSave(a) {
   window.location.href = "/vocal_trainer/settings/setting5_recap.html"; // Redirect to recap page
 }
 
-// Toggle recovery form visibility
-forgotPassword.addEventListener("click", () => {
-  recoverySection.classList.toggle("hidden");
-});
-
-// Handle password recovery
-recoveryForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const recoveryEmail = document.getElementById("recoveryEmail").value;
-
-  try {
-    // Query Firestore to find the account by email
-    const accountsRef = db.collection("store").where("email", "==", recoveryEmail);
-
-    const querySnapshot = await accountsRef.get();
-    
-    if (querySnapshot.empty) {
-      alert("Error: Email not found in the database.");
-      return;
-    }
-    
-    let account;
-    querySnapshot.forEach((doc) => {
-      account = doc.data();
-    });
-    
-    console.log("Account trovato:", account);
-
-    // Prepare email content
-    const templateParams = {
-      to_email: recoveryEmail,
-      nickname: account.nickname,
-      password: account.password
-    };
-
-    // Send email using EmailJS
-    emailjs.send("service_590j2vg", "template_zswucyh", templateParams)
-      .then(() => {
-        alert("Success: An email has been sent with your account details.");
-        console.log("Email sent successfully.");
-      })
-      .catch((error) => {
-        console.error("Error sending email:", error);
-        alert("Error: Failed to send recovery email.");
-      });
-
-  } catch (error) {
-    console.error("Database error:", error);
-    alert("Error: There was an issue retrieving your account.");
-  }
-});
-
 // Handle login
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();

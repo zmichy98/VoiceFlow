@@ -52,7 +52,7 @@ async function sendLoginToFirestore() {
 
 document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("accountForm").addEventListener("submit", async function() {
-    event.preventDefault()
+    event.preventDefault();
     await sendLoginToFirestore();
     window.location.href = "/multiplayer/login/login.html"; // Redirect alla pagina di login
     document.getElementById('accountForm').reset();

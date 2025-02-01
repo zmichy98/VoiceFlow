@@ -52,5 +52,20 @@
 
     <!-- Collegamento con lo script js: -->
     <script src="vt_settings.js"></script>
+
+    <!-- Get the variables saved: -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+          console.log("Singing level: " + localStorage.getItem("selectedLevel"))
+          console.log("Training time: " + localStorage.getItem("sliderValue"))
+          console.log("Manual: " + localStorage.getItem("manual"))
+          console.log("Selected range: " + localStorage.getItem("selectedRange"))
+          console.log("First note: " + localStorage.getItem("firstNote"))
+          console.log("Last note: " + localStorage.getItem("secondNote"))
+      });
+    </script>
+
 </body>
 </html>
+
+

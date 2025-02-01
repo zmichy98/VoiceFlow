@@ -17,24 +17,19 @@ body {
   top: 10px;
 }
 
+/* Cambia il colore del titolo */
 h1 {
   margin-bottom: 20px;
   font-size: 40px;
-  color: #4d9246;
+  color: #4d9246; /* Verde */
 }
 
-h3 {
-  margin-top: 5px;
-  margin-bottom: 10px;
-  font-size: 18px;
-  color: #333;
-  font-weight: normal;
-}
-
+/* Mantiene la struttura della leaderboard */
 .leaderboards {
   display: flex;
-  justify-content: space-between;
-  gap: 100px;
+  justify-content: center;
+  gap: 50px;
+  flex-wrap: wrap;
 }
 
 .leaderboard {
@@ -43,22 +38,50 @@ h3 {
   border-radius: 30px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   flex: 1;
-  min-width: 200px;
+  max-width: 300px;
   text-align: center;
 }
 
-ol {
-  padding-left: 20px;
-  text-align: left;
+/* Tabelle con angoli smussati */
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  border-radius: 30px;
+  overflow: hidden;
 }
 
-li {
-  margin: 5px 0;
-  font-size: 16px;
+
+
+/* Intestazione tabella */
+.leaderboard-table th {
+  background-color: #4d9246;
+  color: white;
+  font-weight: bold;
 }
 
-p {
-  text-align: center;
-  font-style: italic;
-  color: #888;
+/* Alternanza colori righe normali */
+.leaderboard-table tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
+
+.leaderboard-table tr:hover {
+  background-color: #ddd;
+}
+
+/* Evidenziazione prime tre posizioni */
+.leaderboard-table tr:first-child td {
+  background-color: gold; /* Oro per il primo */
+  font-weight: bold;
+}
+
+.leaderboard-table tr:nth-child(2) td {
+  background-color: silver; /* Argento per il secondo */
+  font-weight: bold;
+}
+
+.leaderboard-table tr:nth-child(3) td {
+  background-color: #cd7f32; /* Bronzo per il terzo */
+  font-weight: bold;
+}
+

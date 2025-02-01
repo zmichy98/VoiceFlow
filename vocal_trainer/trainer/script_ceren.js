@@ -760,7 +760,7 @@ const delay = (seconds) => new Promise(resolve => setTimeout(resolve, seconds * 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("playPattern").addEventListener("click", async function() {
 
-        await setLoginValues();
+        setLoginValues();
         await testingValues();
         await chooseWorkout();
         const workout = w;

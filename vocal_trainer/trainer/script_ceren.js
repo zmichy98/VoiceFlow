@@ -35,46 +35,46 @@ let password;
 // Configures the piano
 const piano_trainer = new Tone.Sampler({
     urls: {
-         "A0": "A0.mp3",
-         "C1": "C1.mp3",
-         "D#1": "Ds1.mp3",
-         "F#1": "Fs1.mp3",
-         "A1": "A1.mp3",
-         "C2": "C2.mp3",
-         "D#2": "Ds2.mp3",
-         "F#2": "Fs2.mp3",
-         "A2": "A2.mp3",
-         "C3": "C3.mp3",
-         "D#3": "Ds3.mp3",
-         "F#3": "Fs3.mp3",
-         "A3": "A3.mp3",
-         "C4": "C4.mp3",
-         "D#4": "Ds4.mp3",
-         "F#4": "Fs4.mp3",
-         "A4": "A4.mp3",
-         "C5": "C5.mp3",
-         "D#5": "Ds5.mp3",
-         "F#5": "Fs5.mp3",
-         "A5": "A5.mp3",
-         "C6": "C6.mp3",
-         "D#6": "Ds6.mp3",
-         "F#6": "Fs6.mp3",
-         "A6": "A6.mp3",
-         "C7": "C7.mp3",
-         "D#7": "Ds7.mp3",
-         "F#7": "Fs7.mp3",
-         "A7": "A7.mp3",
-         "C8": "C8.mp3"
+        "A0": "A0.mp3",
+        "C1": "C1.mp3",
+        "D#1": "Ds1.mp3",
+        "F#1": "Fs1.mp3",
+        "A1": "A1.mp3",
+        "C2": "C2.mp3",
+        "D#2": "Ds2.mp3",
+        "F#2": "Fs2.mp3",
+        "A2": "A2.mp3",
+        "C3": "C3.mp3",
+        "D#3": "Ds3.mp3",
+        "F#3": "Fs3.mp3",
+        "A3": "A3.mp3",
+        "C4": "C4.mp3",
+        "D#4": "Ds4.mp3",
+        "F#4": "Fs4.mp3",
+        "A4": "A4.mp3",
+        "C5": "C5.mp3",
+        "D#5": "Ds5.mp3",
+        "F#5": "Fs5.mp3",
+        "A5": "A5.mp3",
+        "C6": "C6.mp3",
+        "D#6": "Ds6.mp3",
+        "F#6": "Fs6.mp3",
+        "A6": "A6.mp3",
+        "C7": "C7.mp3",
+        "D#7": "Ds7.mp3",
+        "F#7": "Fs7.mp3",
+        "A7": "A7.mp3",
+        "C8": "C8.mp3"
     },
     baseUrl: "https://tonejs.github.io/audio/salamander/", // Percorso dei campioni
     onload: () => {
-         console.log("Piano loaded");
+        console.log("Piano loaded");
     }
 }).toDestination();
 
 
 //Takes the variables from the previous pages (stored locally)
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     manual = JSON.parse(localStorage.getItem("manual"));
     range = localStorage.getItem("selectedRange").toString();
     firstmanNote = localStorage.getItem("firstNote").toString();
@@ -88,13 +88,13 @@ document.addEventListener("DOMContentLoaded", function() {
     laxVox = JSON.parse(localStorage.getItem("laxVox")); // Can either be true or false
     gear = localStorage.getItem("selectedGear");
     logged = JSON.parse(localStorage.getItem("loggedIn"));
-    if(logged) {
+    if (logged) {
         nickname = localStorage.getItem("nick");
         password = localStorage.getItem("pass");
     }
 
-    
-        // Create an empty div for the icon
+
+    // Create an empty div for the icon
     const iconContainer = document.createElement("div");
 
     // Check conditions and add the appropriate icons
@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function() {
         iconContainer.classList.add("icon");
         document.body.appendChild(iconContainer); // Append to body or a specific container
     }
-    
+
 });
 
 
@@ -137,257 +137,257 @@ function chooseWorkout() {
         if (time_num === 5) {
 
             console.log("ECCOCI, 5 minuti")
-    
+
             if (mask && !laxVox) {
-    
+
                 w = "wo_1b_n_m_05"
-    
+
             } else if (!mask && laxVox) {
-    
+
                 console.log("ECCOCI, WORKOUT GIUSTO")
 
                 w = "wo_1b_lv_n_05"
-    
+
             } else if (mask && laxVox) {
-    
+
                 w = "wo_1b_lv_m_05"
-    
+
             } else {
-    
+
                 w = "wo_1b_n_n_05"
-    
+
             }
-    
+
         } else if (time_num === 10) {
-    
+
             if (mask && !laxVox) {
-    
+
                 w = "wo_1b_n_m_10"
-    
+
             } else if (!mask && laxVox) {
-    
+
                 w = "wo_1b_lv_n_10"
-    
+
             } else if (mask && laxVox) {
-    
+
                 w = "wo_1b_lv_m_10"
-    
+
             } else {
-    
+
                 w = "wo_1b_n_n_10"
-    
+
             }
-    
+
         } else if (time_num === 15) {
-    
+
             if (mask && !laxVox) {
-    
+
                 w = "wo_1b_n_m_15"
-    
+
             } else if (!mask && laxVox) {
-    
+
                 w = "wo_1b_lv_n_15"
-    
+
             } else if (mask && laxVox) {
-    
+
                 w = "wo_1b_lv_m_15"
-    
+
             } else {
-    
+
                 w = "wo_1b_n_n_15"
-    
+
             }
-    
+
         } else {
-    
+
             if (mask && !laxVox) {
-    
+
                 w = "wo_1b_n_m_20"
-    
+
             } else if (!mask && laxVox) {
-    
+
                 w = "wo_1b_lv_n_20"
-    
+
             } else if (mask && laxVox) {
-    
+
                 w = "wo_1b_lv_m_20"
-    
+
             } else {
-    
+
                 w = "wo_1b_n_n_20"
-    
+
             }
-    
+
         }
-    
+
     } else if (experience === "Intermediate") {
-    
+
         if (time_num === 5) {
-    
+
             if (mask && !laxVox) {
-    
+
                 w = "wo_2i_n_m_05"
-    
+
             } else if (!mask && laxVox) {
-    
+
                 w = "wo_2i_lv_n_05"
-    
+
             } else if (mask && laxVox) {
-    
+
                 w = "wo_2i_lv_m_05"
-    
+
             } else {
-    
+
                 w = "wo_2i_n_n_05"
-    
+
             }
-    
+
         } else if (time_num === 10) {
-    
+
             if (mask && !laxVox) {
-    
+
                 w = "wo_2i_n_m_10"
-    
+
             } else if (!mask && laxVox) {
-    
+
                 w = "wo_2i_lv_n_10"
-    
+
             } else if (mask && laxVox) {
-    
+
                 w = "wo_2i_lv_m_10"
-    
+
             } else {
-    
+
                 w = "wo_2i_n_n_10"
-    
+
             }
-    
+
         } else if (time_num === 15) {
-    
+
             if (mask && !laxVox) {
-    
+
                 w = "wo_2i_n_m_15"
-    
+
             } else if (!mask && laxVox) {
-    
+
                 w = "wo_2i_lv_n_15"
-    
+
             } else if (mask && laxVox) {
-    
+
                 w = "wo_2i_lv_m_15"
-    
+
             } else {
-    
+
                 w = "wo_2i_n_n_15"
-    
+
             }
-    
+
         } else {
-    
+
             if (mask && !laxVox) {
-    
+
                 w = "wo_2i_n_m_20"
-    
+
             } else if (!mask && laxVox) {
-    
+
                 w = "wo_2i_lv_n_20"
-    
+
             } else if (mask && laxVox) {
-    
+
                 w = "wo_2i_lv_m_20"
-    
+
             } else {
-    
+
                 w = "wo_2i_n_n_20"
-    
+
             }
-    
+
         }
-    
+
     } else if (experience === "Advanced") {
-    
+
         if (time_num === 5) {
-    
+
             if (mask && !laxVox) {
-    
+
                 w = "wo_3a_n_m_05"
-    
+
             } else if (!mask && laxVox) {
-    
+
                 w = "wo_3a_lv_n_05"
-    
+
             } else if (mask && laxVox) {
-    
+
                 w = "wo_3a_lv_m_05"
-    
+
             } else {
-    
+
                 w = "wo_3a_n_n_05"
-    
+
             }
-    
+
         } else if (time_num === 10) {
-    
+
             if (mask && !laxVox) {
-    
+
                 w = "wo_3a_n_m_10"
-    
+
             } else if (!mask && laxVox) {
-    
+
                 w = "wo_3a_lv_n_10"
-    
+
             } else if (mask && laxVox) {
-    
+
                 w = "wo_3a_lv_m_10"
-    
+
             } else {
-    
+
                 w = "wo_3a_n_n_10"
-    
+
             }
-    
+
         } else if (time_num === 15) {
-    
+
             if (mask && !laxVox) {
-    
+
                 w = "wo_3a_n_m_15"
-    
+
             } else if (!mask && laxVox) {
-    
+
                 w = "wo_3a_lv_n_15"
-    
+
             } else if (mask && laxVox) {
-    
+
                 w = "wo_3a_lv_m_15"
-    
+
             } else {
-    
+
                 w = "wo_3a_n_n_15"
-    
+
             }
-    
+
         } else {
-    
+
             if (mask && !laxVox) {
-    
+
                 w = "wo_3a_n_m_20"
-    
+
             } else if (!mask && laxVox) {
-    
+
                 w = "wo_3a_lv_n_20"
-    
+
             } else if (mask && laxVox) {
-    
+
                 w = "wo_3a_lv_m_20"
-    
+
             } else {
-    
+
                 w = "wo_3a_n_n_20"
-    
+
             }
-    
+
         }
-    
+
     } else {
         console.log("Eccoci, errore...")
     }
@@ -470,11 +470,11 @@ async function setWorkout(wo) {
     const doc = await db.collection("store").doc("workouts").get();
     const workOuts = doc.data()[wo];
     console.log("workouts retrieved from Firestore:", workOuts);
-  
+
     work.length = 0;
     work.push(...workOuts); // Carica i nuovi pattern
     console.log("workout excersises: " + work);
-  }
+}
 
 // Loads exercise
 async function setExercise(es) {
@@ -500,16 +500,16 @@ async function setExercise(es) {
     } else {
         console.log("Pattern[1] is undefined or empty.");
     }
-    
+
     //const ex_length = (pattern.length) * 60 / tempo;
     //console.log("Ex length: " + ex_length)
     console.log("Tempo from firebase: " + tempo)
     //console.log(speed);
-  }
+}
 
-    // Evaluates Exercise LENGTH
+// Evaluates Exercise LENGTH
 
-  async function setExerciseLength() {
+async function setExerciseLength() {
     const qN = 60 / tempo;
     const hN = qN * 2;
 
@@ -517,13 +517,13 @@ async function setExercise(es) {
     const eM = Tone.Frequency(vox[1]).toMidi();
     const range_length = (eM - sM + 1) + (eM - sM)
 
-    ex_length = ((((pattern.length-6) * qN) + hN) * range_length);
+    ex_length = ((((pattern.length - 6) * qN) + hN) * range_length);
     console.log("Ex length: " + ex_length)
-  }
+}
 
-  // Evaluates WORKOUT LENGTH
+// Evaluates WORKOUT LENGTH
 
-  async function setWorkoutLength() {
+async function setWorkoutLength() {
 
     const sM = Tone.Frequency(vox[0]).toMidi(); // Transform to MIDI
     const eM = Tone.Frequency(vox[1]).toMidi();
@@ -532,7 +532,7 @@ async function setExercise(es) {
 
     workout_length = 0
 
-    for (let i=0; i < work.length; i++) {
+    for (let i = 0; i < work.length; i++) {
         let currEx = work[i];
 
         const doc = await db.collection("store").doc("exercises").get();
@@ -541,16 +541,16 @@ async function setExercise(es) {
         const qN = 60 / currPatt[3];
         const hN = qN * 2;
 
-        let ex_length_i = ((((currPatt.length-6) * qN) + hN) * range_length_w);
+        let ex_length_i = ((((currPatt.length - 6) * qN) + hN) * range_length_w);
         console.log("Pattern length: " + range_length_w)
         workout_length += (ex_length_i + 2)
         console.log("Ex i length: " + ex_length_i)
         console.log("Workout length: " + workout_length)
     }
 
-  }
+}
 
-  
+
 
 // Loads vocal range, or the manual range
 async function setVocal(vol, man, first, second) {
@@ -580,7 +580,7 @@ async function setLoginValues() {
     console.log("Quanto vale il login? " + logged);
 
 
-    if(logged === true) {
+    if (logged === true) {
         const accountsRef = db.collection("store").doc("accounts");
         // Creiamo l'array di dati dell'utente
         const userData = [nickname, password, 0, 0, 0, experience, time_num, range, gear, manual, firstmanNote, secondmanNote, laxVox, mask];
@@ -588,13 +588,13 @@ async function setLoginValues() {
         // Aggiorna Firestore con il nuovo array senza sovrascrivere
         const doc = await accountsRef.get();
         if (doc.exists) {
-        await accountsRef.update({
-            [userData[0]]: userData
-        });
+            await accountsRef.update({
+                [userData[0]]: userData
+            });
         } else {
-        await accountsRef.set({
-            [userData[0]]: userData
-        });
+            await accountsRef.set({
+                [userData[0]]: userData
+            });
         }
 
         console.log("CE L'ABBIAMO FATTA!!! -------------------------------------------------------------")
@@ -707,7 +707,7 @@ const playExercise = async (es) => {
 
         //Tone.Transport.stop()
 
-        const patt_length = (pattern.length-5) * qN;
+        const patt_length = (pattern.length - 5) * qN;
         // Schedule playChord at the correct time
         Tone.Transport.schedule((time) => {
             playChord(currentMidi, hN, time);
@@ -721,7 +721,7 @@ const playExercise = async (es) => {
         Tone.Transport.schedule((time) => {
             playChord(currentMidi, qN, time);
         }, now + patt_length);  // Wait until after the previous chord (hN)
-        
+
         //
 
         now += qN + patt_length; // Increment time for the next note's start time
@@ -731,7 +731,7 @@ const playExercise = async (es) => {
 
         //Tone.Transport.stop()
 
-        const patt_length = (pattern.length-5) * qN;
+        const patt_length = (pattern.length - 5) * qN;
         // Schedule playChord at the correct time
         Tone.Transport.schedule((time) => {
             playChord(currentMidi, hN, time);
@@ -745,7 +745,7 @@ const playExercise = async (es) => {
         Tone.Transport.schedule((time) => {
             playChord(currentMidi, qN, time);
         }, now + patt_length);  // Wait until after the previous chord (hN)
-        
+
         //Tone.Transport.start()
 
         now += qN + patt_length; // Increment time for the next note's start time
@@ -780,45 +780,48 @@ const playWorkout = async (w) => {
 // Funzione per creare un delay in base ai secondi
 const delay = (seconds) => new Promise(resolve => setTimeout(resolve, seconds * 1000));
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("playPattern").addEventListener("click", async function() {
+window.onload = function () {
+    //document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("playPattern").addEventListener("click", async function () {
 
-        setLoginValues();
-        //await testingValues();
-        await showValues();
-        await setVocal(range, manual, firstmanNote, secondmanNote)
-        chooseWorkout();
-        const workout = w;
-        console.log("Workout correct: " + workout)
-        await setWorkout(workout);  // Imposta l'allenamento
-        await setWorkoutLength()
+            await delay(2);
+            setLoginValues();
+            //await testingValues();
+            await showValues();
+            await setVocal(range, manual, firstmanNote, secondmanNote)
+            chooseWorkout();
+            const workout = w;
+            console.log("Workout correct: " + workout)
+            await setWorkout(workout);  // Imposta l'allenamento
+            await setWorkoutLength()
 
-        //timebar
-        const progress = document.getElementById("progress");
-        const wDuration = workout_length + 5;
+            //timebar
+            const progress = document.getElementById("progress");
+            const wDuration = workout_length + 3;
 
-        console.log("Duration ----------------------" + wDuration)
-      
-        progress.style.width = "0"; // Reset della barra
-        progress.style.transition = `${wDuration}s linear`; // Imposta la durata dell'animazione
-        progress.style.width = "100%"; // Riempie la barra
+            console.log("Duration ----------------------" + wDuration)
 
-        //attendi
-        await delay(2);
+            progress.style.width = "0"; // Reset della barra
+            progress.style.transition = `${wDuration}s linear`; // Imposta la durata dell'animazione
+            progress.style.width = "100%"; // Riempie la barra
 
-        //Play Workout
-        await Tone.start();  // Avvia Tone.js
-        console.log("Audio context started");
-    
-        playWorkout(work)
+            //attendi
+            await delay(2);
 
-        // Redirect to results page after workout is done
-        setTimeout(() => {
+            //Play Workout
+            await Tone.start();  // Avvia Tone.js
+            console.log("Audio context started");
+
+            playWorkout(work)
+
+            // Redirect to results page after workout is done
             setTimeout(() => {
-                localStorage.setItem("currentScore", countPoints)
-                window.location.href = "resume.html";
-            }, 1000); // 1-second delay before redirecting
-        }, wDuration * 1000);
+                setTimeout(() => {
+                    localStorage.setItem("currentScore", countPoints)
+                    window.location.href = "resume.html";
+                }, 1000); // 1-second delay before redirecting
+            }, wDuration * 1000);
 
-    });
-});
+        });
+    //});
+}

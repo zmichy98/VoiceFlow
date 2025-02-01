@@ -59,3 +59,22 @@ ELEMENTS OF VOCAL TRAINER
 
 Voice-Flow is a vocal training platform we designed to be accessible to singers of all levels. With its step-by-step approach, it aims to provide a satisfying and engaging experience for everyone, from absolute beginners to seasoned experts. It caters to beginners by guiding them through every detail of a workout tailored to their voice type. At the same time, it appeals to more experienced singers with features that enable complex training sessions using diverse tools, as well as quick warm-up routines designed to prepare for a performance.
 Voice-Flow works flawlessly just with the PC internal microphone and
+
+
+# --------------------- ABOUT ----------------------
+## About VoiceFlow
+
+VoiceFlow is an innovative exercise platform designed specifically for musicians and singers, enabling them to warm up their voices before performances. Whether you're a beginner or an advanced performer, VoiceFlow offers a range of customizable exercises tailored to suit every skill level. The platform allows users to create personalized warm-up routines, helping them gradually improve their vocal technique.            
+In addition to the diverse exercises, VoiceFlow provides an engaging way for users to monitor their progress over time, allowing them to visualize improvements and continue refining their vocal abilities. Our goal is to create a comprehensive space where singers and musicians alike can prepare their voices for any performance, all while fostering growth and development.
+This project was developed as the final project for the Advanced Coding Tools and Methodology course in the Music and Acoustic Engineering program at Politecnico di Milano by Michele Zanardi, Gianluigi Vecchini, Federico Capitani, and İpek Ceren Bayram.
+
+
+# ----------------------------------------------------
+
+* aim
+* firebase
+* user experience
+* piano and tone.js and salamander
+* script_ceren
+* login
+* tuner

@@ -65,6 +65,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            console.log("Logged in: " + localStorage.getItem("loggedIn"))
             console.log("Singing level: " + localStorage.getItem("selectedLevel"))
             console.log("Training time: " + localStorage.getItem("sliderValue"))
             console.log("Manual: " + localStorage.getItem("manual"))

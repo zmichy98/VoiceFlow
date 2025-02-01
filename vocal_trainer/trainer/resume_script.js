@@ -19,7 +19,7 @@ let logged = localStorage.getItem("loggedIn");
 console.log("Logged In: " + logged)
 
 //let currScore = localStorage.getItem("currentScore"); /////////////////////////////////// CAMBIARE
-let currScore = 25;
+let currScore = 4;
 
 // Recupera tutte le liste di punteggi
 async function showTop10() {

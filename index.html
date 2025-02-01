@@ -68,6 +68,9 @@
 
     <script>
         localStorage.setItem("loggedIn", false);
+        let loggedIn = JSON.parse(localStorage.getItem("loggedIn"));
+        console.log("Logged in: " + loggedIn)
+        console.log("Type of Logged in: " + typeof loggedIn)
     </script>
 </body>
 </html>

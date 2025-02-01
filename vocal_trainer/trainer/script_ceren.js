@@ -811,6 +811,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Redirect to results page after workout is done
         setTimeout(() => {
             setTimeout(() => {
+                localStorage.setItem("currentScore", countPoints)
                 window.location.href = "resume.html";
             }, 1000); // 1-second delay before redirecting
         }, duration * 1000);

@@ -29,12 +29,34 @@ async function sendLoginToFirestore() {
     // Creiamo l'array di dati dell'utente
     const userData = [nickname, password, 0, 0, 0, "n", "n", "n", "n", "n", "n", "n", "n", "n"];
 
-    // Aggiorna Firestore con il nuovo array senza sovrascrivere
+// Aggiorna Firestore con il nuovo array senza sovrascrivere
     const doc = await accountsRef.get();
+
     if (doc.exists) {
-      await accountsRef.update({
-        [userData[0]]: userData
-      });
+      
+      let data = doc.data();
+      let usernameExists = false;  // Flag per sapere se il nome utente esiste già
+
+      for (let key in data) {
+        let array = data[key];
+  
+        // Verifica che l'array esista e se il primo elemento (nome utente) è uguale a targetUsername
+        if (Array.isArray(array) && array.length > 0 && array[0] === nickname) {
+          usernameExists = true;
+          console.log(`Il nome utente "${nickname}" esiste già nell'array "${key}".`);
+          break; // Uscita dal ciclo se il nome utente è trovato
+        }
+      }
+
+      if (usernameExists) {
+        console.log(`Il nome utente "${nickname}" esiste già.`);
+        alert("Username not available. Please retry.")
+        return
+      } else {
+        await accountsRef.update({
+          [userData[0]]: userData
+        });
+      }
     } else {
       await accountsRef.set({
         [userData[0]]: userData

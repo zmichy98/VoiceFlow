@@ -15,7 +15,7 @@ const db = firebase.firestore();
 const experience = localStorage.getItem("selectedLevel");
 console.log("selected level: " + experience);
 let top10;
-let logged = localStorage.getItem("loggedIn");
+let logged = JSON.parse(localStorage.getItem("loggedIn"));
 console.log("Logged In: " + logged)
 
 //let currScore = localStorage.getItem("currentScore"); /////////////////////////////////// CAMBIARE

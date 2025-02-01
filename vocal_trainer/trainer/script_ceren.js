@@ -601,14 +601,13 @@ const playNote = async (note, duration, time) => {
     changeKeyColor(note);
 
     // Ottiene la nota rilevata e assegna i punti
-    /*try {
+    try {
         const result = await startGamePitchTrack(note, duration); // Rileva la nota
         countPoints += result; // Aggiungi il risultato
     } catch (error) {
         console.error("Error during pitch tracking:", error);
     }
     console.log("Points counter: " + countPoints);
-    */
    
 };
 

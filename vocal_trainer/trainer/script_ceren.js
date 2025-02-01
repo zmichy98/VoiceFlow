@@ -610,7 +610,6 @@ const playNote = async (note, duration, time) => {
         console.error("Error during pitch tracking:", error);
     }
     console.log("Points counter: " + countPoints);
-   
 };
 
 // Plays a chord for a certain duration

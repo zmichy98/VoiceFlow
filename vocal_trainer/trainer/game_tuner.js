@@ -145,13 +145,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /*-------------- DETECT THE SINGED NOTE: --------------*/
 
-// Variabile per il throttling del pitch detection
-let lastDetectionTime = 0;
+let lastDetectionTime = 0; // Variabile per il throttling del pitch detection
 const detectionInterval = 50; // intervallo in millisecondi, regolabile in base alle performance
 
 export function startGamePitchTrack(goalNote, duration) {
-    console.log("-----------Start PitchTrack-----------");
-    
+    console.log("-------------Start PitchTrack-------------");
+    // Se il nodo globale non esiste, crealo e collegalo alla sorgente
     if (!globalAnalyser) {
         globalAnalyser = audioContext.createAnalyser();
         globalAnalyser.fftSize = 1024;
@@ -160,6 +159,7 @@ export function startGamePitchTrack(goalNote, duration) {
     }
     
     const startTime = performance.now();
+
     console.log("Starting time: " + startTime);
     console.log("Goal note: " + goalNote);
     console.log("Duration: " + duration);
@@ -178,9 +178,10 @@ export function startGamePitchTrack(goalNote, duration) {
 }
 
 function getGamePitch(goalNote, duration, startTime, resolve, callback) {
+    
     const currentTime = performance.now();
     const elapsedTime = currentTime - startTime;
-    console.log("Elapsed Time: " + elapsedTime);
+    console.log("Elapsed Time: " + elapsedTime / 1000 + "seconds");
 
     if (elapsedTime >= duration * 1000) {
         console.log("Time duration exceeded, stopping detection.");
@@ -195,6 +196,7 @@ function getGamePitch(goalNote, duration, startTime, resolve, callback) {
     }
     lastDetectionTime = currentTime;
     
+    // Trova la frequenza target associata alla nota obiettivo
     const goalFreqObj = noteFrequencies.find((n) => n.note === goalNote);
     if (!goalFreqObj) {
         console.error("Goal note not found in frequencies list");
@@ -202,12 +204,15 @@ function getGamePitch(goalNote, duration, startTime, resolve, callback) {
         resolve(0);
         return;
     }
+
     const goalFreq = goalFreqObj.freq;
     console.log("Goal frequency: " + goalFreq);
+    noteElem.innerHTML = "Goal note is " + goalNote + ": " + goalFreq;
 
     noteElem.innerHTML = "Sing " + goalNote + ": " + goalFreq + " Hz";
     
     // Preleva i dati audio dal nodo Analyser
+    // Preleva i dati audio dal nodo Analyser e calcola la frequenza
     globalAnalyser.getFloatTimeDomainData(buffer);
     // Aggiungi qui il log per verificare i primi 20 valori del buffer
     console.log("Buffer sample (first 20 values):", buffer.slice(0, 20));
@@ -221,6 +226,8 @@ function getGamePitch(goalNote, duration, startTime, resolve, callback) {
     } else {
         const detune = getNotediff(frequencyInHz, goalFreq);
         hzElem.innerHTML = "Your frequency is approximately " + Math.round(frequencyInHz) + " Hz";
+        hzElem.innerHTML = "Your frequency is " + frequencyInHz + "Hz"
+
         if (Math.abs(detune) < tuneTollerance) {
             console.log("Note sung correctly");
             cancelAnimationFrame(requestAnimationFrameId);
@@ -232,6 +239,7 @@ function getGamePitch(goalNote, duration, startTime, resolve, callback) {
     
     requestAnimationFrameId = window.requestAnimationFrame(callback);
 }
+
 
 
 /*-------------- TUNER AND FUNCTIONS: --------------*/
@@ -310,3 +318,4 @@ function updateLevelMeter(detune) {
     // Imposta la posizione in percentuale rispetto alla larghezza della barra
     indicator.style.left = position + "%";
 }
+ 

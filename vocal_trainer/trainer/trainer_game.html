@@ -70,42 +70,6 @@
         padding: 0; /* Prevent extra spacing */
     }
 
-    .meter {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        width: 500px;
-        height: 30px;
-        background-color: #e0e0e0;
-        border-radius: 15px;
-        position: relative;
-    }
-
-    .level {
-        height: 100%;
-        width: 0%;
-        background-color: #76c7c0;
-        border-radius: 15px;
-        transition: width 0.3s ease;
-    }
-
-
-    .level.low {
-        background-color: #ff1e00;
-    }
-
-    .level.mid {
-        background-color: yellow;
-    }
-
-    .level.high {
-        background-color: #4d9246;
-    }
-
-    .level.high {
-        background-color: rgba(0, 0, 0, 0.839);
-    }
-
     .ex-detail {
         position: fixed;
         top: 110px;
@@ -136,45 +100,45 @@
         border-radius: 20px;
     }
 
-/* Contenitore del tuner */
-#tuner-container {
-                margin-top: 20px;
-                flex-grow: 0;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-            }
+    /* Contenitore del tuner */
+    #tuner-container {
+        margin-top: 20px;
+        flex-grow: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 
-            /* Barra del tachimetro */
-            #tuner-bar {
-                position: relative;
-                width: 600px; /* Puoi allargarlo se vuoi */
-                height: 10px;
-                background-color: #ddd;
-                border-radius: 5px;
-                overflow: hidden;
-            }
+    /* Barra del tachimetro */
+    #tuner-bar {
+        position: relative;
+        width: 600px; /* Puoi allargarlo se vuoi */
+        height: 10px;
+        background-color: #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+    }
 
-            /* Indicatore del tuner */
-            #tuner-indicator {
-                position: absolute;
-                width: 9px;
-                height: 20px;
-                background-color: red;
-                top: -5px;
-                left: 50%;
-                transform: translateX(-50%);
-                transition: left 0.1s ease-out;
-            }
+    /* Indicatore del tuner */
+    #tuner-indicator {
+        position: absolute;
+        width: 9px;
+        height: 20px;
+        background-color: red;
+        top: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: left 0.1s ease-out;
+    }
 
-            /* Label sotto il tuner adattate alla nuova larghezza */
-            .tuner-labels {
-                display: flex;
-                justify-content: space-between;
-                width: 100%;
-                max-width: 600px; /* Deve essere uguale alla larghezza del tuner */
-            }
+    /* Label sotto il tuner adattate alla nuova larghezza */
+    .tuner-labels {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 600px; /* Deve essere uguale alla larghezza del tuner */
+    }
 </style>
 
 
@@ -384,28 +348,6 @@
 
     <!-- Link to settings script js: -->
     <script src="../settings/vt_settings.js"></script>
-
-    <!-- Get the variables from settings saved: -->
-    <script>
-        /*
-        document.addEventListener('DOMContentLoaded', () => {
-            // selectedLevel variable
-                document.getElementById("selectedLevel").innerHTML = localStorage.getItem("selectedLevel");
-            // sliderValue variable
-                document.getElementById("sliderValue").innerHTML = localStorage.getItem("sliderValue");
-            // manual variable
-                document.getElementById("manual").innerHTML = localStorage.getItem("manual"); 
-            // selectedRange variable
-                document.getElementById("selectedRange").innerHTML = localStorage.getItem("selectedRange");
-            // manual range note variables
-                document.getElementById("firstNote").innerHTML = localStorage.getItem("firstNote");
-                document.getElementById("secondNote").innerHTML = localStorage.getItem("secondNote");
-            // Gear variables
-                document.getElementById("mask").innerHTML = localStorage.getItem("mask");
-                document.getElementById("laxVox").innerHTML = localStorage.getItem("laxVox");
-        });
-        */
-    </script>
     
     <!-- Link to game_tuner js: -->
     <script type="module" src="game_tuner.js"></script>

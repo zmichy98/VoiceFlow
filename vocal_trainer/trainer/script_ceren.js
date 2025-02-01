@@ -604,6 +604,8 @@ const playNote = async (note, duration, time) => {
     try {
         const result = await startGamePitchTrack(note, duration); // Rileva la nota
         countPoints += result; // Aggiungi il risultato
+        const pointsView = document.getElementById("pointsView");
+        pointsView.innerHTML = "Points: " + countPoints
     } catch (error) {
         console.error("Error during pitch tracking:", error);
     }

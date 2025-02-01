@@ -6,19 +6,13 @@ let globalAnalyser = null;
 let buffer = new Float32Array(1024); // length of array = fftSize/2
 let requestAnimationFrameId = null;
 
-const selectNoteBtn = document.getElementById('select-note-btn');
-const noteButtons = document.querySelectorAll('.key');
-
 const tuneTollerance = 30;
+const minimumRMS=0.001;
 
 const constraints = {audio: true, video: false};
 const enableMicBtn = document.getElementById("playPattern");
 const noteElem = document.getElementById("note");
 const hzElem = document.getElementById("hz");
-const detuneElem = document.getElementById("detune");
-const detuneWarning = document.getElementById("detune-warning");
-const levelBar = document.getElementById("level-bar");
-const levelValue = document.getElementById("level-value");
 
 const noteFrequencies = [
     { note: "C2", freq: 65.41 },
@@ -135,8 +129,8 @@ function main(){
     
 
     if (!isTracking === true){
-        noteElem.innerHTML = " ";
-        hzElem.innerHTML = " "
+        noteElem.innerHTML = "Note to play ";
+        hzElem.innerHTML = "Hz of the singer"
         console.log('Call MicStrem function')
         getMicrophoneStream();
     }
@@ -252,7 +246,7 @@ function autoCorrelate( buf, sampleRate ) {
 	rms = Math.sqrt(rms/SIZE);
     console.log("RMS: " + rms);
 
-	if (rms<0.001)
+	if (rms<minimumRMS)
 		return -1;
 
 	var r1 = 0, r2 = SIZE-1, thres = 0.2;

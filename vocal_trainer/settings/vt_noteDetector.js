@@ -67,6 +67,9 @@ const constraints = {audio: true, video: false};
 // Tollerance range to get the right note
 const tuneTollerance = 30;
 
+// Minimum rms to accept the audio signal for analysing
+const minimumRMS = 0.002;
+
 // Get elements by Id
 const instructions = document.getElementById('instructions');
 const selectNoteBtn = document.getElementById('select-note-btn');
@@ -157,7 +160,9 @@ function autoCorrelate( buf, sampleRate ) {
 		rms += val*val;
 	}
 	rms = Math.sqrt(rms/SIZE);
-	if (rms<0.01)
+    console.log("RMS: " + rms);
+
+	if (rms<minimumRMS)
 		return -1;
 
 	var r1 = 0, r2 = SIZE-1, thres = 0.2;
@@ -186,11 +191,14 @@ function autoCorrelate( buf, sampleRate ) {
 		}
 	}
 
+    
 	var T0 = maxpos;
-	var x1 = c[T0-1], x2 = c[T0], x3 = c[T0+1];
-	a = (x1 + x3 - 2*x2)/2;
-	b = (x3 - x1)/2;
-	if (a) T0 = T0 - b/(2*a);
+    var x1 = c[T0 - 1], x2 = c[T0], x3 = c[T0 + 1];
+    let a = (x1 + x3 - 2 * x2) / 2;
+    let b = (x3 - x1) / 2;
+    if (a) {
+        T0 = T0 - b / (2 * a);
+    }
 	return sampleRate / T0;
 }
 
@@ -228,6 +236,17 @@ function getMicrophoneStream(){ //  Initializes the microphone input and prepare
             console.log('got microphone stream');
             console.log(stream);
 
+
+            // Aggiungi un listener su ogni track per gestire la chiusura inaspettata
+            stream.getTracks().forEach(track => {
+              track.addEventListener("ended", () => {
+                  console.warn("Track ended unexpectedly, reinitializing stream");
+                  stopMicrophoneStream();
+                  // Puoi decidere se riavviare immediatamente il flusso o mostrare un messaggio all'utente
+                  getMicrophoneStream();
+              });
+            });
+
             audioContext = new AudioContext(); 
             source = audioContext.createMediaStreamSource(stream)
 
@@ -242,6 +261,21 @@ function getMicrophoneStream(){ //  Initializes the microphone input and prepare
         });
 }
 
+function stopMicrophoneStream(){ 
+  if (currStream !== null){
+      console.log("In the stop function");
+      let tracks = currStream.getTracks();
+      tracks.forEach(track => track.stop());
+  }
+  window.cancelAnimationFrame(requestAnimationFrameId);
+  
+  if (audioContext) {
+      audioContext.close().then(() => {
+          console.log("AudioContext closed");
+      });
+      audioContext = null;
+  }
+}/*
 function stopMicrophoneStream(){ // Stops the microphone and animation.
     if (currStream !== null){
         console.log("In the stop function");
@@ -253,7 +287,7 @@ function stopMicrophoneStream(){ // Stops the microphone and animation.
         }
     }
     window.cancelAnimationFrame(requestAnimationFrameId);
-}
+}*/
 
 // Sets up the audio analyzer for pitch detection.
 function startPitchTrack(){

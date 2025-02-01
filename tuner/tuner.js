@@ -60,7 +60,7 @@ function autoCorrelate( buf, sampleRate ) {
 		rms += val*val;
 	}
 	rms = Math.sqrt(rms/SIZE);
-	if (rms<0.01) // not enough signal
+	if (rms<minimumRMS) // not enough signal
 		return -1;
 
     /* Trim Silence: finds where the signal starts and ends (avoiding noise). */
@@ -112,8 +112,8 @@ function autoCorrelate( buf, sampleRate ) {
 
     // Improves the resolution of the period (T0) by fitting a parabola to the values around the detected peak.
 	var x1 = c[T0-1], x2 = c[T0], x3 = c[T0+1];
-	a = (x1 + x3 - 2*x2)/2;
-	b = (x3 - x1)/2;
+	let a = (x1 + x3 - 2 * x2) / 2;
+    let b = (x3 - x1) / 2;
 	if (a) T0 = T0 - b/(2*a);
 
     // Return the frequency
@@ -170,9 +170,7 @@ function updateLevelMeter(detune) {
 }
 
 //  Initializes the microphone input and prepares it for audio analysis.
-function getMicrophoneStream(){
-    // Requests microphone access consists of several tracks, such as video or audio tracks. 
-    // Each track is specified as an instance of MediaStreamTrack.
+function getMicrophoneStream(){ //  Initializes the microphone input and prepares it for audio analysis.
     navigator.mediaDevices.getUserMedia(constraints)
         // On success
         .then((stream) => {
@@ -181,10 +179,19 @@ function getMicrophoneStream(){
             console.log('got microphone stream');
             console.log(stream);
 
-            /* In the next two steps we are going to translate the stream into something that
-            the webAudio API can analyse*/
-            audioContext = new AudioContext(); // Create AudioContext (This is a constractor part of the web audio API)
-            source = audioContext.createMediaStreamSource(stream) // Inside the context, create the source
+
+            // Aggiungi un listener su ogni track per gestire la chiusura inaspettata
+            stream.getTracks().forEach(track => {
+              track.addEventListener("ended", () => {
+                  console.warn("Track ended unexpectedly, reinitializing stream");
+                  stopMicrophoneStream();
+                  // Puoi decidere se riavviare immediatamente il flusso o mostrare un messaggio all'utente
+                  getMicrophoneStream();
+              });
+            });
+
+            audioContext = new AudioContext(); 
+            source = audioContext.createMediaStreamSource(stream)
 
             // Call the function that detects the pitch
             startPitchTrack()
@@ -193,24 +200,24 @@ function getMicrophoneStream(){
         .catch((err) => {
             // handle the error
             console.log('Did not get microphone stream: \n' + err);
-            enableMicBtn.classList.add('error');
+            enableMicBtn.innerHTML = "Enable Microphone"
         });
 }
 
-// Stops the microphone and animation.
-function stopMicrophoneStream(){
-    if (currStream !== null){
-        // get the tracks from the stream
-        let tracks = currStream.getTracks();
-        console.log(tracks)
-
-        // stop each one
-        for(let i = 0; i < tracks.length; i++){
-            tracks[i].stop();
-        }
-    }
-
-    window.cancelAnimationFrame(requestAnimationFrameId);
+function stopMicrophoneStream(){ 
+  if (currStream !== null){
+      console.log("In the stop function");
+      let tracks = currStream.getTracks();
+      tracks.forEach(track => track.stop());
+  }
+  window.cancelAnimationFrame(requestAnimationFrameId);
+  
+  if (audioContext) {
+      audioContext.close().then(() => {
+          console.log("AudioContext closed");
+      });
+      audioContext = null;
+  }
 }
 
 // Sets up the audio analyzer for pitch detection.
@@ -323,13 +330,15 @@ let analyser = null;
 let buffer = new Float32Array(1024); // length of array = fftSize/2
 let requestAnimationFrameId = null;
 
+const tuneTollerance = 30;
+const minimumRMS = 0.005;
+
 const constraints = {audio: true, video: false};
 const enableMicBtn = document.getElementById("enable-mic");
 const noteElem = document.getElementById("note");
 const hzElem = document.getElementById("hz");
 const detuneElem = document.getElementById("detune");
 const detuneWarning = document.getElementById("detune-warning");
-const tuneTollerance = 30;
 const levelBar = document.getElementById("level-bar");
 const levelValue = document.getElementById("level-value");
 

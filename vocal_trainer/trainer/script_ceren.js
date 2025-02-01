@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function() {
 //Decides Workout to be played (TO BE DONE)
 // ORDER OF CHOICE: Level of skill, time, equipment
 
-async function chooseWorkout() {
+function chooseWorkout() {
 
     console.log("********************************************************************************")
     console.log("Parametri per la scelta del workout")
@@ -782,7 +782,7 @@ document.addEventListener("DOMContentLoaded", function() {
         //await testingValues();
         await showValues();
         await setVocal(range, manual, firstmanNote, secondmanNote)
-        await chooseWorkout();
+        chooseWorkout();
         const workout = w;
         console.log("Workout correct: " + workout)
         await setWorkout(workout);  // Imposta l'allenamento

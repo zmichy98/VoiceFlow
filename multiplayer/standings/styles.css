@@ -1,4 +1,4 @@
-body {
+/*body {
   font-family: 'Kanit', sans-serif;
   background-color: #2E2E2E;
   margin: 0;
@@ -7,6 +7,34 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+}
+*/
+
+body {
+  font-family: 'Kanit', sans-serif;
+  background: linear-gradient(-45deg, #001f3f, #0074D9, #7FDBFF, #39CCCC);
+  background-size: 400% 400%;
+  animation: lavaLamp 10s ease infinite;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Animazione del gradiente */
+@keyframes lavaLamp {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .container {

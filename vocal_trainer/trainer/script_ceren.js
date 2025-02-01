@@ -760,8 +760,8 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("playPattern").addEventListener("click", async function() {
 
         setLoginValues();
-        await testingValues();
         await chooseWorkout();
+        await testingValues();
         const workout = w;
         console.log("Workout correct: " + workout)
         await showValues();

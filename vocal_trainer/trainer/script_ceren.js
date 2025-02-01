@@ -555,14 +555,16 @@ async function setWorkoutLength() {
 // Loads vocal range, or the manual range
 async function setVocal(vol, man, first, second) {
     const doc = await db.collection("store").doc("vocal_ranges").get();
-    const newVoice = doc.data()[vol];
-    console.log("vox from Firebase: " + newVoice);
-    vox.length = 0;
-    vox.push(...newVoice); // Carica i nuovi pattern
-    console.log("vox: " + vox);
-    console.log("manual: " + man);
-    console.log("first note: " + first);
-    console.log("second note: " + second);
+    if(range === "Soprano" || range === "Mezzosoprano" || range === "Alto" || range === "Tenor" || range === "Baritone" || range === "Bass") {
+        const newVoice = doc.data()[vol];
+        console.log("vox from Firebase: " + newVoice);
+        vox.length = 0;
+        vox.push(...newVoice); // Carica i nuovi pattern
+        console.log("vox: " + vox);
+        console.log("manual: " + man);
+        console.log("first note: " + first);
+        console.log("second note: " + second);
+    } 
 
     if (man) {
         vox[0] = first;
@@ -679,7 +681,6 @@ const playPattern = async (curr, duration, pTime) => {
 const playExercise = async (es) => {
 
     await setExercise(es)
-
     await setExerciseLength();
 
     const noteStart1 = vox[0]; // Starting note for the type of voice
@@ -701,7 +702,7 @@ const playExercise = async (es) => {
 
     let now = Tone.now(); // Get current time
 
-    await Tone.Transport.start()
+    Tone.Transport.start()
 
     for (let currentMidi = startMidi; currentMidi <= endMidi; currentMidi++) {
 

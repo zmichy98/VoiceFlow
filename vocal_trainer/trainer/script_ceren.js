@@ -560,7 +560,7 @@ async function setLoginValues() {
     if(logged === true) {
         const accountsRef = db.collection("store").doc("accounts");
         // Creiamo l'array di dati dell'utente
-        const userData = [nickname, password, 0, 0, 0, experience, time, range, gear, manual, firstmanNote, secondmanNote];
+        const userData = [nickname, password, 0, 0, 0, experience, time, range, gear, manual, firstmanNote, secondmanNote, laxVox, mask];
 
         // Aggiorna Firestore con il nuovo array senza sovrascrivere
         const doc = await accountsRef.get();

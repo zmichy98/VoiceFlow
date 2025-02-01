@@ -21,13 +21,14 @@ const work = ["es1", "es2"];
 let workout_length = 480;
 let firstmanNote = "C2"
 let secondmanNote = "D2"
-let time = 5
-let experience = "beginner";
+let time = "5"
+let time_num = 5
+let experience = "Beginner";
 let mask = false;
 let laxVox = false;
-let w = "";
+let w = "wo1";
 let countPoints = 0;
-let gear = "";
+let gear = "No gear selected";
 let logged = false;
 let nickname;
 let password;
@@ -41,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function() {
     secondmanNote = localStorage.getItem("secondNote").toString();
     // To be inserted: time, experience, tools
     time = localStorage.getItem("sliderValue").toString(); // is a string now 5,10,15,20
+    time_num = JSON.parse(localStorage.getItem("sliderValue"));
     experience = localStorage.getItem("selectedLevel").toString(); // string: Beginner, Intermediate, Advanced
     mask = JSON.parse(localStorage.getItem("mask")); // Can either be true or false
     laxVox = JSON.parse(localStorage.getItem("laxVox")); // Can either be true or false
@@ -80,19 +82,33 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function chooseWorkout() {
 
-    if (selectedLevel == "Beginner") {
+    console.log("********************************************************************************")
+    console.log("Parametri per la scelta del workout")
+    console.log("Level: " + experience)
+    console.log("Training time: " + time_num)
+    console.log("Mask? " + mask)
+    console.log("Lax Vox? " + laxVox)
+    console.log("********************************************************************************")
 
-        if (time == "5") {
+    if (experience === "Beginner") {
+
+        console.log("ECCOCI, BEGINNER")
+
+        if (time_num === 5) {
+
+            console.log("ECCOCI, 5 minuti")
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_1b_n_m_05"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
+                console.log("ECCOCI, WORKOUT GIUSTO")
+
                 w = "wo_1b_lv_n_05"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_1b_lv_m_05"
     
@@ -102,17 +118,17 @@ function chooseWorkout() {
     
             }
     
-        } else if (time == "10") {
+        } else if (time_num === 10) {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_1b_n_m_10"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_1b_lv_n_10"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_1b_lv_m_10"
     
@@ -122,17 +138,17 @@ function chooseWorkout() {
     
             }
     
-        } else if (time == "15") {
+        } else if (time_num === 15) {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_1b_n_m_15"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_1b_lv_n_15"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_1b_lv_m_15"
     
@@ -144,15 +160,15 @@ function chooseWorkout() {
     
         } else {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_1b_n_m_20"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_1b_lv_n_20"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_1b_lv_m_20"
     
@@ -164,19 +180,19 @@ function chooseWorkout() {
     
         }
     
-    } else if (selectedLevel == "Intermediate") {
+    } else if (experience === "Intermediate") {
     
-        if (time == "5") {
+        if (time_num === 5) {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_2i_n_m_05"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_2i_lv_n_05"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_2i_lv_m_05"
     
@@ -186,17 +202,17 @@ function chooseWorkout() {
     
             }
     
-        } else if (time == "10") {
+        } else if (time_num === 10) {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_2i_n_m_10"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_2i_lv_n_10"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_2i_lv_m_10"
     
@@ -206,17 +222,17 @@ function chooseWorkout() {
     
             }
     
-        } else if (time == "15") {
+        } else if (time_num === 15) {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_2i_n_m_15"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_2i_lv_n_15"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_2i_lv_m_15"
     
@@ -228,15 +244,15 @@ function chooseWorkout() {
     
         } else {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_2i_n_m_20"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_2i_lv_n_20"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_2i_lv_m_20"
     
@@ -248,19 +264,19 @@ function chooseWorkout() {
     
         }
     
-    } else {
+    } else if (experience === "Advanced") {
     
-        if (time == "5") {
+        if (time_num === 5) {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_3a_n_m_05"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_3a_lv_n_05"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_3a_lv_m_05"
     
@@ -270,17 +286,17 @@ function chooseWorkout() {
     
             }
     
-        } else if (time == "10") {
+        } else if (time_num === 10) {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_3a_n_m_10"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_3a_lv_n_10"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_3a_lv_m_10"
     
@@ -290,17 +306,17 @@ function chooseWorkout() {
     
             }
     
-        } else if (time == "15") {
+        } else if (time_num === 15) {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_3a_n_m_15"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_3a_lv_n_15"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_3a_lv_m_15"
     
@@ -312,15 +328,15 @@ function chooseWorkout() {
     
         } else {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_3a_n_m_20"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_3a_lv_n_20"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_3a_lv_m_20"
     
@@ -332,6 +348,8 @@ function chooseWorkout() {
     
         }
     
+    } else {
+        console.log("Eccoci, errore...")
     }
 
     console.log("Chosen workout: " + w)
@@ -349,6 +367,7 @@ async function testingValues() {
     time = 5;
     mask = false;
     laxVox = true;
+    w = "wo1"
 }
 
 
@@ -382,44 +401,45 @@ async function showValues() {
 }
 
 // Configures the piano
-const piano = new Tone.Sampler({
-    urls: {
-         "A0": "A0.mp3",
-         "C1": "C1.mp3",
-         "D#1": "Ds1.mp3",
-         "F#1": "Fs1.mp3",
-         "A1": "A1.mp3",
-         "C2": "C2.mp3",
-         "D#2": "Ds2.mp3",
-         "F#2": "Fs2.mp3",
-         "A2": "A2.mp3",
-         "C3": "C3.mp3",
-         "D#3": "Ds3.mp3",
-         "F#3": "Fs3.mp3",
-         "A3": "A3.mp3",
-         "C4": "C4.mp3",
-         "D#4": "Ds4.mp3",
-         "F#4": "Fs4.mp3",
-         "A4": "A4.mp3",
-         "C5": "C5.mp3",
-         "D#5": "Ds5.mp3",
-         "F#5": "Fs5.mp3",
-         "A5": "A5.mp3",
-         "C6": "C6.mp3",
-         "D#6": "Ds6.mp3",
-         "F#6": "Fs6.mp3",
-         "A6": "A6.mp3",
-         "C7": "C7.mp3",
-         "D#7": "Ds7.mp3",
-         "F#7": "Fs7.mp3",
-         "A7": "A7.mp3",
-         "C8": "C8.mp3"
-    },
-    baseUrl: "https://tonejs.github.io/audio/salamander/", // Percorso dei campioni
-    onload: () => {
-         console.log("Piano loaded");
-    }
-}).toDestination();
+    const piano = new Tone.Sampler({
+        urls: {
+             "A0": "A0.mp3",
+             "C1": "C1.mp3",
+             "D#1": "Ds1.mp3",
+             "F#1": "Fs1.mp3",
+             "A1": "A1.mp3",
+             "C2": "C2.mp3",
+             "D#2": "Ds2.mp3",
+             "F#2": "Fs2.mp3",
+             "A2": "A2.mp3",
+             "C3": "C3.mp3",
+             "D#3": "Ds3.mp3",
+             "F#3": "Fs3.mp3",
+             "A3": "A3.mp3",
+             "C4": "C4.mp3",
+             "D#4": "Ds4.mp3",
+             "F#4": "Fs4.mp3",
+             "A4": "A4.mp3",
+             "C5": "C5.mp3",
+             "D#5": "Ds5.mp3",
+             "F#5": "Fs5.mp3",
+             "A5": "A5.mp3",
+             "C6": "C6.mp3",
+             "D#6": "Ds6.mp3",
+             "F#6": "Fs6.mp3",
+             "A6": "A6.mp3",
+             "C7": "C7.mp3",
+             "D#7": "Ds7.mp3",
+             "F#7": "Fs7.mp3",
+             "A7": "A7.mp3",
+             "C8": "C8.mp3"
+        },
+        baseUrl: "https://tonejs.github.io/audio/salamander/", // Percorso dei campioni
+        onload: () => {
+             console.log("Piano loaded");
+        }
+    }).toDestination();
+
 
 // Function to change the color of the key when pressed
 function changeKeyColor(note) {
@@ -760,12 +780,12 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("playPattern").addEventListener("click", async function() {
 
         setLoginValues();
-        await chooseWorkout();
-        await testingValues();
-        const workout = w;
-        console.log("Workout correct: " + workout)
+        //await testingValues();
         await showValues();
         await setVocal(range, manual, firstmanNote, secondmanNote)
+        chooseWorkout();
+        const workout = w;
+        console.log("Workout correct: " + workout)
         await setWorkout(workout);  // Imposta l'allenamento
         await setWorkoutLength()
 

@@ -132,8 +132,6 @@ function main(){
 <<<<<<< Updated upstream
         noteElem.innerHTML = "Note to play ";
         hzElem.innerHTML = "Hz of the singer"
-=======
->>>>>>> Stashed changes
         console.log('Call MicStrem function')
         getMicrophoneStream();
     }
@@ -147,7 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /*-------------- DETECT THE SINGED NOTE: --------------*/
-<<<<<<< Updated upstream
 
 // Variabile per il throttling del pitch detection
 let lastDetectionTime = 0;
@@ -156,13 +153,11 @@ const detectionInterval = 50; // intervallo in millisecondi, regolabile in base 
 export function startGamePitchTrack(goalNote, duration) {
     console.log("-----------Start PitchTrack-----------");
     
-=======
 // Variabile globale per riutilizzare il nodo Analyser
 
 export function startGamePitchTrack(goalNote, duration) {
     console.log("-------------Start PitchTrack-------------");
     // Se il nodo globale non esiste, crealo e collegalo alla sorgente
->>>>>>> Stashed changes
     if (!globalAnalyser) {
         globalAnalyser = audioContext.createAnalyser();
         globalAnalyser.fftSize = 1024;
@@ -202,16 +197,13 @@ function getGamePitch(goalNote, duration, startTime, resolve, callback) {
         return;
     }
     
-<<<<<<< Updated upstream
     if (currentTime - lastDetectionTime < detectionInterval) {
         requestAnimationFrameId = window.requestAnimationFrame(callback);
         return;
     }
     lastDetectionTime = currentTime;
     
-=======
     // Trova la frequenza target associata alla nota obiettivo
->>>>>>> Stashed changes
     const goalFreqObj = noteFrequencies.find((n) => n.note === goalNote);
     if (!goalFreqObj) {
         console.error("Goal note not found in frequencies list");
@@ -224,13 +216,10 @@ function getGamePitch(goalNote, duration, startTime, resolve, callback) {
     console.log("Goal frequency: " + goalFreq);
     noteElem.innerHTML = "Goal note is " + goalNote + ": " + goalFreq;
 
-<<<<<<< Updated upstream
     noteElem.innerHTML = "Sing " + goalNote + ": " + goalFreq + " Hz";
     
     // Preleva i dati audio dal nodo Analyser
-=======
     // Preleva i dati audio dal nodo Analyser e calcola la frequenza
->>>>>>> Stashed changes
     globalAnalyser.getFloatTimeDomainData(buffer);
     // Aggiungi qui il log per verificare i primi 20 valori del buffer
     console.log("Buffer sample (first 20 values):", buffer.slice(0, 20));
@@ -242,14 +231,10 @@ function getGamePitch(goalNote, duration, startTime, resolve, callback) {
         hzElem.innerHTML = "No note detected";
         console.log("No note detected");
     } else {
-<<<<<<< Updated upstream
         const detune = getNotediff(frequencyInHz, goalFreq);
         hzElem.innerHTML = "Your frequency is approximately " + Math.round(frequencyInHz) + " Hz";
-=======
         hzElem.innerHTML = "Your frequency is " + frequencyInHz + "Hz"
 
-        const detune = getNotediff(frequencyInHz, goalFreq);
->>>>>>> Stashed changes
         if (Math.abs(detune) < tuneTollerance) {
             console.log("Note sung correctly");
             cancelAnimationFrame(requestAnimationFrameId);

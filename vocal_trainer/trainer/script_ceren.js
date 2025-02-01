@@ -21,7 +21,6 @@ const work = ["es1", "es2"];
 let workout_length = 480;
 let firstmanNote = "C2"
 let secondmanNote = "D2"
-let time = "5"
 let time_num = 5
 let experience = "Beginner";
 let mask = false;
@@ -33,6 +32,46 @@ let logged = false;
 let nickname;
 let password;
 
+// Configures the piano
+const piano_trainer = new Tone.Sampler({
+    urls: {
+         "A0": "A0.mp3",
+         "C1": "C1.mp3",
+         "D#1": "Ds1.mp3",
+         "F#1": "Fs1.mp3",
+         "A1": "A1.mp3",
+         "C2": "C2.mp3",
+         "D#2": "Ds2.mp3",
+         "F#2": "Fs2.mp3",
+         "A2": "A2.mp3",
+         "C3": "C3.mp3",
+         "D#3": "Ds3.mp3",
+         "F#3": "Fs3.mp3",
+         "A3": "A3.mp3",
+         "C4": "C4.mp3",
+         "D#4": "Ds4.mp3",
+         "F#4": "Fs4.mp3",
+         "A4": "A4.mp3",
+         "C5": "C5.mp3",
+         "D#5": "Ds5.mp3",
+         "F#5": "Fs5.mp3",
+         "A5": "A5.mp3",
+         "C6": "C6.mp3",
+         "D#6": "Ds6.mp3",
+         "F#6": "Fs6.mp3",
+         "A6": "A6.mp3",
+         "C7": "C7.mp3",
+         "D#7": "Ds7.mp3",
+         "F#7": "Fs7.mp3",
+         "A7": "A7.mp3",
+         "C8": "C8.mp3"
+    },
+    baseUrl: "https://tonejs.github.io/audio/salamander/", // Percorso dei campioni
+    onload: () => {
+         console.log("Piano loaded");
+    }
+}).toDestination();
+
 
 //Takes the variables from the previous pages (stored locally)
 document.addEventListener("DOMContentLoaded", function() {
@@ -41,7 +80,8 @@ document.addEventListener("DOMContentLoaded", function() {
     firstmanNote = localStorage.getItem("firstNote").toString();
     secondmanNote = localStorage.getItem("secondNote").toString();
     // To be inserted: time, experience, tools
-    time = localStorage.getItem("sliderValue").toString(); // is a string now 5,10,15,20
+    //time = localStorage.getItem("sliderValue").toString(); // is a string now 5,10,15,20
+    //time_num = JSON.parse(localStorage.getItem("sliderValue"));
     time_num = JSON.parse(localStorage.getItem("sliderValue"));
     experience = localStorage.getItem("selectedLevel").toString(); // string: Beginner, Intermediate, Advanced
     mask = JSON.parse(localStorage.getItem("mask")); // Can either be true or false
@@ -358,18 +398,19 @@ function chooseWorkout() {
 
 
 //Variable values (for testing only)
+/*
 async function testingValues() {
     range = "Alto";
     eser = "es3";
     exDuration = 30;
     manual = false;
     experience = "beginner";
-    time = 5;
+    time_num = 5;
     mask = false;
     laxVox = true;
     w = "wo1"
 }
-
+*/
 
 ////////////////////////////////////////////////////////
 
@@ -400,45 +441,7 @@ async function showValues() {
     console.log("**************************************************")
 }
 
-// Configures the piano
-    const piano = new Tone.Sampler({
-        urls: {
-             "A0": "A0.mp3",
-             "C1": "C1.mp3",
-             "D#1": "Ds1.mp3",
-             "F#1": "Fs1.mp3",
-             "A1": "A1.mp3",
-             "C2": "C2.mp3",
-             "D#2": "Ds2.mp3",
-             "F#2": "Fs2.mp3",
-             "A2": "A2.mp3",
-             "C3": "C3.mp3",
-             "D#3": "Ds3.mp3",
-             "F#3": "Fs3.mp3",
-             "A3": "A3.mp3",
-             "C4": "C4.mp3",
-             "D#4": "Ds4.mp3",
-             "F#4": "Fs4.mp3",
-             "A4": "A4.mp3",
-             "C5": "C5.mp3",
-             "D#5": "Ds5.mp3",
-             "F#5": "Fs5.mp3",
-             "A5": "A5.mp3",
-             "C6": "C6.mp3",
-             "D#6": "Ds6.mp3",
-             "F#6": "Fs6.mp3",
-             "A6": "A6.mp3",
-             "C7": "C7.mp3",
-             "D#7": "Ds7.mp3",
-             "F#7": "Fs7.mp3",
-             "A7": "A7.mp3",
-             "C8": "C8.mp3"
-        },
-        baseUrl: "https://tonejs.github.io/audio/salamander/", // Percorso dei campioni
-        onload: () => {
-             console.log("Piano loaded");
-        }
-    }).toDestination();
+
 
 
 // Function to change the color of the key when pressed
@@ -580,7 +583,7 @@ async function setLoginValues() {
     if(logged === true) {
         const accountsRef = db.collection("store").doc("accounts");
         // Creiamo l'array di dati dell'utente
-        const userData = [nickname, password, 0, 0, 0, experience, time, range, gear, manual, firstmanNote, secondmanNote, laxVox, mask];
+        const userData = [nickname, password, 0, 0, 0, experience, time_num, range, gear, manual, firstmanNote, secondmanNote, laxVox, mask];
 
         // Aggiorna Firestore con il nuovo array senza sovrascrivere
         const doc = await accountsRef.get();
@@ -617,8 +620,9 @@ async function setLoginValues() {
 // Plays a note for a certain duration
 const playNote = async (note, duration, time) => {
     // Suona la nota e cambia il colore del tasto
-    piano.triggerAttackRelease(note, duration, time);
+    piano_trainer.triggerAttackRelease(note, duration, time);
     changeKeyColor(note);
+
 
     // Ottiene la nota rilevata e assegna i punti
     try {
@@ -641,7 +645,7 @@ const playChord = async (curr, duration, time) => {
         getNoteFromOffset(pattern[6], curr),
     ];
     console.log(`Playing chord: ${chordNotes.join(", ")} for ${duration}`);
-    chordNotes.forEach((note) => piano.triggerAttackRelease(note, duration, time));
+    chordNotes.forEach((note) => piano_trainer.triggerAttackRelease(note, duration, time));
     chordNotes.forEach((note) => changeKeyColor(note));
 };
 
@@ -791,12 +795,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
         //timebar
         const progress = document.getElementById("progress");
-        const duration = workout_length + 5;
+        const wDuration = workout_length + 5;
 
-        console.log("Duration ----------------------" + duration)
+        console.log("Duration ----------------------" + wDuration)
       
         progress.style.width = "0"; // Reset della barra
-        progress.style.transition = `${duration}s linear`; // Imposta la durata dell'animazione
+        progress.style.transition = `${wDuration}s linear`; // Imposta la durata dell'animazione
         progress.style.width = "100%"; // Riempie la barra
 
         //attendi
@@ -805,7 +809,7 @@ document.addEventListener("DOMContentLoaded", function() {
         //Play Workout
         await Tone.start();  // Avvia Tone.js
         console.log("Audio context started");
-
+    
         playWorkout(work)
 
         // Redirect to results page after workout is done
@@ -814,7 +818,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 localStorage.setItem("currentScore", countPoints)
                 window.location.href = "resume.html";
             }, 1000); // 1-second delay before redirecting
-        }, duration * 1000);
+        }, wDuration * 1000);
 
     });
 });

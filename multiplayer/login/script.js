@@ -25,18 +25,30 @@ const recoveryForm = document.getElementById("recoveryForm");
 async function dataRedirectingAndSave(a) {
 
   if(a[5] === "n") {
+    localStorage.setItem("loggedIn", true);
+    logged = localStorage.getItem("loggedIn");
+    console.log("Logged in status: " + logged);
     window.location.href = "/vocal_trainer/settings/setting1_level.html"; // Redirect to recap page
     return
   }
   if(a[6] === "n") {
+    localStorage.setItem("loggedIn", true);
+    logged = localStorage.getItem("loggedIn");
+    console.log("Logged in status: " + logged);
     window.location.href = "/vocal_trainer/settings/setting2_time.html"; // Redirect to recap page
     return
   }
   if(a[7] === "n") {
+    localStorage.setItem("loggedIn", true);
+    logged = localStorage.getItem("loggedIn");
+    console.log("Logged in status: " + logged);
     window.location.href = "/vocal_trainer/settings/setting3_vocrange.html"; // Redirect to recap page
     return
   }
   if(a[8] === "n") {
+    localStorage.setItem("loggedIn", true);
+    logged = localStorage.getItem("loggedIn");
+    console.log("Logged in status: " + logged);
     window.location.href = "/vocal_trainer/settings/setting4_vocgear.html"; // Redirect to recap page
     return
   }

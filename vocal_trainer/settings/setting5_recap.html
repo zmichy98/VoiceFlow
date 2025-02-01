@@ -62,5 +62,20 @@
         document.getElementById("mask").innerHTML = localStorage.getItem("mask") || "Not selected";
         document.getElementById("laxVox").innerHTML = localStorage.getItem("laxVox") || "Not selected";
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("Logged in: " + localStorage.getItem("loggedIn"))
+            console.log("Singing level: " + localStorage.getItem("selectedLevel"))
+            console.log("Training time: " + localStorage.getItem("sliderValue"))
+            console.log("Manual: " + localStorage.getItem("manual"))
+            console.log("Selected range: " + localStorage.getItem("selectedRange"))
+            console.log("First note: " + localStorage.getItem("firstNote"))
+            console.log("Last note: " + localStorage.getItem("secondNote"))
+            console.log("Mask: " + localStorage.getItem("mask"))
+            console.log("Lax Vox: " + localStorage.getItem("laxVox"))
+            console.log("Selected gear: " + localStorage.getItem("selectedGear"))
+        });
+    </script>
 </body>
 </html>

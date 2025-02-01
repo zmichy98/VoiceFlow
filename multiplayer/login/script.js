@@ -28,6 +28,8 @@ async function dataRedirectingAndSave(a) {
 
   if(a[5] === "n") {
     localStorage.setItem("loggedIn", true);
+    localStorage.setItem("nick", a[0]);
+    localStorage.setItem("pass", a[1]);
     logged = localStorage.getItem("loggedIn");
     console.log("Logged in status: " + logged);
     window.location.href = "/vocal_trainer/settings/setting1_level.html"; // Redirect to recap page
@@ -35,6 +37,8 @@ async function dataRedirectingAndSave(a) {
   }
   if(a[6] === "n") {
     localStorage.setItem("loggedIn", true);
+    localStorage.setItem("nick", a[0]);
+    localStorage.setItem("pass", a[1]);
     logged = localStorage.getItem("loggedIn");
     console.log("Logged in status: " + logged);
     window.location.href = "/vocal_trainer/settings/setting2_time.html"; // Redirect to recap page
@@ -42,6 +46,8 @@ async function dataRedirectingAndSave(a) {
   }
   if(a[7] === "n") {
     localStorage.setItem("loggedIn", true);
+    localStorage.setItem("nick", a[0]);
+    localStorage.setItem("pass", a[1]);
     logged = localStorage.getItem("loggedIn");
     console.log("Logged in status: " + logged);
     window.location.href = "/vocal_trainer/settings/setting3_vocrange.html"; // Redirect to recap page
@@ -49,6 +55,8 @@ async function dataRedirectingAndSave(a) {
   }
   if(a[8] === "n") {
     localStorage.setItem("loggedIn", true);
+    localStorage.setItem("nick", a[0]);
+    localStorage.setItem("pass", a[1]);
     logged = localStorage.getItem("loggedIn");
     console.log("Logged in status: " + logged);
     window.location.href = "/vocal_trainer/settings/setting4_vocgear.html"; // Redirect to recap page
@@ -65,10 +73,10 @@ async function dataRedirectingAndSave(a) {
   localStorage.setItem("selectedRange", a[7]);
   localStorage.setItem("selectedGear", a[8]);
   localStorage.setItem("manual", a[9]);
-  localStorage.setItem("mask", a[10]);
-  localStorage.setItem("laxVox", a[11]);
-  localStorage.setItem("firstNote", a[12]);
-  localStorage.setItem("secondNote", a[13]);
+  localStorage.setItem("firstNote", a[10]);
+  localStorage.setItem("secondNote", a[11]);
+  localStorage.setItem("laxVox", a[12]);
+  localStorage.setItem("mask", a[13]);
   localStorage.setItem("loggedIn", true);
   logged = localStorage.getItem("loggedIn");
   console.log("Logged in status: " + logged);
@@ -109,7 +117,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
       alert("✅ Login successful! Redirecting...");
 
       //CHIAMARE FUNZIONE PER SALVARE LOCALMENTE i VALORI
-      await dataRedirectingAndSave(account)
+      await dataRedirectingAndSave(account);
 
     } else {
       alert("Error: Incorrect nickname or password.");

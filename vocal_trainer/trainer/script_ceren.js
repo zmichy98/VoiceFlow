@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
     mask = localStorage.getItem("mask"); // Can either be true or false
     laxVox = localStorage.getItem("laxVox"); // Can either be true or false
     gear = localStorage.getItem("selectedGear");
-    logged = localStorage.getItem("loggedIn");
+    logged = JSON.parse(localStorage.getItem("loggedIn"));
     if(logged) {
         nickname = localStorage.getItem("nick");
         password = localStorage.getItem("pass");
@@ -363,7 +363,7 @@ async function showValues() {
     console.log("*************************************************")
     console.log("Logged in? " + logged)
     console.log("Logged type: " + typeof logged)
-    if (logged === true) {
+    if (logged) {
         console.log("Nickname: " + nickname)
         console.log("Password: " + password)
     }
@@ -560,7 +560,7 @@ async function setLoginValues() {
     if(logged === true) {
         const accountsRef = db.collection("store").doc("accounts");
         // Creiamo l'array di dati dell'utente
-        const userData = [nickname, password, 0, 0, 0, experience, time, range, gear, manual, firstmanNote, secondmanNote];
+        const userData = [nickname, password, 0, 0, 0, experience, time, range, gear, manual, firstmanNote, secondmanNote, laxVox, mask];
 
         // Aggiorna Firestore con il nuovo array senza sovrascrivere
         const doc = await accountsRef.get();

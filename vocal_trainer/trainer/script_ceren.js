@@ -22,6 +22,7 @@ let workout_length = 480;
 let firstmanNote = "C2"
 let secondmanNote = "D2"
 let time = 5
+let time_num = 5
 let experience = "beginner";
 let mask = false;
 let laxVox = false;
@@ -41,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function() {
     secondmanNote = localStorage.getItem("secondNote").toString();
     // To be inserted: time, experience, tools
     time = localStorage.getItem("sliderValue").toString(); // is a string now 5,10,15,20
+    time_num = JSON.parse(localStorage.getItem("sliderValue"));
     experience = localStorage.getItem("selectedLevel").toString(); // string: Beginner, Intermediate, Advanced
     mask = JSON.parse(localStorage.getItem("mask")); // Can either be true or false
     laxVox = JSON.parse(localStorage.getItem("laxVox")); // Can either be true or false
@@ -83,16 +85,16 @@ async function chooseWorkout() {
     console.log("********************************************************************************")
     console.log("Parametri per la scelta del workout")
     console.log("Level: " + experience)
-    console.log("Training time: " + time)
+    console.log("Training time: " + time_num)
     console.log("Mask? " + mask)
     console.log("Lax Vox? " + laxVox)
     console.log("********************************************************************************")
 
-    if (experience === "beginner") {
+    if (experience === "Beginner") {
 
         console.log("ECCOCI, BEGINNER")
 
-        if (time === 5) {
+        if (time_num === 5) {
 
             console.log("ECCOCI, 5 minuti")
     
@@ -116,7 +118,7 @@ async function chooseWorkout() {
     
             }
     
-        } else if (time === 10) {
+        } else if (time_num === 10) {
     
             if (mask && !laxVox) {
     
@@ -136,7 +138,7 @@ async function chooseWorkout() {
     
             }
     
-        } else if (time === 15) {
+        } else if (time_num === 15) {
     
             if (mask && !laxVox) {
     
@@ -178,9 +180,9 @@ async function chooseWorkout() {
     
         }
     
-    } else if (experience === "intermediate") {
+    } else if (experience === "Intermediate") {
     
-        if (time === 5) {
+        if (time_num === 5) {
     
             if (mask && !laxVox) {
     
@@ -200,7 +202,7 @@ async function chooseWorkout() {
     
             }
     
-        } else if (time === 10) {
+        } else if (time_num === 10) {
     
             if (mask && !laxVox) {
     
@@ -220,7 +222,7 @@ async function chooseWorkout() {
     
             }
     
-        } else if (time === 15) {
+        } else if (time_num === 15) {
     
             if (mask && !laxVox) {
     
@@ -262,9 +264,9 @@ async function chooseWorkout() {
     
         }
     
-    } else if (experience === "advanced") {
+    } else if (experience === "Advanced") {
     
-        if (time === 5) {
+        if (time_num === 5) {
     
             if (mask && !laxVox) {
     
@@ -284,7 +286,7 @@ async function chooseWorkout() {
     
             }
     
-        } else if (time === 10) {
+        } else if (time_num === 10) {
     
             if (mask && !laxVox) {
     
@@ -304,7 +306,7 @@ async function chooseWorkout() {
     
             }
     
-        } else if (time === 15) {
+        } else if (time_num === 15) {
     
             if (mask && !laxVox) {
     
@@ -777,7 +779,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("playPattern").addEventListener("click", async function() {
 
         setLoginValues();
-        await testingValues();
+        //await testingValues();
         await showValues();
         await setVocal(range, manual, firstmanNote, secondmanNote)
         await chooseWorkout();

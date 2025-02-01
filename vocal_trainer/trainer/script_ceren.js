@@ -86,19 +86,19 @@ function chooseWorkout() {
     
             if (mask == true && laxVox == false) {
     
-                w = "wo1"
+                w = "wo_1b_n_m_05"
     
             } else if (mask == false && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_1b_lv_n_05"
     
             } else if (mask == true && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_1b_lv_m_05"
     
             } else {
     
-                w = "wo1"
+                w = "wo_1b_n_n_05"
     
             }
     
@@ -106,19 +106,19 @@ function chooseWorkout() {
     
             if (mask == true && laxVox == false) {
     
-                w = "wo1"
+                w = "wo_1b_n_m_10"
     
             } else if (mask == false && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_1b_lv_n_10"
     
             } else if (mask == true && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_1b_lv_m_10"
     
             } else {
     
-                w = "wo1"
+                w = "wo_1b_n_n_10"
     
             }
     
@@ -126,19 +126,19 @@ function chooseWorkout() {
     
             if (mask == true && laxVox == false) {
     
-                w = "wo1"
+                w = "wo_1b_n_m_15"
     
             } else if (mask == false && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_1b_lv_n_15"
     
             } else if (mask == true && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_1b_lv_m_15"
     
             } else {
     
-                w = "wo1"
+                w = "wo_1b_n_n_15"
     
             }
     
@@ -146,19 +146,19 @@ function chooseWorkout() {
     
             if (mask == true && laxVox == false) {
     
-                w = "wo1"
+                w = "wo_1b_n_m_20"
     
             } else if (mask == false && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_1b_lv_n_20"
     
             } else if (mask == true && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_1b_lv_m_20"
     
             } else {
     
-                w = "wo1"
+                w = "wo_1b_n_n_20"
     
             }
     
@@ -170,19 +170,19 @@ function chooseWorkout() {
     
             if (mask == true && laxVox == false) {
     
-                w = "wo1"
+                w = "wo_2i_n_m_05"
     
             } else if (mask == false && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_2i_lv_n_05"
     
             } else if (mask == true && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_2i_lv_m_05"
     
             } else {
     
-                w = "wo1"
+                w = "wo_2i_n_n_05"
     
             }
     
@@ -190,19 +190,19 @@ function chooseWorkout() {
     
             if (mask == true && laxVox == false) {
     
-                w = "wo1"
+                w = "wo_2i_n_m_10"
     
             } else if (mask == false && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_2i_lv_n_10"
     
             } else if (mask == true && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_2i_lv_m_10"
     
             } else {
     
-                w = "wo1"
+                w = "wo_2i_n_n_10"
     
             }
     
@@ -210,19 +210,19 @@ function chooseWorkout() {
     
             if (mask == true && laxVox == false) {
     
-                w = "wo1"
+                w = "wo_2i_n_m_15"
     
             } else if (mask == false && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_2i_lv_n_15"
     
             } else if (mask == true && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_2i_lv_m_15"
     
             } else {
     
-                w = "wo1"
+                w = "wo_2i_n_n_15"
     
             }
     
@@ -230,19 +230,19 @@ function chooseWorkout() {
     
             if (mask == true && laxVox == false) {
     
-                w = "wo1"
+                w = "wo_2i_n_m_20"
     
             } else if (mask == false && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_2i_lv_n_20"
     
             } else if (mask == true && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_2i_lv_m_20"
     
             } else {
     
-                w = "wo1"
+                w = "wo_2i_n_n_20"
     
             }
     
@@ -254,19 +254,19 @@ function chooseWorkout() {
     
             if (mask == true && laxVox == false) {
     
-                w = "wo1"
+                w = "wo_3a_n_m_05"
     
             } else if (mask == false && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_3a_lv_n_05"
     
             } else if (mask == true && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_3a_lv_m_05"
     
             } else {
     
-                w = "wo1"
+                w = "wo_3a_n_n_05"
     
             }
     
@@ -274,19 +274,19 @@ function chooseWorkout() {
     
             if (mask == true && laxVox == false) {
     
-                w = "wo1"
+                w = "wo_3a_n_m_10"
     
             } else if (mask == false && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_3a_lv_n_10"
     
             } else if (mask == true && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_3a_lv_m_10"
     
             } else {
     
-                w = "wo1"
+                w = "wo_3a_n_n_10"
     
             }
     
@@ -294,19 +294,19 @@ function chooseWorkout() {
     
             if (mask == true && laxVox == false) {
     
-                w = "wo1"
+                w = "wo_3a_n_m_15"
     
             } else if (mask == false && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_3a_lv_n_15"
     
             } else if (mask == true && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_3a_lv_m_15"
     
             } else {
     
-                w = "wo1"
+                w = "wo_3a_n_n_15"
     
             }
     
@@ -314,19 +314,19 @@ function chooseWorkout() {
     
             if (mask == true && laxVox == false) {
     
-                w = "wo1"
+                w = "wo_3a_n_m_20"
     
             } else if (mask == false && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_3a_lv_n_20"
     
             } else if (mask == true && laxVox == true) {
     
-                w = "wo1"
+                w = "wo_3a_lv_m_20"
     
             } else {
     
-                w = "wo1"
+                w = "wo_3a_n_n_20"
     
             }
     

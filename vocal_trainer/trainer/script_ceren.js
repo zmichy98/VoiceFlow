@@ -28,7 +28,7 @@ let laxVox = false;
 let w = "";
 let countPoints = 0;
 let gear = "";
-let logged;
+let logged = false;
 let nickname;
 let password;
 
@@ -45,21 +45,24 @@ document.addEventListener("DOMContentLoaded", function() {
     mask = localStorage.getItem("mask"); // Can either be true or false
     laxVox = localStorage.getItem("laxVox"); // Can either be true or false
     gear = localStorage.getItem("selectedGear");
-    nickname = localStorage.getItem("nick");
-    password = localStorage.getItem("pass");
+    logged = localStorage.getItem("loggedIn");
+    if(logged) {
+        nickname = localStorage.getItem("nick");
+        password = localStorage.getItem("pass");
+    }
 
     
         // Create an empty div for the icon
     const iconContainer = document.createElement("div");
 
     // Check conditions and add the appropriate icons
-    if (laxVox === "true" && mask === "true") {
+    if (laxVox === true && mask === true) {
         iconContainer.textContent = "ⓂⓁ"; // Both selected
     }
-    else if (laxVox === "true") {
+    else if (laxVox === true) {
         iconContainer.textContent = "Ⓛ"; // Only laxVox selected
     }
-    else if (mask === "true") {
+    else if (mask === true) {
         iconContainer.textContent = "Ⓜ"; // Only mask selected
     }
     // If any icon is selected, append the icon container to the body
@@ -345,7 +348,7 @@ async function testingValues() {
     experience = "beginner";
     time = 5;
     mask = false;
-    laxVox = false;
+    laxVox = true;
 }
 
 
@@ -358,6 +361,12 @@ async function showValues() {
     console.log("*************************************************")
     console.log("***************** VARIABLES *********************")
     console.log("*************************************************")
+    console.log("Logged in? " + logged)
+    console.log("Logged type: " + typeof logged)
+    if (logged === true) {
+        console.log("Nickname: " + nickname)
+        console.log("Password: " + password)
+    }
     console.log("Workout: " + w);
     console.log("Vox type: " + range);
     console.log("Training time: " + exDuration);
@@ -545,10 +554,10 @@ async function setVocal(vol, man, first, second) {
 }
 
 async function setLoginValues() {
-    logged = localStorage.getItem("loggedIn");
     console.log("Quanto vale il login? " + logged);
 
-    if(logged) {
+
+    if(logged === true) {
         const accountsRef = db.collection("store").doc("accounts");
         // Creiamo l'array di dati dell'utente
         const userData = [nickname, password, 0, 0, 0, experience, time, range, gear, manual, firstmanNote, secondmanNote];
@@ -566,6 +575,8 @@ async function setLoginValues() {
         }
 
         console.log("CE L'ABBIAMO FATTA!!! -------------------------------------------------------------")
+    } else {
+        console.log("Non sei loggato ------------------------------------------------------")
     }
 }
 

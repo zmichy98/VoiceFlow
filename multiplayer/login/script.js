@@ -24,6 +24,8 @@ const recoveryForm = document.getElementById("recoveryForm");
 // Funzione per salvare i dati localmente /////////////////////////////////
 async function dataRedirectingAndSave(a) {
 
+  let logged = false;
+
   if(a[5] === "n") {
     localStorage.setItem("loggedIn", true);
     logged = localStorage.getItem("loggedIn");

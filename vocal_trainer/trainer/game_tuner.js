@@ -2,7 +2,7 @@
 let audioContext = null;
 let currStream = null; // global variable to save the audio stream
 let source = null; // Audio input (microphone stream)
-let analyser = null;
+let globalAnalyser = null;
 let buffer = new Float32Array(1024); // length of array = fftSize/2
 let requestAnimationFrameId = null;
 
@@ -80,17 +80,29 @@ const noteFrequencies = [
 //  Initializes the microphone input and prepares it for audio analysis.
 function getMicrophoneStream(){
     navigator.mediaDevices.getUserMedia(constraints)
-        // On success
         .then((stream) => {
-            // Save the stream : 
             currStream = stream;
             console.log('got microphone stream');
             console.log(stream);
 
             audioContext = new AudioContext(); 
-            source = audioContext.createMediaStreamSource(stream)
+            // Assicurati che l'AudioContext sia attivo
+            audioContext.resume();
+            source = audioContext.createMediaStreamSource(stream);
+            
+            // Crea e configura il GainNode
+            const gainNode = audioContext.createGain();
+            gainNode.gain.value = 10;  // Imposta il valore di guadagno (modifica questo valore in base alle esigenze)
+
+            // Collega il source al gainNode...
+            source.connect(gainNode);
+            // ... e poi il gainNode verrà usato in seguito per collegarsi all'Analyser.
+            // Per esempio, nella funzione startGamePitchTrack puoi connetterti dal gainNode:
+            // gainNode.connect(globalAnalyser);
+            
+            // Se preferisci gestirlo globalmente, potresti salvare gainNode in una variabile globale:
+            window.myGainNode = gainNode;
         })
-        // On error:
         .catch((err) => {
             console.error('Error accessing microphone:', err);
             alert("Microphone access is required for this application. Please enable it.");
@@ -133,14 +145,12 @@ function main(){
     }
 }
 
-/*document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     main();
-});*/
+});
 
 /*-------------- DETECT THE SINGED NOTE: --------------*/
 
-// Variabile globale per riutilizzare il nodo Analyser
-let globalAnalyser = null;
 // Variabile per il throttling del pitch detection
 let lastDetectionTime = 0;
 const detectionInterval = 50; // intervallo in millisecondi, regolabile in base alle performance
@@ -148,11 +158,11 @@ const detectionInterval = 50; // intervallo in millisecondi, regolabile in base 
 export function startGamePitchTrack(goalNote, duration) {
     console.log("-----------Start PitchTrack-----------");
     
-    // Se il nodo globale non esiste, crealo e collegalo alla sorgente
     if (!globalAnalyser) {
         globalAnalyser = audioContext.createAnalyser();
         globalAnalyser.fftSize = 1024;
-        source.connect(globalAnalyser);
+        // Collega il GainNode (che abbiamo salvato in window.myGainNode) all'Analyser
+        window.myGainNode.connect(globalAnalyser);
     }
     
     const startTime = performance.now();
@@ -161,15 +171,13 @@ export function startGamePitchTrack(goalNote, duration) {
     console.log("Duration: " + duration);
     
     return new Promise((resolve) => {
-        // Funzione di callback per il ciclo di rilevamento
         function trackPitch() {
             getGamePitch(goalNote, duration, startTime, resolve, trackPitch);
         }
         trackPitch();
     }).finally(() => {
-        // Al termine del rilevamento, scollega il nodo per liberare risorse
         if (globalAnalyser) {
-            source.disconnect(globalAnalyser);
+            window.myGainNode.disconnect(globalAnalyser);
             globalAnalyser = null;
         }
     });
@@ -180,7 +188,6 @@ function getGamePitch(goalNote, duration, startTime, resolve, callback) {
     const elapsedTime = currentTime - startTime;
     console.log("Elapsed Time: " + elapsedTime);
 
-    // Se il tempo di rilevamento è scaduto, interrompi il ciclo e restituisci 0
     if (elapsedTime >= duration * 1000) {
         console.log("Time duration exceeded, stopping detection.");
         cancelAnimationFrame(requestAnimationFrameId);
@@ -188,14 +195,12 @@ function getGamePitch(goalNote, duration, startTime, resolve, callback) {
         return;
     }
     
-    // Throttling: controlla che sia trascorso l'intervallo desiderato prima del prossimo campionamento
     if (currentTime - lastDetectionTime < detectionInterval) {
         requestAnimationFrameId = window.requestAnimationFrame(callback);
         return;
     }
     lastDetectionTime = currentTime;
     
-    // Trova la frequenza target associata alla nota obiettivo
     const goalFreqObj = noteFrequencies.find((n) => n.note === goalNote);
     if (!goalFreqObj) {
         console.error("Goal note not found in frequencies list");
@@ -206,32 +211,31 @@ function getGamePitch(goalNote, duration, startTime, resolve, callback) {
     const goalFreq = goalFreqObj.freq;
     console.log("Goal frequency: " + goalFreq);
 
-    noteElem.innerHTML = "Sing" + goalNote + ": " + goalFreq;
+    noteElem.innerHTML = "Sing " + goalNote + ": " + goalFreq + " Hz";
     
     // Preleva i dati audio dal nodo Analyser
     globalAnalyser.getFloatTimeDomainData(buffer);
+    // Aggiungi qui il log per verificare i primi 20 valori del buffer
+    console.log("Buffer sample (first 20 values):", buffer.slice(0, 20));
+
     const frequencyInHz = autoCorrelate(buffer, audioContext.sampleRate);
     console.log("Sung freq: " + frequencyInHz);
     
-    // Se non viene rilevata alcuna nota (valore -1), prosegui il ciclo
     if (frequencyInHz === -1) {
+        hzElem.innerHTML = "No note detected";
         console.log("No note detected");
     } else {
         const detune = getNotediff(frequencyInHz, goalFreq);
-        hzElem.innerHTML = "Your frequency is approximatly " + Math.round(frequencyinHz) + " Hz";
-
-        // Se lo scarto in frequenza rientra nella tolleranza, risolvi la Promise con 1
+        hzElem.innerHTML = "Your frequency is approximately " + Math.round(frequencyInHz) + " Hz";
         if (Math.abs(detune) < tuneTollerance) {
             console.log("Note sung correctly");
             cancelAnimationFrame(requestAnimationFrameId);
             resolve(1);
             return;
         }
-        // Aggiorna il livello UI per dare un feedback visivo all'utente
         updateLevelMeter(detune);
     }
     
-    // Pianifica il prossimo frame per continuare il rilevamento
     requestAnimationFrameId = window.requestAnimationFrame(callback);
 }
 
@@ -246,7 +250,9 @@ function autoCorrelate( buf, sampleRate ) {
 		rms += val*val;
 	}
 	rms = Math.sqrt(rms/SIZE);
-	if (rms<0.01)
+    console.log("RMS: " + rms);
+
+	if (rms<0.001)
 		return -1;
 
 	var r1 = 0, r2 = SIZE-1, thres = 0.2;
@@ -275,18 +281,21 @@ function autoCorrelate( buf, sampleRate ) {
 		}
 	}
 
+    
 	var T0 = maxpos;
-	var x1 = c[T0-1], x2 = c[T0], x3 = c[T0+1];
-	a = (x1 + x3 - 2*x2)/2;
-	b = (x3 - x1)/2;
-	if (a) T0 = T0 - b/(2*a);
+    var x1 = c[T0 - 1], x2 = c[T0], x3 = c[T0 + 1];
+    let a = (x1 + x3 - 2 * x2) / 2;
+    let b = (x3 - x1) / 2;
+    if (a) {
+        T0 = T0 - b / (2 * a);
+    }
 	return sampleRate / T0;
 }
 
 // Calculate the diff between the note selected and the singed one
 function getNotediff(freq, goalFreq) {
-  centsDetune = Math.floor( 1200 * Math.log( freq / goalFreq)/Math.log(2) );
-  return centsDetune;
+    let centsDetune = Math.floor(1200 * Math.log(freq / goalFreq) / Math.log(2));
+    return centsDetune;
 }
 
 // Function to update the level meter based on the cents value

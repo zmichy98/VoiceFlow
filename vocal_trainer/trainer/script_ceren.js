@@ -78,21 +78,35 @@ document.addEventListener("DOMContentLoaded", function() {
 //Decides Workout to be played (TO BE DONE)
 // ORDER OF CHOICE: Level of skill, time, equipment
 
-function chooseWorkout() {
+async function chooseWorkout() {
 
-    if (selectedLevel == "Beginner") {
+    console.log("********************************************************************************")
+    console.log("Parametri per la scelta del workout")
+    console.log("Level: " + experience)
+    console.log("Training time: " + time)
+    console.log("Mask? " + mask)
+    console.log("Lax Vox? " + laxVox)
+    console.log("********************************************************************************")
 
-        if (time == "5") {
+    if (experience === "beginner") {
+
+        console.log("ECCOCI, BEGINNER")
+
+        if (time === 5) {
+
+            console.log("ECCOCI, 5 minuti")
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_1b_n_m_05"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
+                console.log("ECCOCI, WORKOUT GIUSTO")
+
                 w = "wo_1b_lv_n_05"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_1b_lv_m_05"
     
@@ -102,17 +116,17 @@ function chooseWorkout() {
     
             }
     
-        } else if (time == "10") {
+        } else if (time === 10) {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_1b_n_m_10"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_1b_lv_n_10"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_1b_lv_m_10"
     
@@ -122,17 +136,17 @@ function chooseWorkout() {
     
             }
     
-        } else if (time == "15") {
+        } else if (time === 15) {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_1b_n_m_15"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_1b_lv_n_15"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_1b_lv_m_15"
     
@@ -144,15 +158,15 @@ function chooseWorkout() {
     
         } else {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_1b_n_m_20"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_1b_lv_n_20"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_1b_lv_m_20"
     
@@ -164,19 +178,19 @@ function chooseWorkout() {
     
         }
     
-    } else if (selectedLevel == "Intermediate") {
+    } else if (experience === "intermediate") {
     
-        if (time == "5") {
+        if (time === 5) {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_2i_n_m_05"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_2i_lv_n_05"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_2i_lv_m_05"
     
@@ -186,17 +200,17 @@ function chooseWorkout() {
     
             }
     
-        } else if (time == "10") {
+        } else if (time === 10) {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_2i_n_m_10"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_2i_lv_n_10"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_2i_lv_m_10"
     
@@ -206,17 +220,17 @@ function chooseWorkout() {
     
             }
     
-        } else if (time == "15") {
+        } else if (time === 15) {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_2i_n_m_15"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_2i_lv_n_15"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_2i_lv_m_15"
     
@@ -228,15 +242,15 @@ function chooseWorkout() {
     
         } else {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_2i_n_m_20"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_2i_lv_n_20"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_2i_lv_m_20"
     
@@ -248,19 +262,19 @@ function chooseWorkout() {
     
         }
     
-    } else {
+    } else if (experience === "advanced") {
     
-        if (time == "5") {
+        if (time === 5) {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_3a_n_m_05"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_3a_lv_n_05"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_3a_lv_m_05"
     
@@ -270,17 +284,17 @@ function chooseWorkout() {
     
             }
     
-        } else if (time == "10") {
+        } else if (time === 10) {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_3a_n_m_10"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_3a_lv_n_10"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_3a_lv_m_10"
     
@@ -290,17 +304,17 @@ function chooseWorkout() {
     
             }
     
-        } else if (time == "15") {
+        } else if (time === 15) {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_3a_n_m_15"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_3a_lv_n_15"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_3a_lv_m_15"
     
@@ -312,15 +326,15 @@ function chooseWorkout() {
     
         } else {
     
-            if (mask == true && laxVox == false) {
+            if (mask && !laxVox) {
     
                 w = "wo_3a_n_m_20"
     
-            } else if (mask == false && laxVox == true) {
+            } else if (!mask && laxVox) {
     
                 w = "wo_3a_lv_n_20"
     
-            } else if (mask == true && laxVox == true) {
+            } else if (mask && laxVox) {
     
                 w = "wo_3a_lv_m_20"
     
@@ -332,6 +346,8 @@ function chooseWorkout() {
     
         }
     
+    } else {
+        console.log("Eccoci, errore...")
     }
 
     console.log("Chosen workout: " + w)
@@ -349,6 +365,7 @@ async function testingValues() {
     time = 5;
     mask = false;
     laxVox = true;
+    w = "wo1"
 }
 
 
@@ -760,12 +777,12 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("playPattern").addEventListener("click", async function() {
 
         setLoginValues();
-        await chooseWorkout();
         await testingValues();
-        const workout = w;
-        console.log("Workout correct: " + workout)
         await showValues();
         await setVocal(range, manual, firstmanNote, secondmanNote)
+        await chooseWorkout();
+        const workout = w;
+        console.log("Workout correct: " + workout)
         await setWorkout(workout);  // Imposta l'allenamento
         await setWorkoutLength()
 

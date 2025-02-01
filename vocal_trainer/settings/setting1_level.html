@@ -48,5 +48,14 @@
 
     <!-- Collegamento con lo script js: -->
     <script src="vt_settings.js"></script>
+
+    <script>
+        console.log("Logged in: " + localStorage.getItem("loggedIn"))
+        let logged = JSON.parse(localStorage.getItem("loggedIn"));
+        if(logged) {
+            console.log("Nickname: " + localStorage.getItem("nick"))
+            console.log("Password: " + localStorage.getItem("pass"))
+        }
+    </script>
 </body>
 </html>

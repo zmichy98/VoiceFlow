@@ -129,7 +129,6 @@ function main(){
     
 
     if (!isTracking === true){
-<<<<<<< Updated upstream
         noteElem.innerHTML = "Note to play ";
         hzElem.innerHTML = "Hz of the singer"
         console.log('Call MicStrem function')

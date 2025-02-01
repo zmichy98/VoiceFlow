@@ -324,3 +324,4 @@ function updateLevelMeter(detune) {
     // Imposta la posizione in percentuale rispetto alla larghezza della barra
     indicator.style.left = position + "%";
 }
+ 

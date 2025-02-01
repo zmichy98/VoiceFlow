@@ -145,14 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /*-------------- DETECT THE SINGED NOTE: --------------*/
 
-// Variabile per il throttling del pitch detection
-let lastDetectionTime = 0;
+let lastDetectionTime = 0; // Variabile per il throttling del pitch detection
 const detectionInterval = 50; // intervallo in millisecondi, regolabile in base alle performance
-
-export function startGamePitchTrack(goalNote, duration) {
-    console.log("-----------Start PitchTrack-----------");
-    
-// Variabile globale per riutilizzare il nodo Analyser
 
 export function startGamePitchTrack(goalNote, duration) {
     console.log("-------------Start PitchTrack-------------");

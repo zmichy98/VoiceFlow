@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vocal Warmup - Demo</title>
     <link rel="stylesheet" href="../../style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"> <!-- for the font :) -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!-- for the font :) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.43/Tone.min.js"></script>
     <script type="module" src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>
@@ -20,25 +22,25 @@
         font-size: 30px;
     }
 
-    ul{
+    ul {
         list-style-type: none;
-        font-size: 1.5em; 
+        font-size: 1.5em;
         color: #333;
-        text-align: left; 
-        width: calc(100% - 40px); 
+        text-align: left;
+        width: calc(100% - 40px);
         max-width: 300px;
-        display: block; 
-        font-family: 'Kanit', sans-serif; 
-     }
+        display: block;
+        font-family: 'Kanit', sans-serif;
+    }
 
-    .result-container{
+    .result-container {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
     }
 
-    .exercise{
+    .exercise {
         width: 400px;
         padding: 10px;
         background-color: #E0E0E0;
@@ -47,12 +49,12 @@
         text-align: left;
     }
 
-    .point{
+    .point {
         width: 400px;
         padding: 10px;
     }
 
-    .standing{
+    .standing {
         width: 400px;
         padding: 10px;
         background-color: #E0E0E0;
@@ -60,12 +62,77 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         text-align: center;
     }
+
+    /* Mantiene la struttura della leaderboard */
+    .leaderboards {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        flex-wrap: wrap;
+    }
+
+    .leaderboard {
+        background-color: #E0E0E0;
+        padding: 15px;
+        border-radius: 30px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        flex: 1;
+        max-width: 300px;
+        text-align: center;
+    }
+
+    /* Tabelle con angoli smussati */
+    .leaderboard-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        border-radius: 30px;
+        overflow: hidden;
+    }
+
+
+
+    /* Intestazione tabella */
+    .leaderboard-table th {
+        background-color: #4d9246;
+        color: white;
+        font-weight: bold;
+    }
+
+    /* Alternanza colori righe normali */
+    .leaderboard-table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .leaderboard-table tr:hover {
+        background-color: #ddd;
+    }
+
+    /* Evidenziazione prime tre posizioni */
+    .leaderboard-table tr:first-child td {
+        background-color: gold;
+        /* Oro per il primo */
+        font-weight: bold;
+    }
+
+    .leaderboard-table tr:nth-child(2) td {
+        background-color: silver;
+        /* Argento per il secondo */
+        font-weight: bold;
+    }
+
+    .leaderboard-table tr:nth-child(3) td {
+        background-color: #cd7f32;
+        /* Bronzo per il terzo */
+        font-weight: bold;
+    }
 </style>
 
 <body>
     <a href="../../index.html">
-        <img src="logo.jpg" alt="Go to Main Page" style="position:fixed; top:15px; left:20px; width: 100px; cursor: pointer;">
-    </a> 
+        <img src="logo.jpg" alt="Go to Main Page"
+            style="position:fixed; top:15px; left:20px; width: 100px; cursor: pointer;">
+    </a>
 
     <div class="result-container">
         <div class="exercise">
@@ -79,16 +146,16 @@
         </div>
 
         <div class="point">
-            <h1 style="color: #4d9246;">insert point here</h1>
+            <h1 id="punteggio" style="color: #4d9246;"></h1>
         </div>
 
-        <div class="standing">
-            <h2><span id="selectedLevel"></span> Leaderboard</h2>
-            <ol id="scoreList"></ol>
+        <div id="advancedLeaderboard" class="leaderboard">
+            <h2> Leaderboard</h2>
+            <table id="scoreList" class="leaderboard-table"></table>
         </div>
     </div>
 
-    
+
     <script type="module" src="vocal_trainer\settings\vt_settings.js"></script>
     <script type="module" src="resume_script.js"></script>
 
@@ -107,19 +174,20 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
-    
+
         // Your web app's Firebase configuration
         const firebaseConfig = {
-        apiKey: "AIzaSyB-BaTehljfDtni-HAPrYh6rKT9sJyTKaU",
-        authDomain: "database-for-singing.firebaseapp.com",
-        projectId: "database-for-singing",
-        storageBucket: "database-for-singing.firebasestorage.app",
-        messagingSenderId: "397721112623",
-        appId: "1:397721112623:web:c5ec8963358f8e014736da"
+            apiKey: "AIzaSyB-BaTehljfDtni-HAPrYh6rKT9sJyTKaU",
+            authDomain: "database-for-singing.firebaseapp.com",
+            projectId: "database-for-singing",
+            storageBucket: "database-for-singing.firebasestorage.app",
+            messagingSenderId: "397721112623",
+            appId: "1:397721112623:web:c5ec8963358f8e014736da"
         };
-    
+
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
     </script>
 </body>
+
 </html>

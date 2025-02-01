@@ -11,6 +11,36 @@ body {
 }
 
 
+body_title {
+  font-family: 'Kanit', sans-serif;
+  background: linear-gradient(-45deg, #001f3f, #68a0d0, rgb(2, 36, 50), #25027c);
+  background-size: 400% 400%;
+  animation: lavaLamp 10s ease infinite;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Animazione del gradiente */
+@keyframes lavaLamp {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
 /*-------------- LINE TRACING --------------- */
 svg {
   width: 500px;

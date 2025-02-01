@@ -73,10 +73,10 @@ async function dataRedirectingAndSave(a) {
   localStorage.setItem("selectedRange", a[7]);
   localStorage.setItem("selectedGear", a[8]);
   localStorage.setItem("manual", a[9]);
-  localStorage.setItem("mask", a[10]);
-  localStorage.setItem("laxVox", a[11]);
-  localStorage.setItem("firstNote", a[12]);
-  localStorage.setItem("secondNote", a[13]);
+  localStorage.setItem("firstNote", a[10]);
+  localStorage.setItem("secondNote", a[11]);
+  localStorage.setItem("laxVox", a[12]);
+  localStorage.setItem("mask", a[13]);
   localStorage.setItem("loggedIn", true);
   logged = localStorage.getItem("loggedIn");
   console.log("Logged in status: " + logged);

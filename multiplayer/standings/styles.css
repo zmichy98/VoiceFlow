@@ -12,7 +12,7 @@
 
 body {
   font-family: 'Kanit', sans-serif;
-  background: linear-gradient(-45deg, #001f3f, #0074D9, #7FDBFF, #39CCCC);
+  background: linear-gradient(-45deg, #001f3f, #0074D9, rgb(2, 36, 50), #3d0bbb);
   background-size: 400% 400%;
   animation: lavaLamp 10s ease infinite;
   margin: 0;

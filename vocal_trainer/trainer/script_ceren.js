@@ -35,15 +35,15 @@ let password;
 
 //Takes the variables from the previous pages (stored locally)
 document.addEventListener("DOMContentLoaded", function() {
-    manual = localStorage.getItem("manual");
+    manual = JSON.parse(localStorage.getItem("manual"));
     range = localStorage.getItem("selectedRange").toString();
     firstmanNote = localStorage.getItem("firstNote").toString();
     secondmanNote = localStorage.getItem("secondNote").toString();
     // To be inserted: time, experience, tools
     time = localStorage.getItem("sliderValue").toString(); // is a string now 5,10,15,20
     experience = localStorage.getItem("selectedLevel").toString(); // string: Beginner, Intermediate, Advanced
-    mask = localStorage.getItem("mask"); // Can either be true or false
-    laxVox = localStorage.getItem("laxVox"); // Can either be true or false
+    mask = JSON.parse(localStorage.getItem("mask")); // Can either be true or false
+    laxVox = JSON.parse(localStorage.getItem("laxVox")); // Can either be true or false
     gear = localStorage.getItem("selectedGear");
     logged = JSON.parse(localStorage.getItem("loggedIn"));
     if(logged) {

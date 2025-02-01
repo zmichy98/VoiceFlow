@@ -1,20 +1,41 @@
-// Import Firebase modules
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
-
-// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyB-BaTehljfDtni-HAPrYh6rKT9sJyTKaU",
   authDomain: "database-for-singing.firebaseapp.com",
   projectId: "database-for-singing",
-  storageBucket: "database-for-singing.firebasestorage.app",
+  storageBucket: "database-for-singing.appspot.com",
   messagingSenderId: "397721112623",
   appId: "1:397721112623:web:c5ec8963358f8e014736da"
 };
 
-// Initialize Firebase and Firestore
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// Inizializza Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+
+async function getTopScores() {
+  const doc = await db.collection("store").doc("scores").get();
+
+  if (!doc.exists) {
+      console.log("Il documento 'scores' non esiste!");
+      return;
+  }
+
+  const data = doc.data();
+  const top10_b = data["top10_beginner"];
+  console.log("Beginner top 10:", top10_b);
+  
+  const top10_i = data["top10_intermediate"];
+  console.log("Intermediate top 10:", top10_i);
+  
+  const top10_a = data["top10_advanced"];
+  console.log("Advanced top 10:", top10_a);
+}
+
+// Chiamare la funzione
+await getTopScores();
+
+
+/*
 
 // Function to fetch and sort leaderboard data
 async function fetchLeaderboard(level) {
@@ -73,3 +94,4 @@ function renderLeaderboard(containerId, leaderboard) {
 
 // Load leaderboards on page load
 displayLeaderboards();
+*/

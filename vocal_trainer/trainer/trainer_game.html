@@ -13,10 +13,10 @@
 
 <style>
     #labels {
-                font-size: 24px;
-                margin: 5px 0;
-                color: #555;
-            }
+        font-size: 24px;
+        margin: 5px 0;
+        color: #555;
+    }
 
     .keyboard4 {
         top: 220px;
@@ -24,6 +24,9 @@
     }
 
     #playPattern {
+        display: flex;
+        justify-content: center;
+        margin-top: 550px;
         background-color: #4CAF50;
         color: white;
         padding: 12px 24px;
@@ -32,8 +35,6 @@
         border-radius: 25px;
         cursor: pointer;
         transition: background-color 0.3s;
-        margin-bottom: 20px;
-
     }
 
     #playPattern:hover {
@@ -42,40 +43,25 @@
 
     .mic-container {
         display: flex;
-        align-items: center;  /* Center items vertically */
-        justify-content: center; /* Center them horizontally */
+        align-items: center;
+        justify-content: center;
         position: absolute;
-        top: 445px;
+        top: 400px;
         left: 50%;
         transform: translate(-50%, 0);
         z-index: 10;
-        gap: 10px; /* Adjust spacing between button and meter */
-        height: 50px; /* Ensure a consistent height */
-    }
-
-    .mic-button {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background-color: #4d9246; /* Green color */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 24px;
-        cursor: pointer;
-        transition: background-color 0.3s, transform 0.2s;
-        border: none; /* Remove default border */
-        outline: none;
-        padding: 0; /* Prevent extra spacing */
+        gap: 10px; 
+        height: 50px; 
+        flex-direction: column; 
+        margin-top: 40px; 
     }
 
     .ex-detail {
         position: fixed;
         top: 110px;
         max-width: 700px;
-        font-size: 1.5em; /* font size of the description */
-        color:#6b6b6b;    /* text color of the description */
+        font-size: 1.5em;
+        color:#6b6b6b;    
         background: linear-gradient(45deg, #4d9246, #7bd4a3);
         -webkit-background-clip: text;
         background-clip: text;
@@ -89,8 +75,8 @@
         position: fixed;
         top: 500px;
         max-width: 700px;
-        font-size: 1.5em; /* font size of the description */
-        color:#6b6b6b;    /* text color of the description */
+        font-size: 1.5em; 
+        color:#6b6b6b;   
         background: linear-gradient(45deg, #4d9246, #7bd4a3);
         -webkit-background-clip: text;
         background-clip: text;
@@ -100,9 +86,8 @@
         border-radius: 20px;
     }
 
-    /* Contenitore del tuner */
     #tuner-container {
-        margin-top: 20px;
+        margin-top: 0px;
         flex-grow: 0;
         display: flex;
         flex-direction: column;
@@ -110,17 +95,15 @@
         justify-content: center;
     }
 
-    /* Barra del tachimetro */
     #tuner-bar {
         position: relative;
-        width: 600px; /* Puoi allargarlo se vuoi */
+        width: 600px; 
         height: 10px;
         background-color: #ddd;
         border-radius: 5px;
         overflow: hidden;
     }
 
-    /* Indicatore del tuner */
     #tuner-indicator {
         position: absolute;
         width: 9px;
@@ -131,13 +114,12 @@
         transform: translateX(-50%);
         transition: left 0.1s ease-out;
     }
-
-    /* Label sotto il tuner adattate alla nuova larghezza */
+    
     .tuner-labels {
         display: flex;
         justify-content: space-between;
         width: 100%;
-        max-width: 600px; /* Deve essere uguale alla larghezza del tuner */
+        max-width: 600px; 
     }
 </style>
 
@@ -155,7 +137,6 @@
     </a> 
        
     <!-- Exercise description -->
-
     <div id="ex-detail" class="ex-detail">
     </div>
 
@@ -167,9 +148,6 @@
     
     <!-- Play Pattern -->
     <div class="mic-container">
-        <button class="mic-button" id="playPattern" data-tracking="false">
-            <i class="fas fa-microphone"></i>
-        </button>
         <div id="tuner-container">
             <div id="tuner-bar">
                 <div id="tuner-indicator"></div>
@@ -181,7 +159,9 @@
             </div>
         </div>
     </div>
-    
+
+    <button id = "playPattern"  data-tracking="false" class="playpattern">Play</button>
+
     <!-- Progress Bar -->
     <div id="progress-bar">
         <div id="progress"></div>
@@ -343,18 +323,9 @@
             </div>
         </div>
     </div>
-
-
-
     
-    
-    <!-- Link to game_tuner js: -->
     <script type="module" src="game_tuner.js"></script>
-
-    <!-- Link to script_ceren js: -->
     <script type="module" src="script_ceren.js"></script>
-
-    <!-- Link to settings script js: -->
     <script src="../settings/vt_settings.js"></script>
     
     <!-- Include Firebase SDK via CDN -->
@@ -364,6 +335,7 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.43/Tone.min.js"></script>
+    
     <script>
     // Your Firebase config
     var firebaseConfig = {

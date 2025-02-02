@@ -8,12 +8,9 @@ const firebaseConfig = {
   appId: "1:397721112623:web:c5ec8963358f8e014736da"
 };
 
-// Inizializza Firebase
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
-
-// Initialize EmailJS
-//emailjs.init("VoiceFlow"); // User ID di EmailJS
 
 // References to HTML elements
 const forgotPassword = document.getElementById("forgotPassword");
@@ -21,12 +18,12 @@ const recoverySection = document.getElementById("recoverySection");
 const recoveryForm = document.getElementById("recoveryForm");
 
 
-// Funzione per salvare i dati localmente /////////////////////////////////
+// Saves data locally
 async function dataRedirectingAndSave(a) {
 
   let logged = false;
 
-  if(a[5] === "n") {
+  if (a[5] === "n") {
     localStorage.setItem("loggedIn", true);
     localStorage.setItem("nick", a[0]);
     localStorage.setItem("pass", a[1]);
@@ -35,7 +32,7 @@ async function dataRedirectingAndSave(a) {
     window.location.href = "/vocal_trainer/settings/setting1_level.html"; // Redirect to recap page
     return
   }
-  if(a[6] === "n") {
+  if (a[6] === "n") {
     localStorage.setItem("loggedIn", true);
     localStorage.setItem("nick", a[0]);
     localStorage.setItem("pass", a[1]);
@@ -44,7 +41,7 @@ async function dataRedirectingAndSave(a) {
     window.location.href = "/vocal_trainer/settings/setting2_time.html"; // Redirect to recap page
     return
   }
-  if(a[7] === "n") {
+  if (a[7] === "n") {
     localStorage.setItem("loggedIn", true);
     localStorage.setItem("nick", a[0]);
     localStorage.setItem("pass", a[1]);
@@ -53,7 +50,7 @@ async function dataRedirectingAndSave(a) {
     window.location.href = "/vocal_trainer/settings/setting3_vocrange.html"; // Redirect to recap page
     return
   }
-  if(a[8] === "n") {
+  if (a[8] === "n") {
     localStorage.setItem("loggedIn", true);
     localStorage.setItem("nick", a[0]);
     localStorage.setItem("pass", a[1]);
@@ -80,11 +77,11 @@ async function dataRedirectingAndSave(a) {
   localStorage.setItem("loggedIn", true);
   logged = localStorage.getItem("loggedIn");
   console.log("Logged in status: " + logged);
-  
+
   window.location.href = "/vocal_trainer/settings/setting5_recap.html"; // Redirect to recap page
 }
 
-// Handle login
+// Handles login
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -95,28 +92,28 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     // Query Firestore to find the user by nickname
     const accountsRef = db.collection("store").doc("accounts");
     const docSnap = await accountsRef.get();
-    
+
     if (!docSnap.exists) {
       alert("Error: No accounts found.");
       return;
     }
-    
-    const accountsData = docSnap.data(); // Otteniamo il contenuto del documento
-    
-    // Cerchiamo il nickname come chiave nell'oggetto
+
+    const accountsData = docSnap.data();
+
+    // Finds nickname
     if (!accountsData[nickname]) {
       alert("Error: Incorrect nickname or password.");
       return;
     }
-    
-    // Account trovato 🎉
+
+    // Account found
     const account = accountsData[nickname];
-    console.log("✅ Account trovato:", account);
+    console.log("✅ Account found:", account);
 
     if (account[1] === password) {
       alert("✅ Login successful! Redirecting...");
 
-      //CHIAMARE FUNZIONE PER SALVARE LOCALMENTE i VALORI
+      //calls function to save data locally
       await dataRedirectingAndSave(account);
 
     } else {

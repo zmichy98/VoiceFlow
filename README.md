@@ -43,7 +43,7 @@ Let's have a quick look to the main functionalities of VoiceFlow.
 
 The main page let us choose between the Vocal Trainer and the Pitch Tracker.
 
-[INDEX IMAGE]
+![](images/home.png)
 
 The second choice will lead us to the "Pitch Tracker" page, where we can tune our instruments or find the pitch of a note using a simple yet powerful interface.
 
@@ -51,7 +51,8 @@ The second choice will lead us to the "Pitch Tracker" page, where we can tune ou
 
 We can also select the "Login" button, and we will be redirected to the login interface. Here we can create our account or log in with our credentials.
 
-[CREATE and LOGIN images]
+[CREATE images]
+![](images/login.png)
 
 Let's go back to the initial page and choose "Trainer". We will be redirected to the first of a series of "fine tunings" for our vocal workout. In this case, we have to choose our skill level between "Beginner", "Intermediate" and "Advanced".
 
@@ -59,7 +60,7 @@ Let's go back to the initial page and choose "Trainer". We will be redirected to
 
 We will then have to choose how much time we have for the training, using the big slider in the center of the page.
 
-[TIME image]
+![](images/time.png)
 
 The next selection is the most refined: we can choose our voice type using three different methods. The first one allow us to decide between the six main vocal ranges (soprano, mezzosoprano, alto, tenor, baritone and bass). The second one is thought for "pro" users: if you know your specific range, you can input it via a virtual keyboard. The last one is instead thought for less experienced users who wants to find their vocal range. **[COME FUNZIONA? ]**
 
@@ -67,13 +68,13 @@ The next selection is the most refined: we can choose our voice type using three
 
 As many experienced singers know, there are a lot of tools that can help warm up your voice before a performance or just to exercise. We selected two popular SOVTE (Semi-Occluded Vocal Tract Exercises) tools, the Mask and the Lax Vox. If you have them, your workout will change accordingly!
 
-[TOOLS image]
+![](images/equipment.png)
 
 A quick recap page will lead us to the real workout page.
 
 [RECAP image]
 
-The Training Game Page is the heart of VoiceFlow. Here we can sing along the exercises and see in real time the points that we are getting during the game. When we are ready, we can press on the "BUTTON [TO CHANGE]" to start. 
+The Training Game Page is the heart of VoiceFlow. Here we can sing along the exercises and see in real time the points that we are getting during the game. When we are ready, we can press on the "Play" to start. 
 
 [TRAINING GAME image]
 

@@ -1,10 +1,10 @@
-/* For a good explanation of the tuner code take a look at the tuner.js page
+/* For a good explanation of the tuner code take a look at the tuner.js page */
 
 /*-------------- VARIABLES --------------*/
 // Accuracy variables
 const tuneTollerance = 30;
 const minimumRMS = 0.001;
-const fftSize = 1024; //512?
+const fftSize = 512; //512 or 1024?
 const gainValue = 2;
 
 /*  tuneTollerance: is the threshold in cents for which you are in tune with a certain frequency
@@ -34,6 +34,10 @@ const constraints = {audio: true, video: false};
 const enableMicBtn = document.getElementById("playPattern");
 const noteElem = document.getElementById("note");
 const hzElem = document.getElementById("hz");
+const exerciseTitle = document.getElementById("ex-title-text");
+const playBtn = document.getElementById("playPattern");
+
+playBtn.style.display = 'none';
 
 const noteFrequencies = [
     { note: "C2", freq: 65.41 },
@@ -116,7 +120,13 @@ function getMicrophoneStream(){
             
             // Save the gainNode in a global variable
             window.myGainNode = gainNode;
+
             hzElem.innerHTML = "Hz of the singer"
+            noteElem.innerHTML = "Note to play";
+            if (exerciseTitle) {
+                exerciseTitle.textContent = "Let's start";
+                playBtn.style.display = 'inline-block';
+            }
         })
         .catch((err) => {
             console.error('Error accessing microphone:', err);
@@ -137,7 +147,7 @@ function stopMicrophoneStream(){
     window.cancelAnimationFrame(requestAnimationFrameId);
 }
 
-function main(){
+export function main(){
     let isTracking = false;
 
     console.log('I am hooked up to enableMicBtn')
@@ -147,8 +157,6 @@ function main(){
     }
     
     if (!isTracking === true){
-        noteElem.innerHTML = "Note to play ";
-        hzElem.innerHTML = "Please wait the tuner to load"
         console.log('Call MicStrem function')
         getMicrophoneStream();
     }
@@ -197,12 +205,7 @@ export function startGamePitchTrack(goalNote, duration) {
             getGamePitch(goalFreq, duration, startTime, resolve, trackPitch);
         }
         trackPitch();
-    }).finally(() => {
-        if (globalAnalyser) {
-            window.myGainNode.disconnect(globalAnalyser);
-            globalAnalyser = null;
-        }
-    });
+    })
 }
 
 function getGamePitch(goalFreq, duration, startTime, resolve, callback) {

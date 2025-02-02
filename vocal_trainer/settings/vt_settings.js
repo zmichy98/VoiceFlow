@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
           rangeDescription.innerHTML = '<p>The highest female voice, typically able to sing in a high range, often soaring above the melody in classical music. (C4-C6)</p>';
         } else if (selectedRange === 'Mezzosoprano') {
           rangeDescription.innerHTML = '<p>A female voice between soprano and contralto, with a rich mid-range and the ability to sing lower notes while retaining brightness. (A3-A5)</p>';
-        } else if (selectedRange === 'Contralto') {
+        } else if (selectedRange === 'Alto') {
           rangeDescription.innerHTML = '<p>The lowest female voice, known for its deep, resonant tones that can reach into the lower registers of the male range. (F3-F5)</p>';
         } else if (selectedRange === 'Tenor') {
           rangeDescription.innerHTML = '<p>The highest male voice, often characterized by its bright, powerful sound, capable of reaching high notes with strength and clarity. (B2-B4)</p>';

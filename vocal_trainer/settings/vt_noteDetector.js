@@ -54,11 +54,12 @@ const minimumRMS = 0.002;
 const fftSize = 2048;
 const smoothness = 100;
 
-/*  tuneTollerance: is the threshold in cents for which you are in tune with a certain frequency
+/*Accuracy variables:
+    - tuneTollerance: is the threshold in cents for which you are in tune with a certain frequency
 
-    minimumRMS: minimum strength of the signa for which is accepted to be analysied
+    - minimumRMS: minimum strength of the signa for which is accepted to be analysied
 
-    fftSize: must be a power of two. Usually the default is 2048, which provides a good balance between frequency resolution and performance.
+    - fftSize: must be a power of two. Usually the default is 2048, which provides a good balance between frequency resolution and performance.
         - Lower fftSize -->     Larger frequency bins (worse frequency resolution). Better time resolution, faster.
         - Higher fftSize -->    Finer frequency bins (better resolution but slower processing). Worse time resolution, slower. */
 
@@ -296,7 +297,6 @@ function startPitchTrack(){
     getPitch()
 }
 
-// Continuously detects the pitch and updates the UI.
 function getPitch(){
   analyser.getFloatTimeDomainData(buffer);
     
@@ -388,8 +388,8 @@ if (enableMicBtn) {
 
 /*-------------- STORE VARIABLES --------------*/
 function saveNote(goalNote) {
-  // If it is the first note selection
 
+  // If it is the first note selection
   if (firstNote === null) {
 
     updateLevelMeter(0);
@@ -410,7 +410,7 @@ function saveNote(goalNote) {
     }
   }
 
-  // If it iss the second note and different from the first
+  // If it is the second note and different from the first
   else if (secondNote === null && firstNote !== null) {
 
     secondNote = goalNote.trim();
@@ -495,8 +495,7 @@ function stopNoteSelection() {
   if (enableMicBtn) {
     enableMicBtn.style.display = 'inline-block';
   }
-
-  // Remove event listener from note buttons
+  
   noteButtons.forEach(button => {
     button.removeEventListener('click', noteClickHandler);
   });

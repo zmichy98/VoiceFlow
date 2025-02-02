@@ -30,9 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const levelButtons = document.querySelectorAll(".level-button");
   const levelDescription = document.getElementById("level-description");
-  const nextButton = document.querySelector(".next_button"); // Select the "Next" button by class
+  const nextButton = document.querySelector(".next_button");
 
-  // Initially hide the "Next" button
   if(nextButton) {
     nextButton.style.display = "none";
   }
@@ -56,7 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
           levelDescription.innerHTML = "<p>Select a level that describes you the best!</p>";
         }
 
-        // Show the "Next" button when a level is selected
         nextButton.style.display = "inline-block";
       }
 
@@ -106,8 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('range-description element not found.');
     return;
   }
-
-  // Initially hide the "Next" button
+  
   if(nextButton) {
     nextButton.style.display = "none";
   }
@@ -116,10 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     button.addEventListener('click', () => {
       if (!button.classList.contains('active')) {
         
-        // Remove active class from all buttons
         rangeButtons.forEach(btn => btn.classList.remove('active'));
-        
-        // Add active class to the clicked button
         button.classList.add('active');
         
         // Update the selected range based on the button clicked
@@ -142,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
           rangeDescription.innerHTML = '<p> </p>';
         }
 
-        // Show the "Next" button when a range is selected
         nextButton.style.display = "inline-block";
       }
 
@@ -165,7 +158,6 @@ function activeselect() {
   const startselectionText = document.getElementById('startselectionText');
   const nextButton = document.querySelector('.next_button'); // Select the "Next" button by class
 
-  // Initially hide the "Next" button
   if(nextButton) {
     nextButton.style.display = "none";
   }
@@ -176,24 +168,24 @@ function activeselect() {
     key.classList.remove('pressed');
   }); 
 
-  // Add click event listeners when the "Select" button is pressed
   noteButtons.forEach(button => {
     button.addEventListener('click', noteClickHandler); 
   });
 
   function noteClickHandler() {
-    const note = this.getAttribute('data-note'); // Get the note from the data attribute
+    // Get the note from the data attribute
+    const note = this.getAttribute('data-note');
 
     // If it's the first note selection
     if (firstNote === null) {
       firstNote = note;
-      this.classList.add('pressed');  // Highlight the key
+      this.classList.add('pressed');
     } 
     // If it's the second note and different from the first
     else if (secondNote === null && note !== firstNote) {
       secondNote = note;
-      this.classList.add('pressed');  // Highlight the second key
-      finalizeSelection();            // Stop further changes
+      this.classList.add('pressed');  
+      finalizeSelection();       
     }
 
     updateRangeText();
@@ -206,7 +198,6 @@ function activeselect() {
     } else if (firstNote && secondNote) {
       rangeInterval.innerHTML = `<p>Range starts at ${firstNote} and ends at ${secondNote}</p>`; 
 
-      // Show the "Next" button when both notes are selected
       nextButton.style.display = "inline-block";
       startselectionText.innerHTML = "Change interval";
       button.classList.remove('active');
@@ -221,7 +212,6 @@ function activeselect() {
     localStorage.setItem("secondNote", secondNote);
     localStorage.setItem("selectedRange", `from ${firstNote} to ${secondNote}`);
 
-    // Optionally log for debugging
     console.log('First Note:', firstNote, 'Second Note:', secondNote); 
   }
 }
@@ -266,7 +256,6 @@ const piano = new Tone.Sampler({
   }
 }).toDestination();
 
-// Add sound to all keys (independent of "Select" button)
 document.querySelectorAll('.key').forEach(key => {
   key.addEventListener('click', () => {
     const note = key.getAttribute('data-note');
@@ -277,10 +266,7 @@ document.querySelectorAll('.key').forEach(key => {
 
 /*------------------------ VOCAL GEAR ------------------------*/
 document.addEventListener("DOMContentLoaded", () => {
-  // Query the gear buttons
   const buttons = document.querySelectorAll(".button-gear");
-  
-  // Query the "Next" button
   const nextButton = document.querySelector(".next_button");
 
   // Variables to track selected buttons
@@ -290,12 +276,10 @@ document.addEventListener("DOMContentLoaded", () => {
   let laxVox = false;
   let selectedNone = false; 
 
-  // Initially hide the "Next" button
   if(nextButton) {
     nextButton.style.display = "none";
   }
 
-  // Event listener on click
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
       // Toggle the 'selected' and 'activatedgear' classes
@@ -326,6 +310,7 @@ document.addEventListener("DOMContentLoaded", () => {
         selectedLaxvox = false;
         laxVox = false;
       } else if (selectedMask || selectedLaxvox) {
+        
         // Deselect "None of them" if any other button is selected
         const noneButton = document.getElementById("none");
         noneButton.classList.remove("selected");

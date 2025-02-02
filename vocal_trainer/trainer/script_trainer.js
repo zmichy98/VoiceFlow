@@ -15,7 +15,7 @@ let tempo = 120;
 let exDuration = 30;
 let exDuration_woSteps = 30;
 let ex_length = 120;
-const pattern = [0, 2, 4, 5, 7, 5, 4, 2, 0]; ///////////////////////////////////// CEREN
+const pattern = [0, 2, 4, 5, 7, 5, 4, 2, 0];
 let vox = ["A2", "B2"];
 const work = ["es1", "es2"];
 let workout_length = 480;
@@ -66,7 +66,7 @@ const piano_trainer = new Tone.Sampler({
         "A7": "A7.mp3",
         "C8": "C8.mp3"
     },
-    baseUrl: "https://tonejs.github.io/audio/salamander/", // Percorso dei campioni
+    baseUrl: "https://tonejs.github.io/audio/salamander/", // samples path
     onload: () => {
         console.log("Piano loaded");
     }

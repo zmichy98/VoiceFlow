@@ -88,8 +88,8 @@ The Training Game Page is the heart of VoiceFlow. Here we can sing along the exe
 
 As we finish our training, the results will appear automatically. If you are logged in and have managed to beat your best score for the current level, the application will let you know. And if you were good enough to enter the Top 10, your name and your score will be remembered along the ones of the champions!
 
-[RESULTS image]
+![](images/results.png)
 
 There is also a dedicated page for the Standings in the home page. All the best scores for Beginner, Intermediate and Advanced level are displayed here.
 
-[STANDINGS image]
+![](images/standings.png)

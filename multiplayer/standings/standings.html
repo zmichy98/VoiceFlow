@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,14 +11,16 @@
   <script type="module" src="https://www.gstatic.com/firebasejs/7.2.0/firebase-auth.js"></script>
   <script type="module" src="https://www.gstatic.com/firebasejs/7.2.0/firebase-firestore.js"></script>
 </head>
+
 <body>
   <a href="../../index.html">
-    <img src="logo.png" alt="Go to Main Page" style="position:fixed; top:15px; left:20px; width: 100px; cursor: pointer;">
+    <img src="logo.png" alt="Go to Main Page"
+      style="position:fixed; top:15px; left:20px; width: 100px; cursor: pointer;">
   </a>
 
   <div class="container">
     <h1>Game Leaderboards</h1>
-    
+
     <div class="leaderboards">
       <!-- Beginner Leaderboard -->
       <div id="beginnerLeaderboard" class="leaderboard">
@@ -42,12 +45,10 @@
   <script type="module" src="script.js"></script> <!-- Link to the JavaScript file -->
 
   <script type="module">
-    // Import the functions you need from the SDKs you need
+
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-  
-    // Your web app's Firebase configuration
+
+    // Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyB-BaTehljfDtni-HAPrYh6rKT9sJyTKaU",
       authDomain: "database-for-singing.firebaseapp.com",
@@ -56,12 +57,10 @@
       messagingSenderId: "397721112623",
       appId: "1:397721112623:web:c5ec8963358f8e014736da"
     };
-  
+
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
   </script>
 </body>
+
 </html>
-
-
-

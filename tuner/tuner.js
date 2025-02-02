@@ -7,7 +7,7 @@ const smoothness = 100; // Number of (-1) iteration before giving No note detect
 /* Accuracy variables:
     - tuneTollerance: is the threshold in cents for which you are in tune with a certain frequency
 
-    - minimumRMS: minimum strength of the signa for which is accepted to be analysied
+    - minimumRMS: minimum strength of the signal for which is accepted to be analysied
 
     - fftSize: must be a power of two. Usually the default is 2048, which provides a good balance between frequency resolution and performance.
         - Lower fftSize -->     Larger frequency bins (worse frequency resolution). Better time resolution, faster.
@@ -60,9 +60,7 @@ const piano = new Tone.Sampler({
     });
 });
 
-/* This first function was found on gitHub: https://github.com/cwilso/PitchDetect/blob/main/js/pitchdetect.js,
-it returns the dominant freq in Hz of the buffer (array). We changed it a bit some details of it, as the minimum
-RMS level and the definition of some variables */
+/* The skeleton of this autoCorrelate() function has been found on gitHub: https://github.com/cwilso/PitchDetect/blob/main/js/pitchdetect.js. */
 
 function autoCorrelate( buf, sampleRate ) {
     // First of all apply the Hann Window function to the buffer
@@ -74,7 +72,6 @@ function autoCorrelate( buf, sampleRate ) {
 
     /* Measures the signal's strength to ensure there's enough audio data.
     If too quiet (rms < minimumRMS), it returns -1 (indicating no signal detected). */
-
 	for (var i=0; i<SIZE; i++) {
 		var val = buf[i];
 		rms += val*val;
@@ -88,12 +85,10 @@ function autoCorrelate( buf, sampleRate ) {
         - r1: Marks the starting index of the significant portion of the signal.
         - r2: Marks the ending index.
         - thres: The amplitude threshold to decide whether a sample is part of the signal or is only silence. */
-    
 	var r1 = 0, r2 = SIZE-1, thres = 0.2;
 
     /* Decide r1 position (only check up to half the buffer because audio signals are often symmetric or periodic,
     and the autocorrelation will handle periodicity.) */
-
     for (var i = 0; i < SIZE / 2; i++) {
         if (Math.abs(buf[i]) < thres) {
             r1 = i;
@@ -102,7 +97,6 @@ function autoCorrelate( buf, sampleRate ) {
     }
 
     /* Decide r2 position */
-	
     for (var i = 1; i < SIZE / 2; i++) {
         if (Math.abs(buf[SIZE - i]) < thres) {
             r2 = SIZE - i;
@@ -111,7 +105,6 @@ function autoCorrelate( buf, sampleRate ) {
     }
 
     /* Cut the buffer to exclude silence */
-
 	buf = buf.slice(r1,r2);
 	SIZE = buf.length;
 
@@ -133,7 +126,6 @@ function autoCorrelate( buf, sampleRate ) {
 
     Indeed in this case the first significant peak after zero lag is used to estimate the fundamental period (and hence the
     frequency) of the sound. */
-    
     for (var i=0; i<SIZE; i++)
         for (var j=0; j<SIZE-i; j++)
 			c[i] = c[i] + buf[j] * buf[j+i];
@@ -148,11 +140,9 @@ function autoCorrelate( buf, sampleRate ) {
     /* It is time to find Peak Position, the first peak in the autocorrelation gives the period of the dominant frequency. Of course
     we will skip the initial decreasing part of the autocorrelation array. The autocorrelation function c typically has a large
     initial value at lag 0 (due to perfect self-correlation), which then decreases before rising again at the first significant peak. */
-    
     var d=0; while (c[d]>c[d+1]) d++;
 
     /* Find the peak position and store it in T0 */
-
 	var maxval=-1, maxpos=-1;
 
 	for (var i=d; i<SIZE; i++) {
@@ -164,7 +154,6 @@ function autoCorrelate( buf, sampleRate ) {
 	var T0 = maxpos;
 
     /* Improves the resolution of the period T0 by fitting a parabola to the values around the detected peak.*/
-
 	var x1 = c[T0-1], x2 = c[T0], x3 = c[T0+1];
 
     /* - x1: autocorrelation value immediately before the current peak (T0-1).
@@ -172,18 +161,15 @@ function autoCorrelate( buf, sampleRate ) {
        - x3: autocorrelation value immediately after the current peak (T0+1). */
 
     /* Curve parameters: */
-
 	let a = (x1 + x3 - 2 * x2) / 2;
     let b = (x3 - x1) / 2;
 
     /* If the parabola is not flat, then adjust the period with the vertex of the parabola */
-
 	if (a) T0 = T0 - b/(2*a);
 
     /* Return the frequency:
         - sampleRate: The rate at which the audio signal is sampled (e.g., 44100 Hz for CD-quality audio).
         - T0: the period of the fundamental frequency. */
-
 	return sampleRate / T0;
 }
 

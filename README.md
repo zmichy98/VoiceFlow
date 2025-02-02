@@ -23,15 +23,16 @@ In order to include in the project a large database of diverse exercises and var
 
 ![](images/firestore.png)
 
-### "Microphone Integration"
+### Microphone Integration and Tuner Algorithm
 
-**MICROPHONE INTEGRATION**
+One of the main features of this project is the ability of the website to provide a real-time pitch detection. To do such a thing, the Web Audio API is used to capture audio from the user's microphone. The microphone input is managed through navigator.mediaDevices.getUserMedia(), which combined with the methods .createMediaStreamSource(), .createAnalyser(), .fftSize and .getFloatTimeDomainData() allows to obtain a buffer of floating-point numbers that represent the amplitude level of each frequency bin at a specific time frame.
+Thanks to the autoCorrelate() function, the dominant frequency of the audio signal is then calculated by computing the autocorrelation of the buffer. Autocorrelation measures how well the signal matches itself when shifted in time. If the signal repeats itself periodically with period T, then shifting the signal by T (or multiples of T) will align similar parts of the signal, producing local maxima (peaks) at those lags.
+The skeleton of this algorithm has been taken from the GitHub page [PitchDetect](https://github.com/cwilso/PitchDetect/blob/main/js/pitchdetect.js) and improved with the Hann Window function, which smooths out the audio signal, and the normalization of the buffer, that ensures consistency in analysis. For a better understanding of the algorithm it is suggested to take a look at the tuner/tuner.js script, which is commented in detail.
+Once the dominant frequency is identified, the detune value is calculated in cents (where a half-tone is 100 cents).
+Two main variables significantly affect the tuner's ability to detect frequencies:
+- tuneTolerance: The threshold in cents between two frequencies to be considered in tune. It is set to 30 cents.
+- fftSize: The number of samples taken per frame. It is always set to 2048, except during the game, where it is reduced to 1024 to provide a quicker response in despite of frequency resolution.
 
-[SOME IMAGES?]
-
-### "Tuner"
-
-**Tuner?**
 
 [SOME IMAGES?]
 

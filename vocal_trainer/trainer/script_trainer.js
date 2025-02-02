@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
     secondmanNote = localStorage.getItem("secondNote").toString();
     time_num = JSON.parse(localStorage.getItem("sliderValue"));
     experience = localStorage.getItem("selectedLevel").toString();
-    mask = JSON.parse(localStorage.getItem("mask")); 
+    mask = JSON.parse(localStorage.getItem("mask"));
     laxVox = JSON.parse(localStorage.getItem("laxVox"));
     gear = localStorage.getItem("selectedGear");
     logged = JSON.parse(localStorage.getItem("loggedIn"));
@@ -377,7 +377,7 @@ async function setWorkoutLength() {
 // Loads vocal range, or the manual range
 async function setVocal(vol, man, first, second) {
     const doc = await db.collection("store").doc("vocal_ranges").get();
-    if(range === "Soprano" || range === "Mezzosoprano" || range === "Alto" || range === "Tenor" || range === "Baritone" || range === "Bass") {
+    if (range === "Soprano" || range === "Mezzosoprano" || range === "Alto" || range === "Tenor" || range === "Baritone" || range === "Bass") {
         const newVoice = doc.data()[vol];
         console.log("vox from Firebase: " + newVoice);
         vox.length = 0;
@@ -386,7 +386,7 @@ async function setVocal(vol, man, first, second) {
         console.log("manual: " + man);
         console.log("first note: " + first);
         console.log("second note: " + second);
-    } 
+    }
 
     if (man) {
         vox[0] = first;
@@ -461,41 +461,39 @@ const playChord = async (curr, duration, time) => {
 };
 
 // Plays a pattern
-
 const playPattern = async (curr, duration, pTime) => {
     let noteIndex = 7; // Start index of the pattern notes
     let direction = 1; // 1 for ascending, -1 for descending
-    //const now = Tone.now(); // Ottieni il tempo corrente in Tone.js
-    let timeOffset = 0; // Variabile per calcolare il tempo tra le note
+
+    let timeOffset = 0; // Evaluates time between notes
 
     while (noteIndex < pattern.length) {
         const offset = pattern[noteIndex];
         const currNote = getNoteFromOffset(offset, curr);
 
-        // Pianifica la riproduzione della nota a tempo
+        // Plans the next note
         Tone.Transport.schedule((time) => {
-            playNote(currNote, duration, time); // Chiamata alla funzione playNote con il tempo corretto
+            playNote(currNote, duration, time);
             console.log(`Playing note: ${currNote} for ${duration}`);
-        }, pTime + timeOffset); // Programma la riproduzione in base al tempo corrente
+        }, pTime + timeOffset);
 
         noteIndex++;
 
-        // Aggiungi la durata della nota (duration) al tempo di offset
-        timeOffset += duration; // Incrementa l'offset del tempo
+        // Adds the duration of the note to the offset time
+        timeOffset += duration;
     }
 }
 
 // Plays the exercise
-
 const playExercise = async (es) => {
 
     await setExercise(es)
     await setExerciseLength();
 
     const noteStart1 = vox[0]; // Starting note for the type of voice
-    console.log("Prima nota" + noteStart1)
+    console.log("First Note: " + noteStart1)
     const noteStart2 = vox[1]; // Ending note for the type of voice
-    console.log("Seconda nota" + noteStart2)
+    console.log("Second Note: " + noteStart2)
     const qN = 60 / tempo;
     const dqN = qN * 1.5
     const hdqN = qN * 0.5
@@ -503,9 +501,9 @@ const playExercise = async (es) => {
     console.log(qN)
 
     const startMidi = Tone.Frequency(noteStart1).toMidi(); // Transform to MIDI
-    console.log("Primo midi " + startMidi)
+    console.log("Primo midi: " + startMidi)
     const endMidi = Tone.Frequency(noteStart2).toMidi();
-    console.log("Primo midi " + endMidi)
+    console.log("Primo midi: " + endMidi)
     let currentMidi = startMidi; // Start at the initial MIDI note
     console.log(currentMidi)
 
@@ -515,8 +513,6 @@ const playExercise = async (es) => {
 
     for (let currentMidi = startMidi; currentMidi <= endMidi; currentMidi++) {
 
-        //Tone.Transport.stop()
-
         const patt_length = (pattern.length - 5) * qN;
         // Schedule playChord at the correct time
         Tone.Transport.schedule((time) => {
@@ -531,16 +527,12 @@ const playExercise = async (es) => {
         Tone.Transport.schedule((time) => {
             playChord(currentMidi, qN, time);
         }, now + patt_length);  // Wait until after the previous chord (hN)
-
-        //
 
         now += qN + patt_length; // Increment time for the next note's start time
     }
 
     for (let currentMidi = endMidi - 1; currentMidi >= startMidi; currentMidi--) {
 
-        //Tone.Transport.stop()
-
         const patt_length = (pattern.length - 5) * qN;
         // Schedule playChord at the correct time
         Tone.Transport.schedule((time) => {
@@ -556,82 +548,76 @@ const playExercise = async (es) => {
             playChord(currentMidi, qN, time);
         }, now + patt_length);  // Wait until after the previous chord (hN)
 
-        //Tone.Transport.start()
-
         now += qN + patt_length; // Increment time for the next note's start time
     }
 }
 
-
-// Plays the workout
+// Plays the whole workout
 const playWorkout = async (w) => {
     const qN = 60 / tempo;
     const hN = qN * 2;
 
-    // Funzione per creare un delay in base ai secondi
+    // Creates the delay
     const delay = (seconds) => new Promise(resolve => setTimeout(resolve, seconds * 1000));
 
     for (let exIndex = 0; exIndex < w.length; exIndex++) {
         console.log(`Starting exercise ${exIndex + 1}`);
 
         let curr_ex = w[exIndex]
-        // Assicurati che l'esercizio venga impostato prima di procedere
 
-        await playExercise(curr_ex);  // Esegui l'esercizio
+        await playExercise(curr_ex);
 
-        // Aspetta 2 secondi prima di eseguire il prossimo esercizio
         await delay(ex_length);
 
         await delay(2);
     }
 }
 
-
-// Funzione per creare un delay in base ai secondi
+// Creates a delay
 const delay = (seconds) => new Promise(resolve => setTimeout(resolve, seconds * 1000));
 
+
+//////////////////////////////////////////////////////// WINDOW LOAD AND ON CLICK - WHAT IS ACTUALLY HAPPENING
+
 window.onload = function () {
-    //document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("playPattern").addEventListener("click", async function () {
+    document.getElementById("playPattern").addEventListener("click", async function () {
 
-            await delay(2);
-            setLoginValues();
-            //await testingValues();
-            await showValues();
-            await setVocal(range, manual, firstmanNote, secondmanNote)
-            chooseWorkout();
-            const workout = w;
-            console.log("Workout correct: " + workout)
-            await setWorkout(workout);  // Imposta l'allenamento
-            await setWorkoutLength()
+        await delay(2);
+        setLoginValues();
+        await showValues();
+        await setVocal(range, manual, firstmanNote, secondmanNote)
+        chooseWorkout();
+        const workout = w;
+        console.log("Workout correct: " + workout)
+        await setWorkout(workout);
+        await setWorkoutLength()
 
-            //timebar
-            const progress = document.getElementById("progress");
-            const wDuration = workout_length + 3;
+        //timebar
+        const progress = document.getElementById("progress");
+        const wDuration = workout_length + 3;
 
-            console.log("Duration ----------------------" + wDuration)
+        console.log("Duration ----------------------" + wDuration)
 
-            progress.style.width = "0"; // Reset della barra
-            progress.style.transition = `${wDuration}s linear`; // Imposta la durata dell'animazione
-            progress.style.width = "100%"; // Riempie la barra
+        progress.style.width = "0"; // Reset
+        progress.style.transition = `${wDuration}s linear`; // Sets the duration
+        progress.style.width = "100%"; // Fills the bar
 
-            //attendi
-            await delay(2);
+        // Waits
+        await delay(2);
 
-            //Play Workout
-            await Tone.start();  // Avvia Tone.js
-            console.log("Audio context started");
+        // Plays the Workout
+        await Tone.start();
+        console.log("Audio context started");
 
-            playWorkout(work)
+        playWorkout(work)
 
-            // Redirect to results page after workout is done
+        // Redirect to results page after workout is done
+        setTimeout(() => {
             setTimeout(() => {
-                setTimeout(() => {
-                    localStorage.setItem("currentScore", countPoints)
-                    window.location.href = "resume.html";
-                }, 1000); // 1-second delay before redirecting
-            }, wDuration * 1000);
+                localStorage.setItem("currentScore", countPoints)
+                window.location.href = "resume.html";
+            }, 1000); // 1-second delay before redirecting
+        }, wDuration * 1000);
 
-        });
-    //});
+    });
 }

@@ -79,13 +79,10 @@ document.addEventListener("DOMContentLoaded", function () {
     range = localStorage.getItem("selectedRange").toString();
     firstmanNote = localStorage.getItem("firstNote").toString();
     secondmanNote = localStorage.getItem("secondNote").toString();
-    // To be inserted: time, experience, tools
-    //time = localStorage.getItem("sliderValue").toString(); // is a string now 5,10,15,20
-    //time_num = JSON.parse(localStorage.getItem("sliderValue"));
     time_num = JSON.parse(localStorage.getItem("sliderValue"));
-    experience = localStorage.getItem("selectedLevel").toString(); // string: Beginner, Intermediate, Advanced
-    mask = JSON.parse(localStorage.getItem("mask")); // Can either be true or false
-    laxVox = JSON.parse(localStorage.getItem("laxVox")); // Can either be true or false
+    experience = localStorage.getItem("selectedLevel").toString();
+    mask = JSON.parse(localStorage.getItem("mask")); 
+    laxVox = JSON.parse(localStorage.getItem("laxVox"));
     gear = localStorage.getItem("selectedGear");
     logged = JSON.parse(localStorage.getItem("loggedIn"));
     if (logged) {
@@ -115,311 +112,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-
-
-//Decides Workout to be played (TO BE DONE)
-// ORDER OF CHOICE: Level of skill, time, equipment
-
-function chooseWorkout() {
-
-    console.log("********************************************************************************")
-    console.log("Parametri per la scelta del workout")
-    console.log("Level: " + experience)
-    console.log("Training time: " + time_num)
-    console.log("Mask? " + mask)
-    console.log("Lax Vox? " + laxVox)
-    console.log("********************************************************************************")
-
-    if (experience === "Beginner") {
-
-        console.log("ECCOCI, BEGINNER")
-
-        if (time_num === 5) {
-
-            console.log("ECCOCI, 5 minuti")
-
-            if (mask && !laxVox) {
-
-                w = "wo_1b_n_m_05"
-
-            } else if (!mask && laxVox) {
-
-                console.log("ECCOCI, WORKOUT GIUSTO")
-
-                w = "wo_1b_lv_n_05"
-
-            } else if (mask && laxVox) {
-
-                w = "wo_1b_lv_m_05"
-
-            } else {
-
-                w = "wo_1b_n_n_05"
-
-            }
-
-        } else if (time_num === 10) {
-
-            if (mask && !laxVox) {
-
-                w = "wo_1b_n_m_10"
-
-            } else if (!mask && laxVox) {
-
-                w = "wo_1b_lv_n_10"
-
-            } else if (mask && laxVox) {
-
-                w = "wo_1b_lv_m_10"
-
-            } else {
-
-                w = "wo_1b_n_n_10"
-
-            }
-
-        } else if (time_num === 15) {
-
-            if (mask && !laxVox) {
-
-                w = "wo_1b_n_m_15"
-
-            } else if (!mask && laxVox) {
-
-                w = "wo_1b_lv_n_15"
-
-            } else if (mask && laxVox) {
-
-                w = "wo_1b_lv_m_15"
-
-            } else {
-
-                w = "wo_1b_n_n_15"
-
-            }
-
-        } else {
-
-            if (mask && !laxVox) {
-
-                w = "wo_1b_n_m_20"
-
-            } else if (!mask && laxVox) {
-
-                w = "wo_1b_lv_n_20"
-
-            } else if (mask && laxVox) {
-
-                w = "wo_1b_lv_m_20"
-
-            } else {
-
-                w = "wo_1b_n_n_20"
-
-            }
-
-        }
-
-    } else if (experience === "Intermediate") {
-
-        if (time_num === 5) {
-
-            if (mask && !laxVox) {
-
-                w = "wo_2i_n_m_05"
-
-            } else if (!mask && laxVox) {
-
-                w = "wo_2i_lv_n_05"
-
-            } else if (mask && laxVox) {
-
-                w = "wo_2i_lv_m_05"
-
-            } else {
-
-                w = "wo_2i_n_n_05"
-
-            }
-
-        } else if (time_num === 10) {
-
-            if (mask && !laxVox) {
-
-                w = "wo_2i_n_m_10"
-
-            } else if (!mask && laxVox) {
-
-                w = "wo_2i_lv_n_10"
-
-            } else if (mask && laxVox) {
-
-                w = "wo_2i_lv_m_10"
-
-            } else {
-
-                w = "wo_2i_n_n_10"
-
-            }
-
-        } else if (time_num === 15) {
-
-            if (mask && !laxVox) {
-
-                w = "wo_2i_n_m_15"
-
-            } else if (!mask && laxVox) {
-
-                w = "wo_2i_lv_n_15"
-
-            } else if (mask && laxVox) {
-
-                w = "wo_2i_lv_m_15"
-
-            } else {
-
-                w = "wo_2i_n_n_15"
-
-            }
-
-        } else {
-
-            if (mask && !laxVox) {
-
-                w = "wo_2i_n_m_20"
-
-            } else if (!mask && laxVox) {
-
-                w = "wo_2i_lv_n_20"
-
-            } else if (mask && laxVox) {
-
-                w = "wo_2i_lv_m_20"
-
-            } else {
-
-                w = "wo_2i_n_n_20"
-
-            }
-
-        }
-
-    } else if (experience === "Advanced") {
-
-        if (time_num === 5) {
-
-            if (mask && !laxVox) {
-
-                w = "wo_3a_n_m_05"
-
-            } else if (!mask && laxVox) {
-
-                w = "wo_3a_lv_n_05"
-
-            } else if (mask && laxVox) {
-
-                w = "wo_3a_lv_m_05"
-
-            } else {
-
-                w = "wo_3a_n_n_05"
-
-            }
-
-        } else if (time_num === 10) {
-
-            if (mask && !laxVox) {
-
-                w = "wo_3a_n_m_10"
-
-            } else if (!mask && laxVox) {
-
-                w = "wo_3a_lv_n_10"
-
-            } else if (mask && laxVox) {
-
-                w = "wo_3a_lv_m_10"
-
-            } else {
-
-                w = "wo_3a_n_n_10"
-
-            }
-
-        } else if (time_num === 15) {
-
-            if (mask && !laxVox) {
-
-                w = "wo_3a_n_m_15"
-
-            } else if (!mask && laxVox) {
-
-                w = "wo_3a_lv_n_15"
-
-            } else if (mask && laxVox) {
-
-                w = "wo_3a_lv_m_15"
-
-            } else {
-
-                w = "wo_3a_n_n_15"
-
-            }
-
-        } else {
-
-            if (mask && !laxVox) {
-
-                w = "wo_3a_n_m_20"
-
-            } else if (!mask && laxVox) {
-
-                w = "wo_3a_lv_n_20"
-
-            } else if (mask && laxVox) {
-
-                w = "wo_3a_lv_m_20"
-
-            } else {
-
-                w = "wo_3a_n_n_20"
-
-            }
-
-        }
-
-    } else {
-        console.log("Eccoci, errore...")
-    }
-
-    console.log("Chosen workout: " + w)
-
-}
-
-
-//Variable values (for testing only)
-/*
-async function testingValues() {
-    range = "Alto";
-    eser = "es3";
-    exDuration = 30;
-    manual = false;
-    experience = "beginner";
-    time_num = 5;
-    mask = false;
-    laxVox = true;
-    w = "wo1"
-}
-*/
-
-////////////////////////////////////////////////////////
-
-// HELPER FUNCTIONS
+//////////////////////////////////////////////////////// HELPER FUNCTIONS
 
 // Shows all the variables values
 async function showValues() {
     console.log("*************************************************")
-    console.log("***************** VARIABLES *********************")
+    console.log("***************** LOCAL VARIABLES *********************")
     console.log("*************************************************")
     console.log("Logged in? " + logged)
     console.log("Logged type: " + typeof logged)
@@ -429,20 +127,153 @@ async function showValues() {
     }
     console.log("Workout: " + w);
     console.log("Vox type: " + range);
-    console.log("Training time: " + exDuration);
+    console.log("Training time: " + time_num);
     console.log("Manual? " + manual);
     console.log("Mask? " + mask);
     console.log("Lax Vox? " + laxVox);
     console.log("Experience: " + experience);
-    await setVocal(range, manual, firstmanNote, secondmanNote)
-    console.log("Vox range: " + vox);
     console.log("**************************************************")
     console.log("**************************************************")
     console.log("**************************************************")
 }
 
-
-
+// Decides Workout to be played
+// ORDER OF CHOICE: Level of skill, time, equipment
+function chooseWorkout() {
+    if (experience === "Beginner") {
+        console.log("ECCOCI, BEGINNER")
+        if (time_num === 5) {
+            console.log("ECCOCI, 5 minuti")
+            if (mask && !laxVox) {
+                w = "wo_1b_n_m_05"
+            } else if (!mask && laxVox) {
+                console.log("ECCOCI, WORKOUT GIUSTO")
+                w = "wo_1b_lv_n_05"
+            } else if (mask && laxVox) {
+                w = "wo_1b_lv_m_05"
+            } else {
+                w = "wo_1b_n_n_05"
+            }
+        } else if (time_num === 10) {
+            if (mask && !laxVox) {
+                w = "wo_1b_n_m_10"
+            } else if (!mask && laxVox) {
+                w = "wo_1b_lv_n_10"
+            } else if (mask && laxVox) {
+                w = "wo_1b_lv_m_10"
+            } else {
+                w = "wo_1b_n_n_10"
+            }
+        } else if (time_num === 15) {
+            if (mask && !laxVox) {
+                w = "wo_1b_n_m_15"
+            } else if (!mask && laxVox) {
+                w = "wo_1b_lv_n_15"
+            } else if (mask && laxVox) {
+                w = "wo_1b_lv_m_15"
+            } else {
+                w = "wo_1b_n_n_15"
+            }
+        } else {
+            if (mask && !laxVox) {
+                w = "wo_1b_n_m_20"
+            } else if (!mask && laxVox) {
+                w = "wo_1b_lv_n_20"
+            } else if (mask && laxVox) {
+                w = "wo_1b_lv_m_20"
+            } else {
+                w = "wo_1b_n_n_20"
+            }
+        }
+    } else if (experience === "Intermediate") {
+        if (time_num === 5) {
+            if (mask && !laxVox) {
+                w = "wo_2i_n_m_05"
+            } else if (!mask && laxVox) {
+                w = "wo_2i_lv_n_05"
+            } else if (mask && laxVox) {
+                w = "wo_2i_lv_m_05"
+            } else {
+                w = "wo_2i_n_n_05"
+            }
+        } else if (time_num === 10) {
+            if (mask && !laxVox) {
+                w = "wo_2i_n_m_10"
+            } else if (!mask && laxVox) {
+                w = "wo_2i_lv_n_10"
+            } else if (mask && laxVox) {
+                w = "wo_2i_lv_m_10"
+            } else {
+                w = "wo_2i_n_n_10"
+            }
+        } else if (time_num === 15) {
+            if (mask && !laxVox) {
+                w = "wo_2i_n_m_15"
+            } else if (!mask && laxVox) {
+                w = "wo_2i_lv_n_15"
+            } else if (mask && laxVox) {
+                w = "wo_2i_lv_m_15"
+            } else {
+                w = "wo_2i_n_n_15"
+            }
+        } else {
+            if (mask && !laxVox) {
+                w = "wo_2i_n_m_20"
+            } else if (!mask && laxVox) {
+                w = "wo_2i_lv_n_20"
+            } else if (mask && laxVox) {
+                w = "wo_2i_lv_m_20"
+            } else {
+                w = "wo_2i_n_n_20"
+            }
+        }
+    } else if (experience === "Advanced") {
+        if (time_num === 5) {
+            if (mask && !laxVox) {
+                w = "wo_3a_n_m_05"
+            } else if (!mask && laxVox) {
+                w = "wo_3a_lv_n_05"
+            } else if (mask && laxVox) {
+                w = "wo_3a_lv_m_05"
+            } else {
+                w = "wo_3a_n_n_05"
+            }
+        } else if (time_num === 10) {
+            if (mask && !laxVox) {
+                w = "wo_3a_n_m_10"
+            } else if (!mask && laxVox) {
+                w = "wo_3a_lv_n_10"
+            } else if (mask && laxVox) {
+                w = "wo_3a_lv_m_10"
+            } else {
+                w = "wo_3a_n_n_10"
+            }
+        } else if (time_num === 15) {
+            if (mask && !laxVox) {
+                w = "wo_3a_n_m_15"
+            } else if (!mask && laxVox) {
+                w = "wo_3a_lv_n_15"
+            } else if (mask && laxVox) {
+                w = "wo_3a_lv_m_15"
+            } else {
+                w = "wo_3a_n_n_15"
+            }
+        } else {
+            if (mask && !laxVox) {
+                w = "wo_3a_n_m_20"
+            } else if (!mask && laxVox) {
+                w = "wo_3a_lv_n_20"
+            } else if (mask && laxVox) {
+                w = "wo_3a_lv_m_20"
+            } else {
+                w = "wo_3a_n_n_20"
+            }
+        }
+    } else {
+        console.log("Error choosing the workout")
+    }
+    console.log("Chosen workout: " + w)
+}
 
 // Function to change the color of the key when pressed
 function changeKeyColor(note) {
@@ -472,7 +303,7 @@ async function setWorkout(wo) {
     console.log("workouts retrieved from Firestore:", workOuts);
 
     work.length = 0;
-    work.push(...workOuts); // Carica i nuovi pattern
+    work.push(...workOuts); // loads the new patterns
     console.log("workout excersises: " + work);
 }
 
@@ -480,11 +311,10 @@ async function setWorkout(wo) {
 async function setExercise(es) {
     const doc = await db.collection("store").doc("exercises").get();
     const exercisePattern = doc.data()[es];
-    pattern.length = 0; // Pulisci l'array pattern
-    pattern.push(...exercisePattern); // Carica i nuovi pattern
+    pattern.length = 0; // Cleans the array
+    pattern.push(...exercisePattern); // loads the new patterns
     tempo = pattern[3];
 
-    ///////////////////////////////////////////////////////////////////////// CEREN pattern[0]=title pattern[1]=description pattern[2]=mask/lv/none
     const exerciseTitle = document.getElementById("ex-title-text");
     if (exerciseTitle) {
         exerciseTitle.textContent = pattern[0]; // Update the title
@@ -501,14 +331,10 @@ async function setExercise(es) {
         console.log("Pattern[1] is undefined or empty.");
     }
 
-    //const ex_length = (pattern.length) * 60 / tempo;
-    //console.log("Ex length: " + ex_length)
     console.log("Tempo from firebase: " + tempo)
-    //console.log(speed);
 }
 
 // Evaluates Exercise LENGTH
-
 async function setExerciseLength() {
     const qN = 60 / tempo;
     const hN = qN * 2;
@@ -522,7 +348,6 @@ async function setExerciseLength() {
 }
 
 // Evaluates WORKOUT LENGTH
-
 async function setWorkoutLength() {
 
     const sM = Tone.Frequency(vox[0]).toMidi(); // Transform to MIDI
@@ -547,10 +372,7 @@ async function setWorkoutLength() {
         console.log("Ex i length: " + ex_length_i)
         console.log("Workout length: " + workout_length)
     }
-
 }
-
-
 
 // Loads vocal range, or the manual range
 async function setVocal(vol, man, first, second) {
@@ -578,16 +400,16 @@ async function setVocal(vol, man, first, second) {
     console.log(vox);
 }
 
+// Login functionalities
 async function setLoginValues() {
-    console.log("Quanto vale il login? " + logged);
-
+    console.log("Logged in? " + logged);
 
     if (logged === true) {
         const accountsRef = db.collection("store").doc("accounts");
-        // Creiamo l'array di dati dell'utente
+        // Creates the account array
         const userData = [nickname, password, 0, 0, 0, experience, time_num, range, gear, manual, firstmanNote, secondmanNote, laxVox, mask];
 
-        // Aggiorna Firestore con il nuovo array senza sovrascrivere
+        // Updates Firestore with new array
         const doc = await accountsRef.get();
         if (doc.exists) {
             await accountsRef.update({
@@ -599,37 +421,25 @@ async function setLoginValues() {
             });
         }
 
-        console.log("CE L'ABBIAMO FATTA!!! -------------------------------------------------------------")
+        console.log("Set login successful!")
     } else {
-        console.log("Non sei loggato ------------------------------------------------------")
+        console.log("You are not logged in")
     }
 }
 
 
 
+//////////////////////////////////////////////////////// PLAYER FUNCTIONS
 
-
-
-
-
-
-
-
-
-
-
-///////////// ACTUAL FUNCTIONS
 // Plays a note for a certain duration
 const playNote = async (note, duration, time) => {
-    // Suona la nota e cambia il colore del tasto
     piano_trainer.triggerAttackRelease(note, duration, time);
     changeKeyColor(note);
 
-
-    // Ottiene la nota rilevata e assegna i punti
+    // Gets the note and assigns the points
     try {
-        const result = await startGamePitchTrack(note, duration); // Rileva la nota
-        countPoints += result; // Aggiungi il risultato
+        const result = await startGamePitchTrack(note, duration); // reveals the note
+        countPoints += result; // adds the result
         const pointsView = document.getElementById("pointsView");
         pointsView.innerHTML = "Points: " + countPoints
     } catch (error) {
@@ -639,7 +449,6 @@ const playNote = async (note, duration, time) => {
 };
 
 // Plays a chord for a certain duration
-
 const playChord = async (curr, duration, time) => {
     const chordNotes = [
         getNoteFromOffset(pattern[4], curr),

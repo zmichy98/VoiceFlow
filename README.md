@@ -78,3 +78,32 @@ This project was developed as the final project for the Advanced Coding Tools an
 * script_ceren
 * login
 * tuner
+
+## About VoiceFlow
+------
+
+VoiceFlow is a vocal training platform designed specifically for musicians and singers, enabling them to warm up their voices before performances. Whether you're a beginner or an advanced performer, VoiceFlow offers a range of customizable exercises tailored to suit every skill level. The platform allows users to choose between diverse personalized warm-up routines, helping them gradually improve their vocal technique.
+
+In addition to the diverse exercises, VoiceFlow provides an engaging way for users to monitor their progress over time, allowing them to visualize improvements and continue refining their vocal abilities. Our goal is to create a comprehensive space where singers and musicians alike can prepare their voices for any performance, all while fostering growth and development.
+This project was developed as the final project for the Advanced Coding Tools and Methodology course in the Music and Acoustic Engineering program at Politecnico di Milano by Michele Zanardi, Gianluigi Vecchini, Federico Capitani, and İpek Ceren Bayram.
+
+GAMIFICATION
+
+TUNER AS A FUNCTION
+
+
+
+## Technologies Used
+
+WEB API e TONE JS
+
+SALAMANDER PIANO
+
+FIREBASE for Login and for 
+
+MICROPHONE INTEGRATION
+
+Tuner?
+
+## User experience
+

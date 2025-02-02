@@ -11,8 +11,6 @@ One of the main aspects of the project, the _pitch tracker_ developed as a key a
 
 This project was developed as the final project for the Advanced Coding Tools and Methodology course in the Music and Acoustic Engineering program at Politecnico di Milano by Michele Zanardi, Gianluigi Vecchini, Federico Capitani, and İpek Ceren Bayram.
 
-[VOICEFLOW initial page image or NOT]
-
 ## Technologies Used
 
 ### Web API, Tone.js and Salamander Grand Piano
@@ -37,7 +35,7 @@ In order to include in the project a large database of diverse exercises and var
 
 [SOME IMAGES?]
 
-## User experience (Tutorial? Quick guide?)
+## User experience
 
 Let's have a quick look to the main functionalities of VoiceFlow.
 
@@ -47,16 +45,16 @@ The main page let us choose between the Vocal Trainer and the Pitch Tracker.
 
 The second choice will lead us to the "Pitch Tracker" page, where we can tune our instruments or find the pitch of a note using a simple yet powerful interface.
 
-[TUNER image]
+![](images/tuner.png)
 
 We can also select the "Login" button, and we will be redirected to the login interface. Here we can create our account or log in with our credentials.
 
-[CREATE images]
+![](images/create.png)
 ![](images/login.png)
 
 Let's go back to the initial page and choose "Trainer". We will be redirected to the first of a series of "fine tunings" for our vocal workout. In this case, we have to choose our skill level between "Beginner", "Intermediate" and "Advanced".
 
-[LEVEL image]
+![](images/experience.png)
 
 We will then have to choose how much time we have for the training, using the big slider in the center of the page.
 
@@ -64,7 +62,10 @@ We will then have to choose how much time we have for the training, using the bi
 
 The next selection is the most refined: we can choose our voice type using three different methods. The first one allow us to decide between the six main vocal ranges (soprano, mezzosoprano, alto, tenor, baritone and bass). The second one is thought for "pro" users: if you know your specific range, you can input it via a virtual keyboard. The last one is instead thought for less experienced users who wants to find their vocal range. **[COME FUNZIONA? ]**
 
-[4 IMAGES of RANGE]
+![](images/range_general.png)
+![](images/range_1.png)
+![](images/range_2.png)
+![](images/range_3.png)
 
 As many experienced singers know, there are a lot of tools that can help warm up your voice before a performance or just to exercise. We selected two popular SOVTE (Semi-Occluded Vocal Tract Exercises) tools, the Mask and the Lax Vox. If you have them, your workout will change accordingly!
 
@@ -72,11 +73,12 @@ As many experienced singers know, there are a lot of tools that can help warm up
 
 A quick recap page will lead us to the real workout page.
 
-[RECAP image]
+![](images/recap.png)
 
 The Training Game Page is the heart of VoiceFlow. Here we can sing along the exercises and see in real time the points that we are getting during the game. When we are ready, we can press on the "Play" to start. 
 
-[TRAINING GAME image]
+![](images/trainer_1.png)
+![](images/trainer_2.png)
 
 As we finish our training, the results will appear automatically. If you are logged in and have managed to beat your best score for the current level, the application will let you know. And if you were good enough to enter the Top 10, your name and your score will be remembered along the ones of the champions!
 

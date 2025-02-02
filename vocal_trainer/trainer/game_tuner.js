@@ -1,10 +1,10 @@
-/* For a good explanation of the tuner code take a look at the tuner.js page */
+/* To have a good explanation of the tuner code take a look at the tuner.js page */
 
 /*-------------- VARIABLES --------------*/
 // Accuracy variables
 const tuneTollerance = 30;
 const minimumRMS = 0.001;
-const fftSize = 512; //512 or 1024?
+const fftSize = 1024; //512 or 1024?
 const gainValue = 2;
 
 /*  tuneTollerance: is the threshold in cents for which you are in tune with a certain frequency
@@ -268,6 +268,8 @@ function getGamePitch(goalFreq, duration, startTime, resolve, callback) {
 
 /*-------------- TUNER AND FUNCTIONS: --------------*/
 function autoCorrelate( buf, sampleRate ) {
+    buf = applyHannWindow(buf);
+
 	var SIZE = buf.length;
 	var rms = 0;
 
@@ -333,6 +335,14 @@ function autoCorrelate( buf, sampleRate ) {
     }
 
 	return sampleRate / T0;
+}
+
+function applyHannWindow(buf) {
+    const SIZE = buf.length;
+    for (let i = 0; i < SIZE; i++) {
+        buf[i] *= 0.5 * (1 - Math.cos((2 * Math.PI * i) / (SIZE - 1)));
+    }
+    return buf;
 }
 
 function getNotediff(freq, goalFreq) {

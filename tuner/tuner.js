@@ -64,6 +64,9 @@ it returns the dominant freq in Hz of the buffer (array). We changed it a bit so
 RMS level and the definition of some variables */
 
 function autoCorrelate( buf, sampleRate ) {
+    // First of all apply the Hann Window function to the buffer
+    buf = applyHannWindow(buf)
+
 	// Implements the ACF2+ algorithm
 	var SIZE = buf.length;  // SIZE = length of the array
 	var rms = 0;            // root mean square: rappresents the signal strength
@@ -181,6 +184,18 @@ function autoCorrelate( buf, sampleRate ) {
         - T0: the period of the fundamental frequency. */
 
 	return sampleRate / T0;
+}
+
+/* Apply the Hann Window function to each sample of the buffer, this function
+    - starts and ends at zero: This prevents sudden jumps at the beginning and end of the signal.
+    - smoothly increases in the middle: This ensures that middle values have higher weights. */
+function applyHannWindow(buf) {
+    const SIZE = buf.length;
+    // Apply to each buffer the Hann Window function
+    for (let i = 0; i < SIZE; i++) {
+        buf[i] *= 0.5 * (1 - Math.cos((2 * Math.PI * i) / (SIZE - 1)));
+    }
+    return buf;
 }
 
 // Matches the detected frequency to the closest musical note.

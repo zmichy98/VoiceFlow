@@ -587,7 +587,7 @@ window.onload = function () {
             this.style.display = 'none';
         }
         const exerciseTitle = document.getElementById("ex-title-text");
-        exerciseTitle.textContent = "Wait for the workout to load"
+        exerciseTitle.textContent = "Workout is loading..."
 
         await delay(2);
         setLoginValues();

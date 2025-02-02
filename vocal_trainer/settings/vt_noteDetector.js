@@ -1,3 +1,5 @@
+/* To have a good explanation of the tuner code take a look at the tuner.js page */
+
 // Initialize the Salamander piano sampler
 const piano = new Tone.Sampler({
   urls: {
@@ -158,6 +160,9 @@ const noteFrequencies = [
 
 /*-------------- TUNER --------------*/
 function autoCorrelate( buf, sampleRate ) {
+ 
+  buf = applyHannWindow(buf);
+
 	var SIZE = buf.length;
 	var rms = 0;
 
@@ -210,6 +215,14 @@ function autoCorrelate( buf, sampleRate ) {
       T0 = T0 - b / (2 * a);
   }
 	return sampleRate / T0;
+}
+
+function applyHannWindow(buf) {
+  const SIZE = buf.length;
+  for (let i = 0; i < SIZE; i++) {
+      buf[i] *= 0.5 * (1 - Math.cos((2 * Math.PI * i) / (SIZE - 1)));
+  }
+  return buf;
 }
 
 function getNotediff(freq) {

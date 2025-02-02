@@ -1,20 +1,21 @@
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyB-BaTehljfDtni-HAPrYh6rKT9sJyTKaU",
-    authDomain: "database-for-singing.firebaseapp.com",
-    projectId: "database-for-singing",
-    storageBucket: "database-for-singing.appspot.com",
-    messagingSenderId: "397721112623",
-    appId: "1:397721112623:web:c5ec8963358f8e014736da"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyB-BaTehljfDtni-HAPrYh6rKT9sJyTKaU",
+  authDomain: "database-for-singing.firebaseapp.com",
+  projectId: "database-for-singing",
+  storageBucket: "database-for-singing.appspot.com",
+  messagingSenderId: "397721112623",
+  appId: "1:397721112623:web:c5ec8963358f8e014736da"
+};
 
-// Inizializza Firebase
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+// Sends the login data to Firestore
 async function sendLoginToFirestore() {
   try {
-    // Recupera i valori inseriti nel form
+    // Values from form
     const nickname = document.getElementById('nickname').value;
     const password = document.getElementById('password').value;
 
@@ -23,33 +24,33 @@ async function sendLoginToFirestore() {
       return;
     }
 
-    // Controlla se il nickname esiste già
+
     const accountsRef = db.collection("store").doc("accounts");
 
-    // Creiamo l'array di dati dell'utente
+    // User data array
     const userData = [nickname, password, 0, 0, 0, "n", "n", "n", "n", "n", "n", "n", "n", "n"];
 
-// Aggiorna Firestore con il nuovo array senza sovrascrivere
+    // Updates Firestore
     const doc = await accountsRef.get();
 
     if (doc.exists) {
-      
+
       let data = doc.data();
-      let usernameExists = false;  // Flag per sapere se il nome utente esiste già
+      let usernameExists = false;
 
       for (let key in data) {
         let array = data[key];
-  
-        // Verifica che l'array esista e se il primo elemento (nome utente) è uguale a targetUsername
+
+        // Checks if nickname exists
         if (Array.isArray(array) && array.length > 0 && array[0] === nickname) {
           usernameExists = true;
-          console.log(`Il nome utente "${nickname}" esiste già nell'array "${key}".`);
+          console.log(`Nickname "${nickname}" already exists in array "${key}".`);
           break; // Uscita dal ciclo se il nome utente è trovato
         }
       }
 
       if (usernameExists) {
-        console.log(`Il nome utente "${nickname}" esiste già.`);
+        console.log(`Nickname "${nickname}" already exists.`);
         alert("Username not available. Please retry.")
         return
       } else {
@@ -63,7 +64,7 @@ async function sendLoginToFirestore() {
       });
     }
 
-    console.log("✅ Account aggiunto correttamente!");
+    console.log("✅ Account added successfully!");
 
     alert('✅ Account successfully created!');
   } catch (error) {
@@ -72,11 +73,12 @@ async function sendLoginToFirestore() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-  document.getElementById("accountForm").addEventListener("submit", async function() {
+////// WHAT IS ACTUALLY HAPPENING
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("accountForm").addEventListener("submit", async function () {
     event.preventDefault();
     await sendLoginToFirestore();
-    window.location.href = "/multiplayer/login/login.html"; // Redirect alla pagina di login
+    window.location.href = "/multiplayer/login/login.html"; // Redirect to login page
     document.getElementById('accountForm').reset();
   });
 });

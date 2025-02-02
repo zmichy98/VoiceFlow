@@ -129,6 +129,3 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     alert("Error: There was an issue retrieving your account.");
   }
 });
-
-
-//<script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>

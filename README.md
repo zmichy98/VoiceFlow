@@ -35,17 +35,36 @@ Tuner?
 
 [SOME IMAGES?]
 
-## User experience
+## User experience (Tutorial? Quick guide?)
 
-1. Choice between Tuner and Training
-    * Tuner
-2. Level choice
-3. Training time
+Let's have a quick look to the main functionalities of VoiceFlow.
+
+The main page let us choose between the Vocal Trainer and the Pitch Tracker.
+
+[INDEX IMAGE]
+
+The second choice will lead us to the "Pitch Tracker" page, where we can tune our instruments or find the pitch of a note using a simple yet powerful interface.
+
+[TUNER image]
+
+Let's go back to the initial page and choose "Trainer". We will be redirected to the first of a series of "fine tunings" for our vocal workout. In this case, we have to choose our skill level between "Beginner", "Intermediate" and "Advanced".
+
+[LEVEL image]
+
+We will then have to choose how much time we have for the training, using the big slider in the center of the page.
+
+[TIME image]
+
+The next selection is the most refined: we can choose our voice type using three different methods. The first one allow us to decide between the six main vocal ranges (soprano, mezzosoprano, alto, tenor, baritone and bass). The second one is ... toward "pro" users: if you know your specific range, you can input it via a virtual keyboard. The last one is instead thought for less experienced users who wants to find their vocal range. [COME FUNZIONA? ]
+
+
+
 4. Range selector
     * Predefined range
-    * Manual selector
+    * Manual selector 
     * Pitch detection
 5. Equipment
+    SOVTE
 6. Training page
 7. Login functionality
 8. Results page and standings

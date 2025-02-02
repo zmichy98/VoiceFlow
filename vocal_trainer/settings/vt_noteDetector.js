@@ -38,7 +38,6 @@ const piano = new Tone.Sampler({
   }
 }).toDestination();
 
-// Add sound to all keys (independent of "Select" button)
 document.querySelectorAll('.key').forEach(key => {
   key.addEventListener('click', () => {
     const note = key.getAttribute('data-note');
@@ -47,7 +46,19 @@ document.querySelectorAll('.key').forEach(key => {
 });
 
 /*------------------------ VOCAL RANGE 3 ------------------------*/
-/*-------------- VARIABLES --------------*/
+// Accuracy variables
+const tuneTollerance = 30;
+const minimumRMS = 0.002;       
+const fftSize = 2048;
+
+/*  tuneTollerance: is the threshold in cents for which you are in tune with a certain frequency
+
+    minimumRMS: minimum strength of the signa for which is accepted to be analysied
+
+    fftSize: must be a power of two. Usually the default is 2048, which provides a good balance between frequency resolution and performance.
+        - Lower fftSize -->     Larger frequency bins (worse frequency resolution). Better time resolution, faster.
+        - Higher fftSize -->    Finer frequency bins (better resolution but slower processing). Worse time resolution, slower. */
+
 // Variables for storing notes
 let selectingButtonState = "NotSelecting"
 let goalNote = null;
@@ -60,15 +71,9 @@ let audioContext = null;
 let currStream = null;
 let source = null;
 let analyser = null;
-let buffer = new Float32Array(1024);
+let buffer = new Float32Array(fftSize/2);
 let requestAnimationFrameId = null;
 const constraints = {audio: true, video: false};
-
-// Tollerance range to get the right note
-const tuneTollerance = 30;
-
-// Minimum rms to accept the audio signal for analysing
-const minimumRMS = 0.002;
 
 // Get elements by Id
 const instructions = document.getElementById('instructions');
@@ -82,7 +87,6 @@ const detuneWarning = document.getElementById("detune-warning");
 const levelBar = document.getElementById("level-bar");
 const levelValue = document.getElementById("level-value");
 const next3Button = document.getElementById("next_button");
-//const next3Button = document.querySelectorAll('.next3_button');
 
 document.addEventListener("DOMContentLoaded", () => {
   if (enableMicBtn) {
@@ -190,7 +194,6 @@ function autoCorrelate( buf, sampleRate ) {
 			maxpos = i;
 		}
 	}
-
     
 	var T0 = maxpos;
     var x1 = c[T0 - 1], x2 = c[T0], x3 = c[T0 + 1];
@@ -202,13 +205,11 @@ function autoCorrelate( buf, sampleRate ) {
 	return sampleRate / T0;
 }
 
-// Calculate the diff between the note selected and the singed one
 function getNotediff(freq) {
   centsDetune = Math.floor( 1200 * Math.log( freq / goalFreq)/Math.log(2) );
   return centsDetune;
 }
 
-// Function to update the level meter based on the cents value
 function updateLevelMeter(detune) {
   let indicator = document.getElementById("tuner-indicator");
   
@@ -216,33 +217,25 @@ function updateLevelMeter(detune) {
       console.error("Errore: elemento tuner-indicator non trovato!");
       return;
   }
-
-  // Normalizziamo il valore tra -50 e +50 -> tra 0% e 100% nella barra
+  
   let position = ((detune + 50) / 100) * 100; 
 
-  // Assicuriamoci che l'indicatore non esca dalla barra
   position = Math.min(100, Math.max(0, position));
 
-  // Imposta la posizione in percentuale rispetto alla larghezza della barra
   indicator.style.left = position + "%";
 }
 
-function getMicrophoneStream(){ //  Initializes the microphone input and prepares it for audio analysis.
+function getMicrophoneStream(){
     navigator.mediaDevices.getUserMedia(constraints)
-        // On success
         .then((stream) => {
-            // Save the stream : 
             currStream = stream;
             console.log('got microphone stream');
             console.log(stream);
 
-
-            // Aggiungi un listener su ogni track per gestire la chiusura inaspettata
             stream.getTracks().forEach(track => {
               track.addEventListener("ended", () => {
                   console.warn("Track ended unexpectedly, reinitializing stream");
                   stopMicrophoneStream();
-                  // Puoi decidere se riavviare immediatamente il flusso o mostrare un messaggio all'utente
                   getMicrophoneStream();
               });
             });
@@ -250,12 +243,10 @@ function getMicrophoneStream(){ //  Initializes the microphone input and prepare
             audioContext = new AudioContext(); 
             source = audioContext.createMediaStreamSource(stream)
 
-            // Call the function that detects the pitch
             startPitchTrack()
         })
-        // On error:
+
         .catch((err) => {
-            // handle the error
             console.log('Did not get microphone stream: \n' + err);
             enableMicBtn.innerHTML = "Enable Microphone"
         });
@@ -275,24 +266,11 @@ function stopMicrophoneStream(){
       });
       audioContext = null;
   }
-}/*
-function stopMicrophoneStream(){ // Stops the microphone and animation.
-    if (currStream !== null){
-        console.log("In the stop function");
-        let tracks = currStream.getTracks();
-        console.log(tracks)
-        
-        for(let i = 0; i < tracks.length; i++){
-            tracks[i].stop();
-        }
-    }
-    window.cancelAnimationFrame(requestAnimationFrameId);
-}*/
+}
 
-// Sets up the audio analyzer for pitch detection.
 function startPitchTrack(){
     analyser = audioContext.createAnalyser();
-    analyser.fftSize = 2048;
+    analyser.fftSize = fftSize;
     source.connect(analyser);
     console.log(analyser)
     getPitch()
@@ -300,66 +278,84 @@ function startPitchTrack(){
 
 // Continuously detects the pitch and updates the UI.
 function getPitch(){
-    // repetitive Ui /window.requestAnimationFrame
-    analyser.getFloatTimeDomainData(buffer);
+  analyser.getFloatTimeDomainData(buffer);
     
-    let frequencyinHz = autoCorrelate(buffer, audioContext.sampleRate);
-    console.log(frequencyinHz);
+  let frequencyinHz = autoCorrelate(buffer, audioContext.sampleRate);
+  console.log("Frequency in hz: " + frequencyinHz);
+  
+  if(frequencyinHz === -1){
     
-    if(frequencyinHz === -1){
-      hzElem.innerHTML = "No note detected";
-    } else{
-        let detune = getNotediff(frequencyinHz);
+    hzElem.innerHTML = "No note detected";
 
-        hzElem.innerHTML = "The frequency you are singing is approximatly " + Math.round(frequencyinHz) + " Hz";
-        detuneElem.innerHTML = "You are detuned by " + detune + " cents";
+  } else{
+    
+    let detune = getNotediff(frequencyinHz);
+    
+    hzElem.innerHTML = "The frequency you are singing is approximatly " + Math.round(frequencyinHz) + " Hz";
+    
+    if (detune > 50) {
+      
+      detuneElem.innerHTML = "You are detuned by more then + 50 cents: Flat!";
+      
+    
+    } else if (detune < -50) {
 
-        if(Math.abs(detune) < tuneTollerance){
+      detuneElem.innerHTML = "You are detuned by more then - 50 cents: Sharp!";
+    
+    } else if (Math.abs(detune) < tuneTollerance) {
+      
+      saveNote(goalNote);
+      console.log("Note saved");
+      
+      enableMicBtn.innerHTML = "Enable detection";
+      noteElem.innerHTML = "";
+      hzElem.innerHTML = "";
+      detuneElem.innerHTML = "";
 
+      main();
           
-          saveNote(goalNote);
-          console.log("Note saved");
-          
-          enableMicBtn.innerHTML = "Enable detection";
-          noteElem.innerHTML = "";
-          hzElem.innerHTML = "";
-          detuneElem.innerHTML = "";
-          main();
-          
-          selectingButtonState = "NotSelecting"
-          selectNoteBtn.innerHTML = "Start selection";
-          return;
-        }
+      selectingButtonState = "NotSelecting"
+      selectNoteBtn.innerHTML = "Start selection";
+      return;
+    
+    } else if (detune < 0) {
+      
+      detuneElem.innerHTML = "You are detuned by " + detune + " cents: Flat!";
+    
+    } else {
 
-        updateLevelMeter(detune);
+      detuneElem.innerHTML = "You are detuned by " + detune + " cents: Sharp!";
     }
+  
+  updateLevelMeter(detune);
+  }
+  
+  if (!window.requestAnimationFrame){
+    window.requestAnimationFrame = window.webkitRequestAnimationFrame;
+  }
 
-    // Continue to call the function:
-
-    if (!window.requestAnimationFrame){
-        window.requestAnimationFrame = window.webkitRequestAnimationFrame;
-    }
-    requestAnimationFrameId = window.requestAnimationFrame(getPitch);
+  requestAnimationFrameId = window.requestAnimationFrame(getPitch);
 }
 
-function main(){ //Main function to activate and stop Microphone streaming
-    console.log('I am hooked up to enableMicBtn')
-    let isTracking = enableMicBtn.getAttribute("data-tracking") == "true";
-    enableMicBtn.setAttribute("data-tracking", !isTracking)
+function main(){
+  console.log('I am hooked up to enableMicBtn')
+  let isTracking = enableMicBtn.getAttribute("data-tracking") == "true";
+  enableMicBtn.setAttribute("data-tracking", !isTracking)
 
-    if (!isTracking === true){
-        noteElem.innerHTML = "Sing " + goalNote + ", frequency: " + goalFreq + " Hz";
-        hzElem.innerHTML = "Please wait the tuner to load"
-        enableMicBtn.innerHTML = "enabling ..."
-
-        getMicrophoneStream();
-
-        enableMicBtn.innerHTML = "Disable detection"
-    }
-    else{
-        stopMicrophoneStream()
-        enableMicBtn.innerHTML = "Enable detection"
-    }
+  if (!isTracking === true){
+    noteElem.innerHTML = "Sing " + goalNote + ", frequency: " + goalFreq + " Hz";
+    hzElem.innerHTML = "Please wait the tuner to load"
+    enableMicBtn.innerHTML = "enabling ..."
+    
+    getMicrophoneStream();
+    
+    enableMicBtn.innerHTML = "Disable detection"
+  }
+  
+  else {
+    stopMicrophoneStream()
+    enableMicBtn.innerHTML = "Enable detection"
+  }
 }
 
 if (enableMicBtn) {
@@ -370,41 +366,55 @@ if (enableMicBtn) {
 
 /*-------------- STORE VARIABLES --------------*/
 function saveNote(goalNote) {
-  // If it's the first note selection
+  // If it is the first note selection
+
   if (firstNote === null) {
+
     updateLevelMeter(0);
     firstNote = goalNote.trim();
     var element = document.getElementById(firstNote);
     element.classList.add('selected');
+
     instructions.innerHTML = `<p>Range starts at ${firstNote}, now select and detect the high note</p>`;
+
     goalNote = null;
+
     selectingButtonState = "NotSelecting"
     selectNoteBtn.innerHTML = "Start selection";
     selectNoteBtn.classList.remove('active');
+
     if (enableMicBtn) {
       enableMicBtn.style.display = 'none';
     }
   }
-  // If it's the second note and different from the first
+
+  // If it iss the second note and different from the first
   else if (secondNote === null && firstNote !== null) {
+
     secondNote = goalNote.trim();
     var element = document.getElementById(secondNote);
     element.classList.add('selected');
-    instructions.innerHTML = `<p>Range starts at ${firstNote} and ends at ${secondNote}</p>`; 
+
+    instructions.innerHTML = `<p>Range starts at ${firstNote} and ends at ${secondNote}</p>`;
+
     updateLevelMeter(0);
+
     if (enableMicBtn) {
       enableMicBtn.style.display = 'none';
       next3Button.style.display = 'inline-block';
       selectNoteBtn.style.display = 'none';
     }
+
     finalizeSelection();
   }
 }
 
 function finalizeSelection() {
+
   console.log("finalize")
-  // Save the selected range to localStorage
+
   manual = true;
+
   localStorage.setItem("manual", manual);
   localStorage.setItem("firstNote", firstNote);
   localStorage.setItem("secondNote", secondNote);
@@ -413,22 +423,28 @@ function finalizeSelection() {
 
 /*-------------- NOTE SELECTION --------------*/
 if (selectNoteBtn) {
+
   selectNoteBtn.addEventListener('click', () => {
     console.log(selectingButtonState)
+
     if (selectingButtonState === "NotSelecting") {
       startNoteSelection();
+
     } else if (selectingButtonState === "Selecting") {
       stopNoteSelection();
+      
     } else if (selectingButtonState === "ChangeNote") {
       resetNoteSelection();
+
     }
   });
 }
 
 function startNoteSelection() {
+
   selectingButtonState = "Selecting";
-  selectNoteBtn.innerHTML = "Stop selection"; // Change button text
-  selectNoteBtn.classList.add('active'); // Optional styling
+  selectNoteBtn.innerHTML = "Stop selection";
+  selectNoteBtn.classList.add('active');
 
   console.log("Selection started:", selectingButtonState);
 
@@ -438,10 +454,11 @@ function startNoteSelection() {
 }
 
 function noteClickHandler() {
-  goalNote = this.getAttribute('data-note'); // Get the note from the data attribute
+
+  goalNote = this.getAttribute('data-note');
   goalFreq = noteFrequencies.find(n => n.note === goalNote).freq; 
 
-  this.classList.add('pressed'); // Highlight the key 
+  this.classList.add('pressed');
 
   console.log('Selected Note:', goalNote);
 
@@ -449,7 +466,7 @@ function noteClickHandler() {
 }
 
 function stopNoteSelection() {
-  selectingButtonState = "ChangeNote";  // Transition state
+  selectingButtonState = "ChangeNote";
   selectNoteBtn.innerHTML = "Change note";
   selectNoteBtn.classList.remove('active');
 
@@ -490,3 +507,26 @@ function resetNoteSelection() {
   console.log("Selection reset. Restarting selection...");
   startNoteSelection();
 }
+
+/*------------------------ SETTINGS BAR ------------------------*/
+document.addEventListener("DOMContentLoaded", () => {
+  const settings = document.querySelectorAll(".setting");
+  const currentPage = parseInt(document.body.dataset.setting);
+  const totalSettings = settings.length;
+
+  let currentSetting = parseInt(localStorage.getItem("currentSetting")) || 1;
+
+  if (currentPage > currentSetting) {
+    currentSetting = currentPage;
+    localStorage.setItem("currentSetting", currentSetting);
+  }
+  
+  settings.forEach((setting, index) => {
+    if (index + 1 < currentPage) {
+      setting.classList.add("completed");
+      setting.textContent = "✔";
+    } else if (index + 1 === currentPage) {
+      setting.classList.add("active");
+    }
+  });
+});

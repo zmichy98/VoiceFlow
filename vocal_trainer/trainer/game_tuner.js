@@ -1,15 +1,36 @@
+/* For a good explanation of the tuner code take a look at the tuner.js page
+
 /*-------------- VARIABLES --------------*/
-let audioContext = null;
-let currStream = null; // global variable to save the audio stream
-let source = null; // Audio input (microphone stream)
-let globalAnalyser = null;
-let buffer = new Float32Array(1024); // length of array = fftSize/2
-let requestAnimationFrameId = null;
-
+// Accuracy variables
 const tuneTollerance = 30;
-const minimumRMS=0.001;
+const minimumRMS = 0.001;
+const fftSize = 1024;
+const gainValue = 2;
 
+/*  tuneTollerance: is the threshold in cents for which you are in tune with a certain frequency
+
+    minimumRMS: minimum strength of the signa for which is accepted to be analysied
+
+    fftSize: must be a power of two. Usually the default is 2048, which provides a good balance between frequency resolution and performance.
+        - Lower fftSize -->     Larger frequency bins (worse frequency resolution). Better time resolution, faster.
+        - Higher fftSize -->    Finer frequency bins (better resolution but slower processing). Worse time resolution, slower.
+    
+    Gain Value:
+        = 1 --> the input signal passes through unchanged.
+        = 0 --> mute the signal
+        > 1 --> increases the amplitude (volume gets louder). Can cause distortion if too high.
+        > 0 & < 1 -->  attenuates the signal.
+        < 0 --> invert the phase of the signal. */
+
+// Other variables
+let audioContext = null;
+let currStream = null; 
+let source = null;
+let globalAnalyser = null;
+let buffer = new Float32Array(fftSize/2);
+let requestAnimationFrameId = null;
 const constraints = {audio: true, video: false};
+
 const enableMicBtn = document.getElementById("playPattern");
 const noteElem = document.getElementById("note");
 const hzElem = document.getElementById("hz");
@@ -70,8 +91,8 @@ const noteFrequencies = [
     { note: "C6", freq: 1046.50 }
 ];
 
-/*-------------- ACTIVETING THE MICROPHONE AT THE BEGINNING OF THE WORKOUT: --------------*/
-//  Initializes the microphone input and prepares it for audio analysis.
+/*-------------- ACTIVATING THE MICROPHONE AT THE OPENING PAGE --------------*/
+
 function getMicrophoneStream(){
     navigator.mediaDevices.getUserMedia(constraints)
         .then((stream) => {
@@ -80,21 +101,20 @@ function getMicrophoneStream(){
             console.log(stream);
 
             audioContext = new AudioContext(); 
-            // Assicurati che l'AudioContext sia attivo
+            
+            // Make sure the audio context is active
             audioContext.resume();
             source = audioContext.createMediaStreamSource(stream);
             
-            // Crea e configura il GainNode
+            /* Create a GAIN NODE (new functionality) to be able to detect also lower sound */
             const gainNode = audioContext.createGain();
-            gainNode.gain.value = 10;  // Imposta il valore di guadagno (modifica questo valore in base alle esigenze)
+            gainNode.gain.value = gainValue; 
 
-            // Collega il source al gainNode...
+            /* Connect the source to the gain. The gain node will be connected to the analyser. */
+
             source.connect(gainNode);
-            // ... e poi il gainNode verrà usato in seguito per collegarsi all'Analyser.
-            // Per esempio, nella funzione startGamePitchTrack puoi connetterti dal gainNode:
-            // gainNode.connect(globalAnalyser);
             
-            // Se preferisci gestirlo globalmente, potresti salvare gainNode in una variabile globale:
+            // Save the gainNode in a global variable
             window.myGainNode = gainNode;
         })
         .catch((err) => {
@@ -103,7 +123,6 @@ function getMicrophoneStream(){
         });
 }
 
-// Stops the microphone and animation.
 function stopMicrophoneStream(){
     if (currStream !== null){
         console.log("In the stop function");
@@ -118,7 +137,6 @@ function stopMicrophoneStream(){
 }
 
 function main(){
-
     let isTracking = false;
 
     console.log('I am hooked up to enableMicBtn')
@@ -127,13 +145,13 @@ function main(){
         enableMicBtn.setAttribute("data-tracking", !isTracking)
     }
     
-
     if (!isTracking === true){
         noteElem.innerHTML = "Note to play ";
         hzElem.innerHTML = "Hz of the singer"
         console.log('Call MicStrem function')
         getMicrophoneStream();
     }
+
     else{
         stopMicrophoneStream()
     }
@@ -145,15 +163,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /*-------------- DETECT THE SINGED NOTE: --------------*/
 
-let lastDetectionTime = 0; // Variabile per il throttling del pitch detection
-const detectionInterval = 50; // intervallo in millisecondi, regolabile in base alle performance
+let lastDetectionTime = 0;      // Variabile per il throttling del pitch detection
+const detectionInterval = 50;   // intervallo in millisecondi, regolabile in base alle performance
 
 export function startGamePitchTrack(goalNote, duration) {
     console.log("-------------Start PitchTrack-------------");
     // Se il nodo globale non esiste, crealo e collegalo alla sorgente
     if (!globalAnalyser) {
         globalAnalyser = audioContext.createAnalyser();
-        globalAnalyser.fftSize = 1024;
+        globalAnalyser.fftSize = fftSize;
         // Collega il GainNode (che abbiamo salvato in window.myGainNode) all'Analyser
         window.myGainNode.connect(globalAnalyser);
     }
@@ -282,7 +300,6 @@ function autoCorrelate( buf, sampleRate ) {
 			maxpos = i;
 		}
 	}
-
     
 	var T0 = maxpos;
     var x1 = c[T0 - 1], x2 = c[T0], x3 = c[T0 + 1];
@@ -294,13 +311,11 @@ function autoCorrelate( buf, sampleRate ) {
 	return sampleRate / T0;
 }
 
-// Calculate the diff between the note selected and the singed one
 function getNotediff(freq, goalFreq) {
     let centsDetune = Math.floor(1200 * Math.log(freq / goalFreq) / Math.log(2));
     return centsDetune;
 }
 
-// Function to update the level meter based on the cents value
 function updateLevelMeter(detune) {
     let indicator = document.getElementById("tuner-indicator");
     
@@ -308,14 +323,11 @@ function updateLevelMeter(detune) {
         console.error("Errore: elemento tuner-indicator non trovato!");
         return;
     }
-
-    // Normalizziamo il valore tra -50 e +50 -> tra 0% e 100% nella barra
+    
     let position = ((detune + 50) / 100) * 100; 
 
-    // Assicuriamoci che l'indicatore non esca dalla barra
     position = Math.min(100, Math.max(0, position));
-
-    // Imposta la posizione in percentuale rispetto alla larghezza della barra
+    
     indicator.style.left = position + "%";
 }
  

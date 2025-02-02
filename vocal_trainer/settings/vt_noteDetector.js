@@ -50,6 +50,7 @@ document.querySelectorAll('.key').forEach(key => {
 const tuneTollerance = 30;
 const minimumRMS = 0.002;       
 const fftSize = 2048;
+const smoothness = 100;
 
 /*  tuneTollerance: is the threshold in cents for which you are in tune with a certain frequency
 
@@ -67,6 +68,7 @@ let firstNote = null;
 let secondNote = null;
 
 // Variables for the tuner
+let countNoDetection = 0;
 let audioContext = null;
 let currStream = null;
 let source = null;
@@ -180,6 +182,11 @@ function autoCorrelate( buf, sampleRate ) {
 	buf = buf.slice(r1,r2);
 	SIZE = buf.length;
 
+  var maxVal = Math.max(...buf.map(Math.abs));
+  if (maxVal > 0) {
+      buf = buf.map(x => x / maxVal);
+  }
+
 	var c = new Array(SIZE).fill(0);
 	for (var i=0; i<SIZE; i++)
 		for (var j=0; j<SIZE-i; j++)
@@ -196,12 +203,12 @@ function autoCorrelate( buf, sampleRate ) {
 	}
     
 	var T0 = maxpos;
-    var x1 = c[T0 - 1], x2 = c[T0], x3 = c[T0 + 1];
-    let a = (x1 + x3 - 2 * x2) / 2;
-    let b = (x3 - x1) / 2;
-    if (a) {
-        T0 = T0 - b / (2 * a);
-    }
+  var x1 = c[T0 - 1], x2 = c[T0], x3 = c[T0 + 1];
+  let a = (x1 + x3 - 2 * x2) / 2;
+  let b = (x3 - x1) / 2;
+  if (a) {
+      T0 = T0 - b / (2 * a);
+  }
 	return sampleRate / T0;
 }
 
@@ -284,11 +291,13 @@ function getPitch(){
   console.log("Frequency in hz: " + frequencyinHz);
   
   if(frequencyinHz === -1){
-    
-    hzElem.innerHTML = "No note detected";
+
+    countNoDetection += 1
+        if (countNoDetection > smoothness){noteElem.innerHTML = "No note detected";}
 
   } else{
-    
+    countNoDetection = 0;
+
     let detune = getNotediff(frequencyinHz);
     
     hzElem.innerHTML = "The frequency you are singing is approximatly " + Math.round(frequencyinHz) + " Hz";

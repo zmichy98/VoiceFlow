@@ -4,7 +4,7 @@
 // Accuracy variables
 const tuneTollerance = 30;
 const minimumRMS = 0.001;
-const fftSize = 1024;
+const fftSize = 1024; //512?
 const gainValue = 2;
 
 /*  tuneTollerance: is the threshold in cents for which you are in tune with a certain frequency
@@ -27,7 +27,7 @@ let audioContext = null;
 let currStream = null; 
 let source = null;
 let globalAnalyser = null;
-let buffer = new Float32Array(fftSize/2);
+let buffer = new Float32Array(fftSize);
 let requestAnimationFrameId = null;
 const constraints = {audio: true, video: false};
 
@@ -163,7 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /*-------------- DETECT THE SINGED NOTE: --------------*/
-
 export function startGamePitchTrack(goalNote, duration) {
     console.log("--------------Start PitchTrack-------------");
     
@@ -221,7 +220,9 @@ function getGamePitch(goalFreq, duration, startTime, resolve, callback) {
 
     if (elapsedTime >= duration * 1000) {
         console.log("Time duration exceeded, stopping detection.");
-        cancelAnimationFrame(requestAnimationFrameId);
+        if (requestAnimationFrameId) {
+            cancelAnimationFrame(requestAnimationFrameId);
+        }
         resolve(0);
         return;
     }
@@ -259,8 +260,6 @@ function getGamePitch(goalFreq, duration, startTime, resolve, callback) {
     requestAnimationFrameId = window.requestAnimationFrame(callback);
 }
 
-
-
 /*-------------- TUNER AND FUNCTIONS: --------------*/
 function autoCorrelate( buf, sampleRate ) {
 	var SIZE = buf.length;
@@ -278,14 +277,28 @@ function autoCorrelate( buf, sampleRate ) {
 
 	var r1 = 0, r2 = SIZE-1, thres = 0.2;
 
-  for (var i=0; i<SIZE/2; i++)
-		if (Math.abs(buf[i]) < thres){ r1=i; break; }
+    for (var i = 0; i < SIZE / 2; i++) {
+        if (Math.abs(buf[i]) < thres) {
+            r1 = i;
+            break;
+        }
+    }
 
-	for (var i=1; i<SIZE/2; i++)
-		if (Math.abs(buf[SIZE-i]) < thres) { r2=SIZE-i; break; }
+    for (var i = 1; i < SIZE / 2; i++) {
+        if (Math.abs(buf[SIZE - i]) < thres) {
+            r2 = SIZE - i;
+            break;
+        }
+    }
 
 	buf = buf.slice(r1,r2);
 	SIZE = buf.length;
+
+    // Normalize buffer
+    var maxVal = Math.max(...buf.map(Math.abs));
+    if (maxVal > 0) {
+        buf = buf.map(x => x / maxVal);
+    }
 
 	var c = new Array(SIZE).fill(0);
 	for (var i=0; i<SIZE; i++)
@@ -303,12 +316,16 @@ function autoCorrelate( buf, sampleRate ) {
 	}
     
 	var T0 = maxpos;
-    var x1 = c[T0 - 1], x2 = c[T0], x3 = c[T0 + 1];
-    let a = (x1 + x3 - 2 * x2) / 2;
-    let b = (x3 - x1) / 2;
-    if (a) {
-        T0 = T0 - b / (2 * a);
+    
+    if (T0 > 0 && T0 < SIZE - 1) {
+        var x1 = c[T0 - 1], x2 = c[T0], x3 = c[T0 + 1];
+        var a = (x1 + x3 - 2 * x2) / 2;
+        var b = (x3 - x1) / 2;
+        if (a) {
+            T0 = T0 - b / (2 * a);
+        }
     }
+
 	return sampleRate / T0;
 }
 

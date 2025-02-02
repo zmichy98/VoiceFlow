@@ -2,6 +2,7 @@
 const tuneTollerance = 30;
 const minimumRMS = 0.005;
 const fftSize = 2048;
+const smoothness = 100; // Number of (-1) iteration before giving No note detected
 
 /*  tuneTollerance: is the threshold in cents for which you are in tune with a certain frequency
 
@@ -89,17 +90,32 @@ function autoCorrelate( buf, sampleRate ) {
     /* Decide r1 position (only check up to half the buffer because audio signals are often symmetric or periodic,
     and the autocorrelation will handle periodicity.) */
 
-	for (var i=0; i<SIZE/2; i++)
-		if (Math.abs(buf[i]) < thres){ r1=i; break; }
+    for (var i = 0; i < SIZE / 2; i++) {
+        if (Math.abs(buf[i]) < thres) {
+            r1 = i;
+            break;
+        }
+    }
 
     /* Decide r2 position */
-	for (var i=1; i<SIZE/2; i++)
-		if (Math.abs(buf[SIZE-i]) < thres) { r2=SIZE-i; break; }
-    
+	
+    for (var i = 1; i < SIZE / 2; i++) {
+        if (Math.abs(buf[SIZE - i]) < thres) {
+            r2 = SIZE - i;
+            break;
+        }
+    }
+
     /* Cut the buffer to exclude silence */
 
 	buf = buf.slice(r1,r2);
 	SIZE = buf.length;
+
+    // Normalize buffer
+    var maxVal = Math.max(...buf.map(Math.abs));
+    if (maxVal > 0) {
+        buf = buf.map(x => x / maxVal);
+    }
 
     /* Perform Autocorrelation: measures how well the signal matches itself when  shifted in time to determine the
     fundamental frequency. The array c will store in c[i] the autocorrelation result for a time lag of i */
@@ -292,11 +308,11 @@ function getPitch(){
     console.log("Frequency detected:" + frequencyinHz);
 
     if (frequencyinHz === -1) {
-
-        noteElem.innerHTML = "No note detected";
+        countNoDetection += 1
+        if (countNoDetection > smoothness){noteElem.innerHTML = "No note detected";}
 
     } else {
-
+        countNoDetection = 0
         let [closerNote, detune] = getClosestNote(frequencyinHz);
         noteElem.innerHTML = closerNote.note;
         hzElem.innerHTML = "Your frequency is approximately " + Math.round(frequencyinHz) + " Hz";
@@ -330,9 +346,8 @@ function getPitch(){
             detuneWarning.className = "sharp";
 
         }
-    }
-    
     updateLevelMeter(detune);
+    }
 
     // Continue to call the function:
 
@@ -386,6 +401,7 @@ enableMicBtn.addEventListener("click", () => {
     enableMicBtn.classList.toggle("active");
 });
 
+let countNoDetection = 0;
 let audioContext = null;
 let currStream = null;                          // global variable to save the audio stream
 let source = null;                              // Audio input (microphone stream)

@@ -6,6 +6,8 @@ const db = firebase.firestore();
 
 //import Game Pitch
 import { startGamePitchTrack } from './game_tuner.js';
+//import main of the tuner
+import { main } from './game_tuner.js';
 
 // Defines variables
 let manual = false;
@@ -581,6 +583,11 @@ const delay = (seconds) => new Promise(resolve => setTimeout(resolve, seconds * 
 
 window.onload = function () {
     document.getElementById("playPattern").addEventListener("click", async function () {
+        if (this) {
+            this.style.display = 'none';
+        }
+        const exerciseTitle = document.getElementById("ex-title-text");
+        exerciseTitle.textContent = "Wait for the workout to load"
 
         await delay(2);
         setLoginValues();
@@ -614,6 +621,7 @@ window.onload = function () {
         // Redirect to results page after workout is done
         setTimeout(() => {
             setTimeout(() => {
+                main();
                 localStorage.setItem("currentScore", countPoints)
                 window.location.href = "resume.html";
             }, 1000); // 1-second delay before redirecting

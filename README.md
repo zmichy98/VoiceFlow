@@ -7,7 +7,7 @@ VoiceFlow is a vocal training platform designed specifically for musicians and s
 
 In addition to the exercises, VoiceFlow provides an engaging way for users to monitor their progress over time, allowing them to visualize improvements and continue refining their vocal abilities in the broader context of _gamification_. Our goal is to create a comprehensive space where singers and musicians alike can prepare their voices for any performance, all while fostering growth and development.
 
-One of the main aspects of the project, the _pitch tracker_ developed as a key aspect of the training game, was also furtherly developed, and a dedicated page for this useful tool was also added. [MODIFY ]
+One of the key aspects of the training game, the _pitch tracker_, was also furtherly developed, and a dedicated page for this useful tool was also added. We believed that the functionalities of this powerful tool were too good to be relegated to a side part of the project, so we decided to give it a dignity of its own.
 
 This project was developed as the final project for the Advanced Coding Tools and Methodology course in the Music and Acoustic Engineering program at Politecnico di Milano by Michele Zanardi, Gianluigi Vecchini, Federico Capitani, and İpek Ceren Bayram.
 
@@ -21,7 +21,7 @@ One of the most important aspect of the training game is the designing of the pi
 
 In order to include in the project a large database of diverse exercises and various personalized workouts, as well as all the aspects related to the _login_ functions for the users, a FireBase FireStore database was set up. FireStore is a NoSQL realtime database that uses Collections and Documents instead of tables and rows, perfect for scalability, real-time applications and large quantities of data. The structure of the database for this application is easy to mantain, as it can be seen in the next image.
 
-[IMAGE OF FIREBASE]
+![](images/firestore.png)
 
 ### "Microphone Integration"
 

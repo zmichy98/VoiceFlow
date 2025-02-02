@@ -13,7 +13,7 @@ This project was developed as the final project for the Advanced Coding Tools an
 
 ## Technologies Used
 
-### Web API, Tone.js and the Salamander Piano
+### Web API, Tone.js and Salamander Grand Piano
 
 One of the most important aspect of the training game is the designing of the piano keyboard: it is powered by modern Web Audio APIs, such as the Tone.js JavaScript library throught the use of its Tone.Sampler(). The samples used are the ones from the well-known Salamander Grand Piano set on GitHub, based on the popular Yamaha G5 Grand Piano and recorded in high quality.
 

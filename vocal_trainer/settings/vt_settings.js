@@ -76,14 +76,14 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const slider = document.getElementById('Slider');
   const sliderValue = document.getElementById('trainingTime');
-  const nextButton = document.querySelector(".next_button"); // Select the "Next" button by class
+  const nextButton = document.querySelector(".next_button");
 
   if(nextButton) {
     nextButton.style.display = "none";
   }
   if(slider) {
     slider.addEventListener('input', function() {
-      sliderValue.textContent = slider.value;  // Aggiorna il testo con il valore dello slider
+      sliderValue.textContent = slider.value;
       if (slider.value > 0) {
         nextButton.style.display = "inline-block";
       } else {
@@ -100,9 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let selectedRange = '';
   const rangeButtons = document.querySelectorAll('.range-button');
   const rangeDescription = document.getElementById('range-description');
-  const nextButton = document.querySelector('.next_button'); // Select the "Next" button by class
+  const nextButton = document.querySelector('.next_button');
 
-  // Check if the range description exists in the DOM
   if (!rangeDescription) {
     console.log('range-description element not found.');
     return;
@@ -116,10 +115,13 @@ document.addEventListener('DOMContentLoaded', () => {
   rangeButtons.forEach(button => {
     button.addEventListener('click', () => {
       if (!button.classList.contains('active')) {
+        
         // Remove active class from all buttons
         rangeButtons.forEach(btn => btn.classList.remove('active'));
+        
         // Add active class to the clicked button
         button.classList.add('active');
+        
         // Update the selected range based on the button clicked
         selectedRange = button.textContent.trim();
 
@@ -185,13 +187,13 @@ function activeselect() {
     // If it's the first note selection
     if (firstNote === null) {
       firstNote = note;
-      this.classList.add('pressed'); // Highlight the key
+      this.classList.add('pressed');  // Highlight the key
     } 
     // If it's the second note and different from the first
     else if (secondNote === null && note !== firstNote) {
       secondNote = note;
-      this.classList.add('pressed'); // Highlight the second key
-      finalizeSelection(); // Stop further changes
+      this.classList.add('pressed');  // Highlight the second key
+      finalizeSelection();            // Stop further changes
     }
 
     updateRangeText();
@@ -268,7 +270,7 @@ const piano = new Tone.Sampler({
 document.querySelectorAll('.key').forEach(key => {
   key.addEventListener('click', () => {
     const note = key.getAttribute('data-note');
-    piano.triggerAttackRelease(note, "6n");
+    piano.triggerAttackRelease(note, "4n");
   });
 });
 
@@ -333,9 +335,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Show or hide the "Next" button based on selection
       if (selectedMask || selectedLaxvox || selectedNone) {
-        nextButton.style.display = "inline-block"; // Show the "Next" button if any option is selected
+        nextButton.style.display = "inline-block";  // Show the "Next" button if any option is selected
       } else {
-        nextButton.style.display = "none"; // Hide the "Next" button if no options are selected
+        nextButton.style.display = "none";          // Hide the "Next" button if no options are selected
       }
 
       // Update selectedGear variable

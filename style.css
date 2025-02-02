@@ -499,7 +499,7 @@ button.notusable {
 
 /*--------- minute slider ---------*/
 input[type="range"] {
-  width: 80%;
+  width: 800px;
   margin: 20px 0;
   appearance: none;
   height: 8px;

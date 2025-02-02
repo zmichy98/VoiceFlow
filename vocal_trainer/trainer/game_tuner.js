@@ -14,6 +14,7 @@ const gainValue = 2;
     fftSize: must be a power of two. Usually the default is 2048, which provides a good balance between frequency resolution and performance.
         - Lower fftSize -->     Larger frequency bins (worse frequency resolution). Better time resolution, faster.
         - Higher fftSize -->    Finer frequency bins (better resolution but slower processing). Worse time resolution, slower.
+        A smaller buffer means lower latency in detection because you’re processing fewer samples per frame, though you’ll sacrifice some frequency resolution.
     
     Gain Value:
         = 1 --> the input signal passes through unchanged.
@@ -227,6 +228,7 @@ function getGamePitch(goalFreq, duration, startTime, resolve, callback) {
             cancelAnimationFrame(requestAnimationFrameId);
         }
         resolve(0);
+        updateLevelMeter(0)
         return;
     }
 
@@ -255,6 +257,7 @@ function getGamePitch(goalFreq, duration, startTime, resolve, callback) {
             console.log("Note correct!");
             cancelAnimationFrame(requestAnimationFrameId);
             resolve(1);
+            updateLevelMeter(0)
             return;
         }
         updateLevelMeter(detune);

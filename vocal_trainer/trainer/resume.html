@@ -16,6 +16,32 @@
 </head>
 
 <style>
+    body {
+        font-family: 'Kanit', sans-serif;
+        background: linear-gradient(-45deg, #2E2E2E, #4d9246, rgb(2, 36, 50), #1c3f18);
+        background-size: 400% 400%;
+        animation: lavaLamp 10s ease infinite;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    @keyframes lavaLamp {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
     h2 {
         padding: 0%;
         color: #333;
@@ -23,21 +49,41 @@
     }
 
     ul {
-        list-style-type: none;
-        font-size: 1.2em;
-        color: #333;
-        text-align: left;
-        width: calc(100% - 40px);
-        max-width: 250px;
-        display: block;
-        font-family: 'Kanit', sans-serif;
+        list-style: none;
+        padding: 0;
+        width: 100%;
     }
 
-    .result-container {
+    li {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
-        height: 100vh;
+        font-size: 18px;
+        padding: 5px 0;
+        flex-direction: column;
+    }
+
+    li a {
+        flex-grow: 1;
+        text-align: center;
+        font-weight: bold;
+    }
+
+
+    .results-container {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: flex-start;
+        padding: 50px;
+        gap: 150px;
+    }
+
+    .column {
+        width: 250px;
+        background-color: #E0E0E0;
+        padding: 20px;
+        border-radius: 30px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     }
 
     .exercise {
@@ -52,15 +98,6 @@
     .point {
         width: 400px;
         padding: 10px;
-    }
-
-    .standing {
-        width: 400px;
-        padding: 10px;
-        background-color: #E0E0E0;
-        border-radius: 50px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        text-align: center;
     }
 
     /* Keeps leaderboard structure*/
@@ -86,7 +123,7 @@
         width: 100%;
         border-collapse: collapse;
         margin-top: 10px;
-        border-radius: 30px;
+        border-radius: 15px;
         overflow: hidden;
     }
 
@@ -132,24 +169,25 @@
             style="position:fixed; top:15px; left:20px; width: 100px; cursor: pointer;">
     </a>
 
-    <div class="result-container">
-        <div class="exercise">
-            <h2> You've completed: </h2>
+
+    <div class="point">
+        <h1 id="punteggio" style="color: #E0E0E0; font-size: 50px;">Your Points:</h1>
+    </div>
+
+    <div class="results-container">
+        <div class="column" id="exercise">
+            <h2>Exercise Summary</h2>
             <ul>
-                <li>Singing level: <a id="selectedLevel"></a></li>
+                <li>Singing level:
+                    <a id="selectedLevel"></a></li>
                 <li>Training time: <a id="sliderValue"></a> </li>
                 <li>Vocal range: <a id="selectedRange"></a> </li>
                 <li>Gear: <a id="selectedGear"></a> </li>
             </ul>
         </div>
-
-        <div class="point">
-            <h1 id="punteggio" style="color: #4d9246;"></h1>
-        </div>
-
-        <div id="advancedLeaderboard" class="leaderboard">
-            <h2> Leaderboard</h2>
-            <table id="scoreList" class="leaderboard-table"></table>
+        <div class="column" id="leaderboard">
+            <h2>Leaderboard</h2>
+                <table id="scoreList" class="leaderboard-table"></table>
         </div>
     </div>
 

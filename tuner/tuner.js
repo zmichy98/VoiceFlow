@@ -205,7 +205,6 @@ function getClosestNote(freq) {
     There are 100 cents in a semitone, and 1200 cents in an octave. This means cents allow us to measure small variations in pitch.
     Pitch (or frequency) doubles every octave, making the relationship between pitch and frequency logarithmic.
     */
-
     centsDetune = Math.floor( 1200 * Math.log( freq / closestNote.freq)/Math.log(2) );
 
     return [closestNote, centsDetune];
@@ -352,7 +351,6 @@ function getPitch(){
     }
 
     // Continue to call the function:
-
     if (!window.requestAnimationFrame){
 
         // Browsers are not all the same so we also consider FireFox just in case:
@@ -405,10 +403,10 @@ enableMicBtn.addEventListener("click", () => {
 
 let countNoDetection = 0;
 let audioContext = null;
-let currStream = null;                          // global variable to save the audio stream
-let source = null;                              // Audio input (microphone stream)
+let currStream = null;                              // global variable to save the audio stream
+let source = null;                                  // Audio input (microphone stream)
 let analyser = null;
-let buffer = new Float32Array(fftSize / 2);       // length of array = fftSize/2
+let buffer = new Float32Array(fftSize / 2);         // length of array = fftSize/2
 let requestAnimationFrameId = null;
 
 const constraints = {audio: true, video: false};

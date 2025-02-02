@@ -1,4 +1,6 @@
 
+![](vocal_trainer/settings/logo.png)
+
 ## About VoiceFlow
 
 VoiceFlow is a vocal training platform designed specifically for musicians and singers, enabling them to warm up their voices before performances. Whether you're a beginner or an advanced performer, VoiceFlow offers a range of customizable exercises tailored to suit every skill level. The platform allows users to choose between diverse personalized warm-up routines, helping them gradually improve their vocal technique.
@@ -9,7 +11,7 @@ One of the main aspects of the project, the _pitch tracker_ developed as a key a
 
 This project was developed as the final project for the Advanced Coding Tools and Methodology course in the Music and Acoustic Engineering program at Politecnico di Milano by Michele Zanardi, Gianluigi Vecchini, Federico Capitani, and İpek Ceren Bayram.
 
-[VOICEFLOW initial page image]
+[VOICEFLOW initial page image or NOT]
 
 ## Technologies Used
 

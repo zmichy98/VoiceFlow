@@ -17,9 +17,7 @@ console.log("selected level: " + experience);
 let top10;
 let logged = JSON.parse(localStorage.getItem("loggedIn"));
 console.log("Logged In: " + logged)
-
-//let currScore = localStorage.getItem("currentScore"); /////////////////////////////////// CAMBIARE
-let currScore = 4;
+let currScore = localStorage.getItem("currentScore");
 
 // Loads and shows score lists
 async function showTop10() {

@@ -15,26 +15,31 @@ This project was developed as the final project for the Advanced Coding Tools an
 
 ### Web API, Tone.js and Salamander Grand Piano
 
-One of the most important aspect of the training game is the designing of the piano keyboard: it is powered by modern Web Audio APIs, such as the Tone.js JavaScript library throught the use of its Tone.Sampler(). The samples used are the ones from the well-known Salamander Grand Piano set on GitHub, based on the popular Yamaha G5 Grand Piano and recorded in high quality.
+One of the most important aspect of the training game is the designing of the piano keyboard: it is powered by modern Web Audio APIs, such as the [Tone.js](https://tonejs.github.io) JavaScript library throught the use of its <small>`Tone.Sampler()`</small>. The samples used are the ones from the well-known [Salamander Grand Piano set on GitHub](https://github.com/sfzinstruments/SalamanderGrandPiano), based on the popular Yamaha G5 Grand Piano and recorded in high quality.
 
 ### FireBase FireStore Integration
 
-In order to include in the project a large database of diverse exercises and various personalized workouts, as well as all the aspects related to the _login_ functions for the users, a FireBase FireStore database was set up. FireStore is a NoSQL realtime database that uses Collections and Documents instead of tables and rows, perfect for scalability, real-time applications and large quantities of data. The structure of the database for this application is easy to mantain, as it can be seen in the next image.
+In order to include in the project a large database of diverse exercises and various personalized workouts, as well as all the aspects related to the _login_ functions for the users, a [FireBase FireStore](https://firebase.google.com/docs/firestore?hl=it) database was set up. FireStore is a NoSQL realtime database that uses Collections and Documents instead of tables and rows, perfect for scalability, real-time applications and large quantities of data. The structure of the database for this application is easy to mantain, as it can be seen in the next image.
 
 ![](images/firestore.png)
 
 ### Microphone Integration and Tuner Algorithm
 
-One of the main features of this project is the ability of the website to provide a real-time pitch detection. To do such a thing, the Web Audio API is used to capture audio from the user's microphone. The microphone input is managed through navigator.mediaDevices.getUserMedia(), which combined with the methods .createMediaStreamSource(), .createAnalyser(), .fftSize and .getFloatTimeDomainData() allows to obtain a buffer of floating-point numbers that represent the amplitude level of each frequency bin at a specific time frame.
-Thanks to the autoCorrelate() function, the dominant frequency of the audio signal is then calculated by computing the autocorrelation of the buffer. Autocorrelation measures how well the signal matches itself when shifted in time. If the signal repeats itself periodically with period T, then shifting the signal by T (or multiples of T) will align similar parts of the signal, producing local maxima (peaks) at those lags.
-The skeleton of this algorithm has been taken from the GitHub page [PitchDetect](https://github.com/cwilso/PitchDetect/blob/main/js/pitchdetect.js) and improved with the Hann Window function, which smooths out the audio signal, and the normalization of the buffer, that ensures consistency in analysis. For a better understanding of the algorithm it is suggested to take a look at the tuner/tuner.js script, which is commented in detail.
+Another important feature of the project is the website's ability to provide a real-time pitch detection. To achive this, the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) is used to capture audio from the user's microphone. The microphone input is managed through <small>`navigator.mediaDevices.getUserMedia()`</small>, which, combined with the methods <small>`.createMediaStreamSource()`</small>, <small>`.createAnalyser()`</small>, <small>`.fftSize`</small> and <small>`getFloatTimeDomainData()`</small>, allows obtaining a buffer of floating-point numbers that represent the amplitude level of each frequency bin at a specific time frame.
+
+Thanks to the <small>`autoCorrelate()`</small> function, the dominant frequency of the audio signal is then calculated by computing the autocorrelation of the buffer. Autocorrelation measures how well the signal matches itself when shifted in time. If the signal repeats itself periodically with period T, then shifting the signal by T (or multiples of T) will align similar parts of the signal, producing local maxima (peaks) at those lags.
+The skeleton of this algorithm has been taken from the GitHub page [PitchDetect](https://github.com/cwilso/PitchDetect/blob/main/js/pitchdetect.js) and improved with:
+- The <small>`applyHannWindow()`</small> function, which smooths out the audio signal.
+- The normalization of the buffer, that ensures consistency in analysis.
+
+The tuner's ability to detect frequencies mainly depends on the following variables:
+- <small>`tuneTolerance`</small>: The threshold in cents between two frequencies to be considered in tune. It is set to 30.
+- <small>`fftSize`</small>: The number of samples taken per frame. It is always set to 2048, except during the game, where it is reduced to 1024 to provide a quicker time response in despite of the frequency resolution.
+
+For a better understanding of the algorithm it is suggested to take a look at the tuner/tuner.js script, which is commented in detail.
+
 Once the dominant frequency is identified, the detune value is calculated in cents (where a half-tone is 100 cents).
-Two main variables significantly affect the tuner's ability to detect frequencies:
-- tuneTolerance: The threshold in cents between two frequencies to be considered in tune. It is set to 30 cents.
-- fftSize: The number of samples taken per frame. It is always set to 2048, except during the game, where it is reduced to 1024 to provide a quicker response in despite of frequency resolution.
 
-
-[SOME IMAGES?]
 
 ## User experience
 
@@ -61,7 +66,7 @@ We will then have to choose how much time we have for the training, using the bi
 
 ![](images/time.png)
 
-The next selection is the most refined: we can choose our voice type using three different methods. The first one allow us to decide between the six main vocal ranges (soprano, mezzosoprano, alto, tenor, baritone and bass). The second one is thought for "pro" users: if you know your specific range, you can input it via a virtual keyboard. The last one is instead thought for less experienced users who wants to find their vocal range. **[COME FUNZIONA? ]**
+The next selection is the most refined: we can choose our voice type using three different methods. The first one allow us to decide between the six main vocal ranges (soprano, mezzosoprano, alto, tenor, baritone and bass). The second one is thought for "pro" users: if you know your specific range, you can input it via a virtual keyboard. The last feature is designed for less experienced users who want to determine their vocal range. The user can select their range by finding the lowest and highest notes they can sing using the website’s tuner.
 
 ![](images/range_general.png)
 ![](images/range_1.png)

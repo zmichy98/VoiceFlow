@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <!-- Collegamento con il file css: -->
+    <!-- Link to file css: -->
     <link rel="stylesheet" href="../../style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.25/Tone.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tone@14.8.29/build/Tone.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800&display=swap" rel="stylesheet"></head>
-    <title>VoiceFlow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<title>VoiceFlow</title>
 </head>
 <style>
     #labels {
@@ -17,7 +19,7 @@
         color: #555;
     }
 
-    /* Contenitore del tuner */
+    /* Container of tuner */
     #tuner-container {
         margin-top: 20px;
         margin-bottom: 120px;
@@ -28,17 +30,17 @@
         justify-content: center;
     }
 
-    /* Barra del tachimetro */
+    /* Bar */
     #tuner-bar {
         position: relative;
-        width: 600px; /* Puoi allargarlo se vuoi */
+        width: 600px;
         height: 10px;
         background-color: #ddd;
         border-radius: 5px;
         overflow: hidden;
     }
 
-    /* Indicatore del tuner */
+    /* Tuner identifier */
     #tuner-indicator {
         position: absolute;
         width: 9px;
@@ -50,22 +52,22 @@
         transition: left 0.1s ease-out;
     }
 
-    /* Label sotto il tuner adattate alla nuova larghezza */
+    /* Label under tuner */
     .tuner-labels {
         display: flex;
         justify-content: space-between;
         width: 100%;
-        max-width: 600px; /* Deve essere uguale alla larghezza del tuner */
+        max-width: 600px;
     }
 
-    /* Contenitore della tastiera */
+    /* Container of keyboard */
     .keyboard3 {
-        margin-top: 5px; /* Aggiunge spazio tra la tastiera e gli altri elementi */
+        margin-top: 5px;
     }
 
     .container {
         position: absolute;
-        top: 600px; /* Assicurati che sia più basso della tastiera */
+        top: 600px;
         left: 50%;
         transform: translateX(-50%);
     }
@@ -86,8 +88,10 @@
         position: fixed;
         top: 480px;
         max-width: 700px;
-        font-size: 1.5em; /* font size of the description */
-        color:#6b6b6b;    /* text color of the description */
+        font-size: 1.5em;
+        /* font size of the description */
+        color: #6b6b6b;
+        /* text color of the description */
         background: linear-gradient(45deg, #4d9246, #7bd4a3);
         -webkit-background-clip: text;
         background-clip: text;
@@ -96,8 +100,8 @@
         padding: 10px;
         border-radius: 20px;
     }
-
 </style>
+
 <body data-setting="3">
 
     <div class="settings-bar">
@@ -109,13 +113,14 @@
     </div>
 
     <a href="../../index.html">
-        <img src="logo.png" alt="Go to Main Page" style="position:fixed; top:15px; left:20px; width: 100px; cursor: pointer;">
-    </a> 
+        <img src="logo.png" alt="Go to Main Page"
+            style="position:fixed; top:15px; left:20px; width: 100px; cursor: pointer;">
+    </a>
 
     <h2 style="position: absolute; top: 70px; font-size: 30px;" id="instructions">
         Select the lowest note and sing it after pressing the detecting button
     </h2>
-      
+
 
     <!-- range description -->
     <div id="rangeInterval" class="range-description">
@@ -281,8 +286,8 @@
 
     <!-- Start detecting button -->
     <div class="container">
-        <button id = "select-note-btn" class="start-selecting-button">Start selection</button>
-        <button id = "enable-mic" data-tracking="false">Enable detection</button>
+        <button id="select-note-btn" class="start-selecting-button">Start selection</button>
+        <button id="enable-mic" data-tracking="false">Enable detection</button>
     </div>
 
     <div id="tuner-container">
@@ -297,8 +302,8 @@
     </div>
 
     <div class="range-description">
-        <div id="note" ></div> 
-        <div id="hz" ></div>
+        <div id="note"></div>
+        <div id="hz"></div>
         <div id="detune"></div>
     </div>
 
@@ -312,4 +317,5 @@
 
     <script src="vt_noteDetector.js"></script>
 </body>
+
 </html>

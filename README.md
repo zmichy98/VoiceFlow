@@ -3,7 +3,7 @@
 
 VoiceFlow is a vocal training platform designed specifically for musicians and singers, enabling them to warm up their voices before performances. Whether you're a beginner or an advanced performer, VoiceFlow offers a range of customizable exercises tailored to suit every skill level. The platform allows users to choose between diverse personalized warm-up routines, helping them gradually improve their vocal technique.
 
-In addition to the exercises, VoiceFlow provides an engaging way for users to monitor their progress over time, allowing them to visualize improvements and continue refining their vocal abilities adding some aspects from the broader field of _gamification_. Our goal is to create a comprehensive space where singers and musicians alike can prepare their voices for any performance, all while fostering growth and development.
+In addition to the exercises, VoiceFlow provides an engaging way for users to monitor their progress over time, allowing them to visualize improvements and continue refining their vocal abilities in the broader context of _gamification_. Our goal is to create a comprehensive space where singers and musicians alike can prepare their voices for any performance, all while fostering growth and development.
 
 One of the main aspects of the project, the _pitch tracker_ developed as a key aspect of the training game, was also furtherly developed, and a dedicated page for this useful tool was also added. [MODIFY ]
 
@@ -25,13 +25,13 @@ In order to include in the project a large database of diverse exercises and var
 
 ### "Microphone Integration"
 
-MICROPHONE INTEGRATION
+**MICROPHONE INTEGRATION**
 
 [SOME IMAGES?]
 
 ### "Tuner"
 
-Tuner?
+**Tuner?**
 
 [SOME IMAGES?]
 
@@ -47,6 +47,10 @@ The second choice will lead us to the "Pitch Tracker" page, where we can tune ou
 
 [TUNER image]
 
+We can also select the "Login" button, and we will be redirected to the login interface. Here we can create our account or log in with our credentials.
+
+[CREATE and LOGIN images]
+
 Let's go back to the initial page and choose "Trainer". We will be redirected to the first of a series of "fine tunings" for our vocal workout. In this case, we have to choose our skill level between "Beginner", "Intermediate" and "Advanced".
 
 [LEVEL image]
@@ -55,7 +59,7 @@ We will then have to choose how much time we have for the training, using the bi
 
 [TIME image]
 
-The next selection is the most refined: we can choose our voice type using three different methods. The first one allow us to decide between the six main vocal ranges (soprano, mezzosoprano, alto, tenor, baritone and bass). The second one is ... toward "pro" users: if you know your specific range, you can input it via a virtual keyboard. The last one is instead thought for less experienced users who wants to find their vocal range. [COME FUNZIONA? ]
+The next selection is the most refined: we can choose our voice type using three different methods. The first one allow us to decide between the six main vocal ranges (soprano, mezzosoprano, alto, tenor, baritone and bass). The second one is thought for "pro" users: if you know your specific range, you can input it via a virtual keyboard. The last one is instead thought for less experienced users who wants to find their vocal range. **[COME FUNZIONA? ]**
 
 [4 IMAGES of RANGE]
 
@@ -67,8 +71,14 @@ A quick recap page will lead us to the real workout page.
 
 [RECAP image]
 
-The Training Game Page is the heart of VoiceFlow. Here we can sing along the exercises presented by
+The Training Game Page is the heart of VoiceFlow. Here we can sing along the exercises and see in real time the points that we are getting during the game. When we are ready, we can press on the "BUTTON [TO CHANGE]" to start. 
 
+[TRAINING GAME image]
 
-7. Login functionality
-8. Results page and standings
+As we finish our training, the results will appear automatically. If you are logged in and have managed to beat your best score for the current level, the application will let you know. And if you were good enough to enter the Top 10, your name and your score will be remembered along the ones of the champions!
+
+[RESULTS image]
+
+There is also a dedicated page for the Standings in the home page. All the best scores for Beginner, Intermediate and Advanced level are displayed here.
+
+[STANDINGS image]

@@ -4,11 +4,12 @@ const minimumRMS = 0.005;
 const fftSize = 2048;
 const smoothness = 100; // Number of (-1) iteration before giving No note detected
 
-/*  tuneTollerance: is the threshold in cents for which you are in tune with a certain frequency
+/* Accuracy variables:
+    - tuneTollerance: is the threshold in cents for which you are in tune with a certain frequency
 
-    minimumRMS: minimum strength of the signa for which is accepted to be analysied
+    - minimumRMS: minimum strength of the signa for which is accepted to be analysied
 
-    fftSize: must be a power of two. Usually the default is 2048, which provides a good balance between frequency resolution and performance.
+    - fftSize: must be a power of two. Usually the default is 2048, which provides a good balance between frequency resolution and performance.
         - Lower fftSize -->     Larger frequency bins (worse frequency resolution). Better time resolution, faster.
         - Higher fftSize -->    Finer frequency bins (better resolution but slower processing). Worse time resolution, slower. */
 

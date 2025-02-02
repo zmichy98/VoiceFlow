@@ -7,16 +7,17 @@ const minimumRMS = 0.001;
 const fftSize = 1024; //512 or 1024?
 const gainValue = 2;
 
-/*  tuneTollerance: is the threshold in cents for which you are in tune with a certain frequency
+/* Accuracy variables:
+    - tuneTollerance: is the threshold in cents for which you are in tune with a certain frequency
 
-    minimumRMS: minimum strength of the signa for which is accepted to be analysied
+    - minimumRMS: minimum strength of the signa for which is accepted to be analysied
 
-    fftSize: must be a power of two. Usually the default is 2048, which provides a good balance between frequency resolution and performance.
+    - fftSize: must be a power of two. Usually the default is 2048, which provides a good balance between frequency resolution and performance.
         - Lower fftSize -->     Larger frequency bins (worse frequency resolution). Better time resolution, faster.
         - Higher fftSize -->    Finer frequency bins (better resolution but slower processing). Worse time resolution, slower.
         A smaller buffer means lower latency in detection because you’re processing fewer samples per frame, though you’ll sacrifice some frequency resolution.
     
-    Gain Value:
+    - Gain Value:
         = 1 --> the input signal passes through unchanged.
         = 0 --> mute the signal
         > 1 --> increases the amplitude (volume gets louder). Can cause distortion if too high.
@@ -115,8 +116,6 @@ function getMicrophoneStream(){
             const gainNode = audioContext.createGain();
             gainNode.gain.value = gainValue; 
 
-            /* Connect the source to the gain. The gain node will be connected to the analyser. */
-
             source.connect(gainNode);
             
             // Save the gainNode in a global variable
@@ -175,11 +174,10 @@ document.addEventListener('DOMContentLoaded', () => {
 export function startGamePitchTrack(goalNote, duration) {
     console.log("--------------Start PitchTrack-------------");
     
-    // I the global node doesn't exist, create one and connect it to the source
+    // If the global node doesn't exist, create one and connect it to the source
     if (!globalAnalyser) {
         globalAnalyser = audioContext.createAnalyser();
         globalAnalyser.fftSize = fftSize;
-        // Collega il GainNode (che abbiamo salvato in window.myGainNode) all'Analyser
         window.myGainNode.connect(globalAnalyser);
     }
     
@@ -212,16 +210,13 @@ export function startGamePitchTrack(goalNote, duration) {
 function getGamePitch(goalFreq, duration, startTime, resolve, callback) {
 
     // Calculate the current time in milliseconds
-
     const currentTime = performance.now();
 
      // Calculate the elpsed time in milliseconds
-
     const elapsedTime = currentTime - startTime;
     console.log("Elapsed Time: " + elapsedTime / 1000 + " seconds");
 
     // Duration is in second, calculate if the elapsed time is > then duration * 1000
-
     if (elapsedTime >= duration * 1000) {
         console.log("Time duration exceeded, stopping detection.");
         if (requestAnimationFrameId) {
@@ -233,10 +228,7 @@ function getGamePitch(goalFreq, duration, startTime, resolve, callback) {
     }
 
     // Take the audio data from the analyser and calculate the frequency
-
     globalAnalyser.getFloatTimeDomainData(buffer);
-
-    // Take the first 20 values to verify the buffer makes sense
     console.log("Buffer sample (first 20 values):", buffer.slice(0, 20));
 
     const frequencyInHz = autoCorrelate(buffer, audioContext.sampleRate);
@@ -301,8 +293,7 @@ function autoCorrelate( buf, sampleRate ) {
 
 	buf = buf.slice(r1,r2);
 	SIZE = buf.length;
-
-    // Normalize buffer
+    
     var maxVal = Math.max(...buf.map(Math.abs));
     if (maxVal > 0) {
         buf = buf.map(x => x / maxVal);

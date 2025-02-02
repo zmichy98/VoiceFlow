@@ -57,14 +57,18 @@ We will then have to choose how much time we have for the training, using the bi
 
 The next selection is the most refined: we can choose our voice type using three different methods. The first one allow us to decide between the six main vocal ranges (soprano, mezzosoprano, alto, tenor, baritone and bass). The second one is ... toward "pro" users: if you know your specific range, you can input it via a virtual keyboard. The last one is instead thought for less experienced users who wants to find their vocal range. [COME FUNZIONA? ]
 
+[4 IMAGES of RANGE]
+
+As many experienced singers know, there are a lot of tools that can help warm up your voice before a performance or just to exercise. We selected two popular SOVTE (Semi-Occluded Vocal Tract Exercises) tools, the Mask and the Lax Vox. If you have them, your workout will change accordingly!
+
+[TOOLS image]
+
+A quick recap page will lead us to the real workout page.
+
+[RECAP image]
+
+The Training Game Page is the heart of VoiceFlow. Here we can sing along the exercises presented by
 
 
-4. Range selector
-    * Predefined range
-    * Manual selector 
-    * Pitch detection
-5. Equipment
-    SOVTE
-6. Training page
 7. Login functionality
 8. Results page and standings

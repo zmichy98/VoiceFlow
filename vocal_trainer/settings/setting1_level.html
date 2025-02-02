@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <!-- Collegamento con il file css: -->
+    <!-- Link to css: -->
     <link rel="stylesheet" href="../../style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.25/Tone.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800&display=swap" rel="stylesheet"></head>
-    <title>VoiceFlow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800&display=swap" rel="stylesheet">
 </head>
+<title>VoiceFlow</title>
+</head>
+
 <body data-setting="1">
     <div class="settings-bar">
         <div class="setting">1</div>
@@ -17,10 +20,11 @@
         <div class="setting">4</div>
         <div class="setting">5</div>
     </div>
-    
+
     <a href="../../index.html">
-        <img src="logo.png" alt="Go to Main Page" style="position:fixed; top:15px; left:20px; width: 100px; cursor: pointer;">
-    </a>    
+        <img src="logo.png" alt="Go to Main Page"
+            style="position:fixed; top:15px; left:20px; width: 100px; cursor: pointer;">
+    </a>
 
     <h2>Are you experienced?</h2>
 
@@ -30,7 +34,7 @@
         <button class="level-button toggle-button">Intermediate</button>
         <button class="level-button toggle-button">Advanced</button>
     </div>
-    
+
     <!-- Level description -->
     <div id="level-description" class="level-description">
         <p>Select a level that describes you the best</p>
@@ -46,16 +50,17 @@
         <a href="../../index.html" class="bottomleft_button">Home</a>
     </div>
 
-    <!-- Collegamento con lo script js: -->
+    <!-- Link to js: -->
     <script src="vt_settings.js"></script>
 
     <script>
         console.log("Logged in: " + localStorage.getItem("loggedIn"))
         let logged = JSON.parse(localStorage.getItem("loggedIn"));
-        if(logged) {
+        if (logged) {
             console.log("Nickname: " + localStorage.getItem("nick"))
             console.log("Password: " + localStorage.getItem("pass"))
         }
     </script>
 </body>
+
 </html>

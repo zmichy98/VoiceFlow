@@ -63,7 +63,7 @@
         text-align: center;
     }
 
-    /* Mantiene la struttura della leaderboard */
+    /* Keeps leaderboard structure*/
     .leaderboards {
         display: flex;
         justify-content: center;
@@ -81,7 +81,7 @@
         text-align: center;
     }
 
-    /* Tabelle con angoli smussati */
+    /* Tables with rounded angles */
     .leaderboard-table {
         width: 100%;
         border-collapse: collapse;
@@ -90,16 +90,14 @@
         overflow: hidden;
     }
 
-
-
-    /* Intestazione tabella */
+    /* Heading table */
     .leaderboard-table th {
         background-color: #4d9246;
         color: white;
         font-weight: bold;
     }
 
-    /* Alternanza colori righe normali */
+    /* Alternating colors */
     .leaderboard-table tr:nth-child(even) {
         background-color: #f2f2f2;
     }
@@ -108,22 +106,22 @@
         background-color: #ddd;
     }
 
-    /* Evidenziazione prime tre posizioni */
+    /* Highlight 3 first positions */
     .leaderboard-table tr:first-child td {
         background-color: gold;
-        /* Oro per il primo */
+        /* Gold */
         font-weight: bold;
     }
 
     .leaderboard-table tr:nth-child(2) td {
         background-color: silver;
-        /* Argento per il secondo */
+        /* Silver */
         font-weight: bold;
     }
 
     .leaderboard-table tr:nth-child(3) td {
         background-color: #cd7f32;
-        /* Bronzo per il terzo */
+        /* Bronze */
         font-weight: bold;
     }
 </style>
@@ -170,12 +168,9 @@
     </script>
 
     <script type="module">
-        // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
 
-        // Your web app's Firebase configuration
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyB-BaTehljfDtni-HAPrYh6rKT9sJyTKaU",
             authDomain: "database-for-singing.firebaseapp.com",

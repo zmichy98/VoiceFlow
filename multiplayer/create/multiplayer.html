@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,37 +11,35 @@
   <script type="module" src="https://www.gstatic.com/firebasejs/7.2.0/firebase-auth.js"></script>
   <script type="module" src="https://www.gstatic.com/firebasejs/7.2.0/firebase-firestore.js"></script>
 </head>
+
 <body>
-  
+
   <a href="../../index.html">
-    <img src="logo.png" alt="Go to Main Page" style="position:fixed; top:15px; left:20px; width: 100px; cursor: pointer;">
-  </a> 
+    <img src="logo.png" alt="Go to Main Page"
+      style="position:fixed; top:15px; left:20px; width: 100px; cursor: pointer;">
+  </a>
   <div class="container">
     <h2>Create an Account</h2>
     <form id="accountForm">
       <label for="nickname">Username:</label>
       <input type="text" id="nickname" required>
-      
+
       <label for="password">Password:</label>
       <input type="password" id="password" required>
 
       <input type="hidden" id="level" value="beginner">
-      
+
       <button id="submit" type="submit">Create an Account</button>
     </form>
   </div>
 
   <script type="module" src="script.js"></script>
 
-  <!-- Include Firebase SDK via CDN -->
-
   <script type="module">
-    // Import the functions you need from the SDKs you need
+
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-  
-    // Your web app's Firebase configuration
+
+    //Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyB-BaTehljfDtni-HAPrYh6rKT9sJyTKaU",
       authDomain: "database-for-singing.firebaseapp.com",
@@ -49,13 +48,9 @@
       messagingSenderId: "397721112623",
       appId: "1:397721112623:web:c5ec8963358f8e014736da"
     };
-  
-    // Initialize Firebase
+
     const app = initializeApp(firebaseConfig);
   </script>
-
-  
-
 </body>
-</html>
 
+</html>

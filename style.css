@@ -10,37 +10,6 @@ body {
   z-index: 1;
 }
 
-
-body_title {
-  font-family: 'Kanit', sans-serif;
-  background: linear-gradient(-45deg, #001f3f, #68a0d0, rgb(2, 36, 50), #25027c);
-  background-size: 400% 400%;
-  animation: lavaLamp 10s ease infinite;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  overflow: hidden;
-  z-index: 1;
-}
-
-/* Animazione del gradiente */
-@keyframes lavaLamp {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-
 /*-------------- LINE TRACING --------------- */
 svg {
   width: 500px;
@@ -547,7 +516,7 @@ input[type="range"]:active {
   transform: scale(1.1);
   box-shadow: 0 8px 30px rgba(255, 0, 0, 0.9);
   background: linear-gradient(45deg, #ff1e00, #ffabab);
-  animation: bounce 0.5s infinite alternate; /* Add a bounce effect */
+  animation: bounce 0.5s infinite alternate;
 }
 
 /*-------------Piano keyboard styling-------------*/
@@ -585,7 +554,7 @@ input[type="range"]:active {
   background-color: black;
   position: absolute;
   z-index: 2;
-  margin-left: -15px; /* Centers black keys */
+  margin-left: -15px;
   border-radius: 5px;
 }
 
@@ -607,8 +576,8 @@ input[type="range"]:active {
   width: 100%;
   text-align: center;
   font-size: 12px;
-  color: rgba(0, 0, 0, 0.4); /* Low opacity */
-  pointer-events: none; /* Prevents interference with mouse events */
+  color: rgba(0, 0, 0, 0.4);
+  pointer-events: none;
 }
 
 /* Correct positioning of black keys using nth-of-type */
@@ -664,8 +633,8 @@ input[type="range"]:active {
 #progress {
   width: 0;
   height: 100%;
-  background-color: #4d9246; /* Starting color */
-  transition: width 10s linear, background-color 10s ease; /*maybe this?: width 1s ease-in-out;*/
+  background-color: #4d9246; 
+  transition: width 10s linear, background-color 10s ease;
 }
 
 /*-------------------- Pitch meter -------------------*/

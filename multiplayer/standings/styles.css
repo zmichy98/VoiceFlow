@@ -1,15 +1,3 @@
-/*body {
-  font-family: 'Kanit', sans-serif;
-  background-color: #2E2E2E;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-*/
-
 body {
   font-family: 'Kanit', sans-serif;
   background: linear-gradient(-45deg, #2E2E2E, #4d9246, rgb(2, 36, 50), #1c3f18);
@@ -67,7 +55,7 @@ h1 {
   text-align: center;
 }
 
-/* Tabelle con angoli smussati */
+/* Tables with rounded corners */
 .leaderboard-table {
   width: 100%;
   border-collapse: collapse;
@@ -76,14 +64,14 @@ h1 {
   overflow: hidden;
 }
 
-/* Intestazione tabella */
+/* Table titles */
 .leaderboard-table th {
   background-color: #4d9246;
   color: white;
   font-weight: bold;
 }
 
-/* Alternanza colori righe normali */
+/* Alternating colors */
 .leaderboard-table tr:nth-child(even) {
   background-color: #f2f2f2;
 }
@@ -92,19 +80,19 @@ h1 {
   background-color: #ddd;
 }
 
-/* Evidenziazione prime tre posizioni */
+/* Highlight top 3 */
 .leaderboard-table tr:first-child td {
-  background-color: gold; /* Oro per il primo */
+  background-color: gold; 
   font-weight: bold;
 }
 
 .leaderboard-table tr:nth-child(2) td {
-  background-color: silver; /* Argento per il secondo */
+  background-color: silver; 
   font-weight: bold;
 }
 
 .leaderboard-table tr:nth-child(3) td {
-  background-color: #cd7f32; /* Bronzo per il terzo */
+  background-color: #cd7f32; 
   font-weight: bold;
 }
 

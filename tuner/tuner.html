@@ -17,16 +17,16 @@
 
             /* Container for note, Hz, detune, etc. */
             .container {
-                margin: 0px; /* Adds space below the meter bar */
-                text-align: center; /* Center text */
+                margin: 0px; 
+                text-align: center; 
             }
 
             /* Styling for note (e.g., C1, D#2, etc.) */
             #note {
                 font-size: 72px;
-                margin: 0 !important; /* Remove margins */
-                padding: 0 !important; /* Remove padding */
-                display: block; /* Ensure proper spacing behavior */
+                margin: 0 !important; 
+                padding: 0 !important;
+                display: block; 
                 font-weight: bold;
                 color: #444;
                 line-height: 1;
@@ -56,9 +56,9 @@
                 background-color: #45a049;
             }
 
-            /* Contenitore flessibile per microfono e tachimetro */
+            /* Flexible container for mic and indicator */
 
-            /* Pulsante microfono (a sinistra) */
+            /* mic button (on the left) */
             .mic-button-container {
                 min-width: 80px;
                 display: flex;
@@ -67,7 +67,7 @@
             }
 
 
-            /* Contenitore del tuner */
+            /* tuner container */
             #tuner-container {
                 margin-top: 20px;
                 flex-grow: 0;
@@ -77,17 +77,17 @@
                 justify-content: center;
             }
 
-            /* Barra del tachimetro */
+            /* indicator bar */
             #tuner-bar {
                 position: relative;
-                width: 600px; /* Puoi allargarlo se vuoi */
+                width: 600px; 
                 height: 10px;
                 background-color: #ddd;
                 border-radius: 5px;
                 overflow: hidden;
             }
 
-            /* Indicatore del tuner */
+            /* tuner indicator */
             #tuner-indicator {
                 position: absolute;
                 width: 9px;
@@ -99,15 +99,15 @@
                 transition: left 0.1s ease-out;
             }
 
-            /* Label sotto il tuner adattate alla nuova larghezza */
+            /* Label under tuner */
             .tuner-labels {
                 display: flex;
                 justify-content: space-between;
                 width: 100%;
-                max-width: 600px; /* Deve essere uguale alla larghezza del tuner */
+                max-width: 600px;
             }
 
-            /* Pulsante microfono */
+            /* mic button */
             .mic-button {
                 width: 60px;
                 height: 60px;
@@ -123,9 +123,9 @@
             }
             
 
-            /* Contenitore della tastiera */
+            /* Keyboard container*/
             .keyboard3 {
-                margin-top: 5px; /* Aggiunge spazio tra la tastiera e gli altri elementi */
+                margin-top: 5px; 
             }
         </style>
     </head>

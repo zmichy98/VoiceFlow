@@ -2,7 +2,7 @@
 const tuneTollerance = 30;
 const minimumRMS = 0.005;
 const fftSize = 2048;
-const smoothness = 100; // Number of (-1) iteration before giving No note detected
+const smoothness = 600; // Number of (-1) iteration before giving No note detected
 
 /* Accuracy variables:
     - tuneTollerance: is the threshold in cents for which you are in tune with a certain frequency
